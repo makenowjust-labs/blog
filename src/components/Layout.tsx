@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'gatsby';
+import { StaticQuery, Link, graphql } from 'gatsby';
 
 import { Box, ChakraProvider, Container, Heading, Stack } from "@chakra-ui/react"
 
@@ -12,17 +12,18 @@ const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export type LayoutProps = {
+export type LayoutContentProps = {
+  siteName: string;
   children: React.ReactNode;
 };
 
-export const Layout = ({ children }: LayoutProps) => (
+export const LayoutContent = ({ siteName, children }: LayoutContentProps) => (
   <ChakraProvider>
-    <Container as="main" w="100vw" maxW="1280px" my="1rem">
+    <Container as="main" w="100vw" maxW="1280px" my={["1rem", "3rem"]}>
       <Stack direction={['column', 'row']}>
-        <Box w={[null, "280px"]} py={[null, "2rem"]}>
+        <Box w={[null, "280px"]}>
           <Heading fontSize="20px" fontWeight="bold" _hover={{textDecoration: 'underline'}}>
-            <Link to="/">MakeNowJust-Labo/blog</Link>
+            <Link to="/">{ siteName }</Link>
           </Heading>
           <GithubIcon width="20px" height="20px" />
         </Box>
@@ -30,4 +31,22 @@ export const Layout = ({ children }: LayoutProps) => (
       </Stack>
     </Container>
   </ChakraProvider>
+);
+
+export type LayoutProps = {
+  children: React.ReactNode;
+};
+
+export const Layout = ({ children }: LayoutProps) => (
+  <StaticQuery query={graphql`
+    query {
+      site {
+        siteMetadata {
+          siteName
+        }
+      }
+    }
+  `}
+  render={({site: {siteMetadata}}: any) => <LayoutContent siteName={siteMetadata.siteName}>{children}</LayoutContent>}
+  />
 );
