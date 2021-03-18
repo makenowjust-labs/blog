@@ -1,12 +1,14 @@
 import * as React from "react"
+import { Heading } from "@chakra-ui/react";
 
+import Layout from "../components/Layout";
 
 // markup
 const IndexPage = () => {
   return (
-    <main>
-      <h1>Hello World</h1>
-    </main>
+    <Layout>
+      <Heading>MakeNowJust-Labo/blog</Heading>
+    </Layout>
   )
 }
 
