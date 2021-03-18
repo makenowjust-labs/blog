@@ -2,5 +2,7 @@ module.exports = {
   siteMetadata: {
     title: "MakeNowJust-Labo/blog",
   },
-  plugins: [],
+  plugins: [
+    'gatsby-plugin-typescript'
+  ],
 };
