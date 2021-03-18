@@ -1,12 +1,5 @@
 {
-  "name": "make-now-just-labo-blog",
-  "version": "1.0.0",
   "private": true,
-  "description": "MakeNowJust-Labo/blog",
-  "author": "TSUYUSATO Kitsune",
-  "keywords": [
-    "gatsby"
-  ],
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
