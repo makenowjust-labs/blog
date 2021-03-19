@@ -6,8 +6,8 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "lint": "prettier --list-different '**/*.{js,json,ts,md}'",
-    "format": "prettier --write '**/*.{js,json,ts,md}'"
+    "lint": "prettier --list-different '**/*.{js,json,ts,tsx,md}'",
+    "format": "prettier --write '**/*.{js,json,ts,tsx,md}'"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.6",
@@ -15,8 +15,7 @@
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "dayjs": "^1.10.4",
-    "framer-motion": "^3.10.5",
-    "katex": "^0.10.2",
+    "framer-motion": "^3.10.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
@@ -24,10 +23,11 @@
     "@types/react": "^17.0.3",
     "gatsby": "^3.0.1",
     "gatsby-plugin-typescript": "^3.1.0",
-    "gatsby-remark-katex": "^4.1.0",
     "gatsby-source-filesystem": "^3.1.0",
     "gatsby-transformer-remark": "^3.1.0",
+    "katex": "^0.13.0",
     "prettier": "^2.2.1",
+    "remark-math": "^3.0.1",
     "typescript": "^4.2.3"
   }
 }

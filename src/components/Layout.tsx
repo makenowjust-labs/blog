@@ -1,8 +1,26 @@
-import * as React from 'react';
-import { StaticQuery, Link as GatsbyLink, graphql } from 'gatsby';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import * as React from "react";
+import { StaticQuery, Link as GatsbyLink, graphql } from "gatsby";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import { Box, Button, Container, Heading, Stack, Text, useColorMode, VStack, Link } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Stack,
+  Text,
+  useColorMode,
+  VStack,
+  Link,
+  ColorModeProvider,
+  CSSReset,
+  GlobalStyle,
+  PortalManager,
+  ChakraProvider,
+} from "@chakra-ui/react";
+import { ThemeProvider } from "@emotion/react";
+
+import theme from "../theme";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 20 20" {...props}>
@@ -19,23 +37,54 @@ export type LayoutContentProps = {
   children: React.ReactNode;
 };
 
-export const LayoutContent = ({ siteName, github, children }: LayoutContentProps) => {
+export const LayoutContent = ({
+  siteName,
+  github,
+  children,
+}: LayoutContentProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const ColorModeIcon = colorMode === 'light' ? SunIcon : MoonIcon;
+  const ColorModeIcon = colorMode === "light" ? SunIcon : MoonIcon;
 
   return (
     <Container as="main" w="100vw" maxW="1280px">
-      <Stack direction={['column', 'row']}>
-        <Box w={[null, "280px"]} h={[null, '100vh']} pt={["1rem", "3rem"]} pos={[null, "sticky"]} top={[null, 0]} mr={[null, "1rem"]} borderRightStyle={[null, 'solid']} borderRightWidth={[null, '1px']} borderRightColor={[null, 'gray.400']} flexGrow={1}>
+      <Stack direction={["column", "row"]}>
+        <Box
+          w={[null, "280px"]}
+          h={[null, "100vh"]}
+          pt={["1rem", "3rem"]}
+          pos={[null, "sticky"]}
+          top={[null, 0]}
+          mr={[null, "1rem"]}
+          borderRightStyle={[null, "solid"]}
+          borderRightWidth={[null, "1px"]}
+          borderRightColor={[null, "gray.400"]}
+          flexGrow={1}
+        >
           <Heading fontSize="20px" fontWeight="bold">
-            <GatsbyLink to="/"><Link as="span">{ siteName }</Link></GatsbyLink>
-            <Link ml={"0.25rem"} href={`https://github.com/${github}`}><GithubIcon style={{display: 'inline-block'}} width="20px" height="20px" /></Link>
+            <GatsbyLink to="/">
+              <Link as="span">{siteName}</Link>
+            </GatsbyLink>
+            <Link ml={"0.25rem"} href={`https://github.com/${github}`}>
+              <GithubIcon
+                style={{ display: "inline-block" }}
+                width="20px"
+                height="20px"
+              />
+            </Link>
           </Heading>
         </Box>
         <Box w={[null, "1000px"]} pt={["1rem", "3rem"]}>
           <VStack>
-            <Box textAlign="right" width="100%"><Button display="inline" variant="ghost" onClick={toggleColorMode}><ColorModeIcon /></Button></Box>
-            { children }
+            <Box textAlign="right" width="100%">
+              <Button
+                display="inline"
+                variant="ghost"
+                onClick={toggleColorMode}
+              >
+                <ColorModeIcon />
+              </Button>
+            </Box>
+            {children}
             <Text pb={"1rem"}>(C) 2021 TSUYUSATO "MakeNowJust" Kitsune</Text>
           </VStack>
         </Box>
@@ -49,16 +98,26 @@ export type LayoutProps = {
 };
 
 export const Layout = ({ children }: LayoutProps) => (
-  <StaticQuery query={graphql`
-    query {
-      site {
-        siteMetadata {
-          siteName
-          github
+  <StaticQuery
+    query={graphql`
+      query {
+        site {
+          siteMetadata {
+            siteName
+            github
+          }
         }
       }
-    }
-  `}
-  render={({site: {siteMetadata}}: any) => <LayoutContent github={siteMetadata.github} siteName={siteMetadata.siteName}>{children}</LayoutContent>}
+    `}
+    render={({ site: { siteMetadata } }: any) => (
+      <ChakraProvider theme={theme}>
+        <LayoutContent
+          github={siteMetadata.github}
+          siteName={siteMetadata.siteName}
+        >
+          {children}
+        </LayoutContent>
+      </ChakraProvider>
+    )}
   />
 );

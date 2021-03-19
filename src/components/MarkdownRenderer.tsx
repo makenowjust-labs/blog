@@ -1,23 +1,37 @@
 /** @jsx jsx */
 
-import 'katex/dist/katex.min.css';
+import "katex/dist/katex.min.css";
 
-import { useColorMode, useTheme } from '@chakra-ui/system';
-import { jsx, css } from '@emotion/react';
+import { useColorMode, useTheme } from "@chakra-ui/system";
+import { jsx, css } from "@emotion/react";
 
 export type MarkdownRendererProps = {
   html: string;
 };
 
 export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
-  const {colorMode} = useColorMode();
+  const { colorMode } = useColorMode();
   const theme = useTheme();
   const style = css`
-    h1, h2, h3, h4, h5, h6, ul, ol, p, hr, table, blockquote {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol,
+    p,
+    hr,
+    table,
+    blockquote {
       margin: ${theme.sizes[2]} ${theme.sizes[0]};
     }
 
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       font-weight: bold;
     }
 
@@ -38,8 +52,9 @@ export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
       font-size: ${theme.sizes[4.5]};
     }
 
-    ul, ol {
-      padding-left: ${theme.sizes[4]}
+    ul,
+    ol {
+      padding-left: ${theme.sizes[4]};
     }
 
     p {
@@ -55,12 +70,13 @@ export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
     }
 
     blockquote {
-      border-left: ${theme.sizes[1]} solid ${theme.colors.red[colorMode === 'light' ? 600 : 200]};
+      border-left: ${theme.sizes[1]} solid
+        ${theme.colors.red[colorMode === "light" ? 600 : 200]};
       padding-left: ${theme.sizes[4]};
     }
 
     a {
-      color: ${theme.colors.purple[colorMode === 'light' ? 600 : 200]}
+      color: ${theme.colors.purple[colorMode === "light" ? 600 : 200]};
     }
 
     a:hover {
@@ -68,7 +84,5 @@ export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
     }
   `;
 
-  return (
-    <div css={style} dangerouslySetInnerHTML={{__html: html}} />
-  )
+  return <div css={style} dangerouslySetInnerHTML={{ __html: html }} />;
 };

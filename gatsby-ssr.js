@@ -1,6 +1,12 @@
 import * as React from "react";
+import theme from "./src/theme";
 import { ColorModeScript } from "@chakra-ui/react";
 
 export const onRenderBody = ({ setPreBodyComponents }) => {
-  setPreBodyComponents([<ColorModeScript key="chakra-ui-no-flash" />]);
+  setPreBodyComponents([
+    <ColorModeScript
+      initialColorMode={theme.config.initialColorMode}
+      key="chakra-ui-no-flash"
+    />,
+  ]);
 };
