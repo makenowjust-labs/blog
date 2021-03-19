@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     siteName: "MakeNowJust-Labo/blog",
-    github: "MakeNowJust-Labo/blog"
+    github: "MakeNowJust-Labo/blog",
   },
   plugins: [
     {
@@ -11,16 +11,16 @@ module.exports = {
         path: `${__dirname}/src/posts/`,
       },
     },
-    'gatsby-plugin-typescript',
+    "gatsby-plugin-typescript",
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
             resolve: `gatsby-remark-katex`,
-          }
+          },
         ],
-      }
-    }
+      },
+    },
   ],
 };
