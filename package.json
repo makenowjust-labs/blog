@@ -6,8 +6,8 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "lint": "prettier --list-different '**/*.{js,ts,md}'",
-    "format": "prettier --write '**/*.{js,ts,md}'"
+    "lint": "prettier --list-different '**/*.{js,json,ts,md}'",
+    "format": "prettier --write '**/*.{js,json,ts,md}'"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.6",
