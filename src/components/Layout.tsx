@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { StaticQuery, Link, graphql } from 'gatsby';
+import { StaticQuery, Link as GatsbyLink, graphql } from 'gatsby';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
-import { Box, ChakraProvider, Container, Heading, Stack } from "@chakra-ui/react"
+import { Box, Button, Container, Heading, Stack, Text, useColorMode, VStack, Link } from "@chakra-ui/react"
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 20 20" {...props}>
@@ -14,24 +15,34 @@ const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export type LayoutContentProps = {
   siteName: string;
+  github: string;
   children: React.ReactNode;
 };
 
-export const LayoutContent = ({ siteName, children }: LayoutContentProps) => (
-  <ChakraProvider>
-    <Container as="main" w="100vw" maxW="1280px" my={["1rem", "3rem"]}>
+export const LayoutContent = ({ siteName, github, children }: LayoutContentProps) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const ColorModeIcon = colorMode === 'light' ? SunIcon : MoonIcon;
+
+  return (
+    <Container as="main" w="100vw" maxW="1280px">
       <Stack direction={['column', 'row']}>
-        <Box w={[null, "280px"]}>
-          <Heading fontSize="20px" fontWeight="bold" _hover={{textDecoration: 'underline'}}>
-            <Link to="/">{ siteName }</Link>
+        <Box w={[null, "280px"]} h={[null, '100vh']} pt={["1rem", "3rem"]} pos={[null, "sticky"]} top={[null, 0]} mr={[null, "1rem"]} borderRightStyle={[null, 'solid']} borderRightWidth={[null, '1px']} borderRightColor={[null, 'gray.400']} flexGrow={1}>
+          <Heading fontSize="20px" fontWeight="bold">
+            <GatsbyLink to="/"><Link as="span">{ siteName }</Link></GatsbyLink>
+            <Link ml={"0.25rem"} href={`https://github.com/${github}`}><GithubIcon style={{display: 'inline-block'}} width="20px" height="20px" /></Link>
           </Heading>
-          <GithubIcon width="20px" height="20px" />
         </Box>
-        <Box>{ children }</Box>
+        <Box w={[null, "1000px"]} pt={["1rem", "3rem"]}>
+          <VStack>
+            <Box textAlign="right" width="100%"><Button display="inline" variant="ghost" onClick={toggleColorMode}><ColorModeIcon /></Button></Box>
+            { children }
+            <Text pb={"1rem"}>(C) 2021 TSUYUSATO "MakeNowJust" Kitsune</Text>
+          </VStack>
+        </Box>
       </Stack>
     </Container>
-  </ChakraProvider>
-);
+  );
+};
 
 export type LayoutProps = {
   children: React.ReactNode;
@@ -43,10 +54,11 @@ export const Layout = ({ children }: LayoutProps) => (
       site {
         siteMetadata {
           siteName
+          github
         }
       }
     }
   `}
-  render={({site: {siteMetadata}}: any) => <LayoutContent siteName={siteMetadata.siteName}>{children}</LayoutContent>}
+  render={({site: {siteMetadata}}: any) => <LayoutContent github={siteMetadata.github} siteName={siteMetadata.siteName}>{children}</LayoutContent>}
   />
 );
