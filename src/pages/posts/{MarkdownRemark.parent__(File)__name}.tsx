@@ -1,10 +1,4 @@
-import {
-  Box,
-  Heading,
-  VStack,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/layout";
+import { Box, Heading, VStack, Wrap, WrapItem } from "@chakra-ui/layout";
 import { graphql } from "gatsby";
 import * as React from "react";
 import dayjs from "dayjs";

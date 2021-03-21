@@ -14,6 +14,7 @@ import {
 import { Link as GatsbyLink, StaticQuery, graphql } from "gatsby";
 import * as React from "react";
 
+import { useSiteMedatada } from "../hooks/useSiteMetadata";
 import theme from "../theme";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -93,29 +94,11 @@ export type LayoutProps = {
   children: React.ReactNode;
 };
 
-export const Layout = ({ children }: LayoutProps) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            siteName
-            github
-            copyright
-          }
-        }
-      }
-    `}
-    render={({ site: { siteMetadata } }: any) => (
-      <ChakraProvider theme={theme}>
-        <LayoutContent
-          github={siteMetadata.github}
-          siteName={siteMetadata.siteName}
-          copyright={siteMetadata.copyright}
-        >
-          {children}
-        </LayoutContent>
-      </ChakraProvider>
-    )}
-  />
-);
+export const Layout = ({ children }: LayoutProps) => {
+  const siteMetadata = useSiteMedatada();
+  return (
+    <ChakraProvider theme={theme}>
+      <LayoutContent {...siteMetadata}>{children}</LayoutContent>
+    </ChakraProvider>
+  );
+};
