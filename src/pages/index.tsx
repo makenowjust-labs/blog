@@ -7,12 +7,36 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { Link as GatsbyLink, graphql } from "gatsby";
+import { graphql, Link as GatsbyLink } from "gatsby";
 import * as React from "react";
 import dayjs from "dayjs";
 
 import { Layout } from "../components/Layout";
 import { MarkdownRenderer } from "../components/MarkdownRenderer";
+
+type PostSummaryData = {
+  name: string;
+  title: string;
+  created: Date;
+  updated: Date;
+  html: string;
+};
+
+type PostSummaryQuery = {
+  allMarkdownRemark: {
+    nodes: {
+      parent: {
+        name: string;
+      };
+      frontmatter: {
+        title: string;
+        created: Date;
+        updated: Date;
+      }
+      excerpt: string;
+    }[];
+  }
+};
 
 type PostSummaryProps = {
   name: string;
@@ -58,16 +82,20 @@ const PostSummary = ({
   </VStack>
 );
 
-const IndexPage = (props: any) => {
-  const posts = props.data.allMarkdownRemark.nodes.map((data: any) => (
-    <PostSummary
-      name={data.parent.name}
-      title={data.frontmatter.title}
-      created={data.frontmatter.created}
-      updated={data.frontmatter.updated}
-      html={data.excerpt}
-    />
-  ));
+type IndexPageProps = {
+  data: PostSummaryQuery;
+};
+
+const convertQueryToData = (data: PostSummaryQuery): PostSummaryData[] =>
+  data.allMarkdownRemark.nodes.map(node => ({
+    name: node.parent.name,
+    ...node.frontmatter,
+    html: node.excerpt,
+  }));
+
+const IndexPage = ({ data }: IndexPageProps) => {
+  const postsData = convertQueryToData(data);
+  const posts = postsData.map(postData => <PostSummary {...postData} />);
   return (
     <Layout>
       <Heading pb={4}>記事一覧</Heading>
