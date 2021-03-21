@@ -1,19 +1,18 @@
-import * as React from "react";
 import {
   Box,
+  Button,
   Heading,
+  Link,
   VStack,
   Wrap,
   WrapItem,
-  Link,
-  Button,
 } from "@chakra-ui/react";
-import { Link as GatsbyLink } from "gatsby";
+import { Link as GatsbyLink, graphql } from "gatsby";
+import * as React from "react";
+import dayjs from "dayjs";
 
 import { Layout } from "../components/Layout";
 import { MarkdownRenderer } from "../components/MarkdownRenderer";
-import { graphql } from "gatsby";
-import dayjs from "dayjs";
 
 type PostSummaryProps = {
   name: string;
@@ -32,6 +31,7 @@ const PostSummary = ({
 }: PostSummaryProps) => (
   <VStack
     key={name}
+    my={4}
     borderBottomWidth={"1px"}
     borderBottomStyle={"solid"}
     borderBottomColor={"gray.400"}

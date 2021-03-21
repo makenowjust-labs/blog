@@ -3,7 +3,7 @@
 import "katex/dist/katex.min.css";
 
 import { useColorMode, useTheme } from "@chakra-ui/system";
-import { jsx, css } from "@emotion/react";
+import { css, jsx } from "@emotion/react";
 
 export type MarkdownRendererProps = {
   html: string;

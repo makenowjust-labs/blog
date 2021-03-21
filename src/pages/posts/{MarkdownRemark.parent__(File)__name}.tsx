@@ -1,17 +1,16 @@
-import { graphql } from "gatsby";
-import { Layout } from "../../components/Layout";
-import * as React from "react";
-import { MarkdownRenderer } from "../../components/MarkdownRenderer";
 import {
   Box,
   Heading,
   VStack,
-  Text,
-  HStack,
   Wrap,
   WrapItem,
 } from "@chakra-ui/layout";
+import { graphql } from "gatsby";
+import * as React from "react";
 import dayjs from "dayjs";
+
+import { Layout } from "../../components/Layout";
+import { MarkdownRenderer } from "../../components/MarkdownRenderer";
 
 export const PostPage = (props: any) => {
   const {

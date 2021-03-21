@@ -1,24 +1,18 @@
-import * as React from "react";
-import { StaticQuery, Link as GatsbyLink, graphql } from "gatsby";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-
 import {
   Box,
   Button,
+  ChakraProvider,
   Container,
   Heading,
+  Link,
   Stack,
   Text,
-  useColorMode,
   VStack,
-  Link,
-  ColorModeProvider,
-  CSSReset,
-  GlobalStyle,
-  PortalManager,
-  ChakraProvider,
+  useColorMode,
 } from "@chakra-ui/react";
-import { ThemeProvider } from "@emotion/react";
+import { Link as GatsbyLink, StaticQuery, graphql } from "gatsby";
+import * as React from "react";
 
 import theme from "../theme";
 
