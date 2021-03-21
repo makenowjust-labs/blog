@@ -3,7 +3,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby build --prefix-paths",
     "clean": "gatsby clean",
     "lint": "prettier --list-different '**/*.{js,json,ts,tsx,md}'",
     "format": "prettier --write '**/*.{js,json,ts,tsx,md}'",
