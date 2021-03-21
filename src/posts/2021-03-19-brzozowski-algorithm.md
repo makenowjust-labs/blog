@@ -22,19 +22,20 @@ Brzozowski 微分などで知られる [Janusz Brzozowski](<https://en.wikipedia
 ## 準備
 
 $X$を集合として、$x$ が $S$ に含まれるとき $x \subseteq X$ と表し、$Y$ が $X$ の部分集合であるとき $Y \subseteq X$ で表します。
-また、$X$ のすべての部分集合全体からなる集合を $\mathscr{P}(X)$ で表します。
+集合 $X, Y$ について $X \cap Y$ は $X$ と $Y$ の共通部分、$X \cup Y$ は $X$ と $Y$ の和集合を表します。
+$X$ のすべての部分集合全体からなる集合を $\mathscr{P}(X)$ で表します。
 空集合は $\varnothing$ とします。
 
-有限の集合 $\Sigma$ をアルファベットとして、$\Sigma$ の元を並べたもの全体からなる集合を $\Sigma^\ast$ といい、$\Sigma$ の元を文字、$\Sigma^\ast$ の元を文字列と呼びます。
+有限の集合 $\Sigma$ をアルファベットとして、$\Sigma$ の元を有限個並べたもの全体からなる集合を $\Sigma^\ast$ と表し、$\Sigma$ の元を文字、$\Sigma^\ast$ の元を文字列と呼びます。
 2 つの文字列 $u, v \in \Sigma^\ast$ を順番に並べたものを $u \cdot v$ で表します。
-文字列 $w$ の並びを逆向きにしたもの (リバースしたもの) を $w^R$ で表し、文字列の集合 $L$ の含まれるすべての文字列をリバースしたものを $L^R$ で表します。
+文字列 $w$ の並びを逆向きにしたもの (リバースしたもの) を $w^R$ で表し、文字列の集合 $L$ に含まれるすべての文字列をリバースしたものを $L^R$ で表します。
 空文字列は $\varepsilon$ とします。
 
 5 タプル $(Q, \Sigma, \delta, I, F)$ を NFA (非決定性有限状態オートマトン) と呼びます。
 ここで $Q$ は状態の有限集合、$\Sigma$ はアルファベット、$\delta : Q \times \Sigma \to \mathscr{P}(Q)$ は遷移関数、$I \subseteq Q$ は初期状態の集合、$F \subseteq Q$ は受理状態の集合です。
 状態の部分集合 $P \subseteq Q$ に対して拡張した遷移関数を $\delta_D(P, \sigma) = \bigcup_{p \in P}  \delta(p, \sigma)$ と定義して、さらに文字列 $w$ に対して拡張した遷移関数を $\delta^\ast(P, \varepsilon) = P,\ \delta^\ast(P, \sigma w) = \delta^\ast(\delta_D(P, \sigma), w)$ と定義します。
 このとき状態 $q \in Q$ について $L_{I, q} = \{ w \in \Sigma^\ast\ |\ q \in \delta^\ast(I, w) \}$ を $q$ の左言語、$L_{q, F} = \{ w \in \Sigma^\ast\ |\ \delta^\ast(\{ q \}, w) \cap F \ne \varnothing \}$ を $q$ の右言語とします。
-状態 $q$ について右言語が空ではないものを到達可能な状態と呼び、すべての状態が到達可能なときその NFA を到達可能な NFA と呼びます。
+状態 $q$ について左言語が空ではないものを到達可能な状態と呼び、すべての状態が到達可能なときその NFA を到達可能な NFA と呼びます。
 初期状態の右言語の和集合 $\bigcup_{q \in I} L_{q, F}$ を NFA の受理する言語と呼びます。
 2 つの NFA のそれぞれの値が等しいとき、2 つの NFA を構造的に等しいといいます。
 さらに、NFA の初期状態がちょうど 1 つで、遷移関数の遷移先 $\delta(q, \sigma)$ が高々 1 つのとき、その NFA を DFA (決定性有限状態オートマトン) と呼び、NFA に関する用語は DFA に対しても同様に用いられます。
@@ -53,7 +54,6 @@ $D(A)$ の受理する言語は元の NFA $A$ の受理する言語 $L$ と等�
 ## Brzozowski のアルゴリズム
 
 Brzozowski のアルゴリズムによって最小 DFA が求められるのは、次の定理に依ります。
-
 (この部分の内容は以前の Qiita の記事の内容と同様です。)
 
 **定理**: 言語 $L$ を受理する DFA $A$ について、$D(R(A))$ は $L^R$ を受理する最小 DFA となる。
