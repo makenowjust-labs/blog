@@ -1,1 +1,5 @@
-# MakeNowJust-Labo/blog
+# blog
+
+> A MakeNowJust-Labo's blog.
+
+## License
