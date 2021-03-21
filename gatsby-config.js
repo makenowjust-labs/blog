@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/blog',
   siteMetadata: {
     siteName: "MakeNowJust-Labo/blog",
     github: "MakeNowJust-Labo/blog",
