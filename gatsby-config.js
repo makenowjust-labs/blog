@@ -2,6 +2,7 @@ module.exports = {
   siteMetadata: {
     siteName: "MakeNowJust-Labo/blog",
     github: "MakeNowJust-Labo/blog",
+    copyright: '(C) 2021 TSUYUSATO "MakeNowJust" Kitsune',
   },
   plugins: [
     {

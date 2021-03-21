@@ -34,12 +34,14 @@ const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export type LayoutContentProps = {
   siteName: string;
   github: string;
+  copyright: string;
   children: React.ReactNode;
 };
 
 export const LayoutContent = ({
   siteName,
   github,
+  copyright,
   children,
 }: LayoutContentProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -85,7 +87,7 @@ export const LayoutContent = ({
               </Button>
             </Box>
             {children}
-            <Text pb={"1rem"}>(C) 2021 TSUYUSATO "MakeNowJust" Kitsune</Text>
+            <Text pb={"1rem"}>{copyright}</Text>
           </VStack>
         </Box>
       </Stack>
@@ -105,6 +107,7 @@ export const Layout = ({ children }: LayoutProps) => (
           siteMetadata {
             siteName
             github
+            copyright
           }
         }
       }
@@ -114,6 +117,7 @@ export const Layout = ({ children }: LayoutProps) => (
         <LayoutContent
           github={siteMetadata.github}
           siteName={siteMetadata.siteName}
+          copyright={siteMetadata.copyright}
         >
           {children}
         </LayoutContent>
