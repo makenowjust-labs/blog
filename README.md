@@ -1,6 +1,6 @@
 # blog
 
-> A MakeNowJust-Labo's blog.
+> MakeNowJust-Labo's blog.
 
 ## License
 
