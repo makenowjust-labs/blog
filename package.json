@@ -4,10 +4,10 @@
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
-    "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "prettier --list-different '**/*.{js,json,ts,tsx,md}'",
-    "format": "prettier --write '**/*.{js,json,ts,tsx,md}'"
+    "format": "prettier --write '**/*.{js,json,ts,tsx,md}'",
+    "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.6",
