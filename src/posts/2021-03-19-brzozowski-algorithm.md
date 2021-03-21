@@ -1,7 +1,7 @@
 ---
 title: Brzozowski のアルゴリズムとは結局何なのか
 created: 2021-03-19
-updated: 2021-03-19
+updated: 2021-03-21
 ---
 
 $A$ を言語 $L$ を受理する DFA とすると、$D(R(D(R(A))))$ は言語 $L$ を受理する最小 DFA となります。
