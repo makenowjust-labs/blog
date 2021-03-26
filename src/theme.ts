@@ -5,5 +5,5 @@ const config = {
   useSystemColorMode: false,
 };
 
-const theme = extendTheme({ config });
+const theme = extendTheme({ config } as any);
 export default theme;
