@@ -4,15 +4,24 @@ import * as React from "react";
 import dayjs from "dayjs";
 
 import { Layout } from "../../components/Layout";
+import { OGP } from "../../components/OGP";
 import { MarkdownRenderer } from "../../components/MarkdownRenderer";
+import { useSiteMetadata } from "../../hooks/useSiteMetadata";
+import { buildOGImageURL } from "../../utils/buildOGImageURL";
 
 export const PostPage = (props: any) => {
   const {
     html,
-    frontmatter: { title, created, updated },
+    frontmatter: { title, created, updated, description },
   } = props.data.markdownRemark;
+  const { siteName } = useSiteMetadata();
   return (
     <Layout>
+      <OGP
+        title={`${title} | ${siteName}`}
+        description={description}
+        image={buildOGImageURL({title, info: `${dayjs(created).format("YYYY-MM-DD")} | ${siteName}`})}
+      />
       <VStack>
         <Box>
           <Heading>{title}</Heading>
@@ -35,6 +44,7 @@ export const query = graphql`
         title
         created
         updated
+        description
       }
     }
   }

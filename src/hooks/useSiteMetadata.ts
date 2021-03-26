@@ -3,7 +3,9 @@ import { graphql, useStaticQuery } from "gatsby";
 export type SiteMetadata = {
   siteName: string;
   github: string;
+  twitter: string;
   copyright: string;
+  description: string;
 };
 
 type SiteMetadataQuery = {
@@ -12,14 +14,16 @@ type SiteMetadataQuery = {
   };
 };
 
-export const useSiteMedatada = (): SiteMetadata => {
+export const useSiteMetadata = (): SiteMetadata => {
   const data = useStaticQuery<SiteMetadataQuery>(graphql`
     query {
       site {
         siteMetadata {
           siteName
           github
+          twitter
           copyright
+          description
         }
       }
     }

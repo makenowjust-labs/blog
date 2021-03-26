@@ -13,6 +13,9 @@ import dayjs from "dayjs";
 
 import { Layout } from "../components/Layout";
 import { MarkdownRenderer } from "../components/MarkdownRenderer";
+import { OGP } from "../components/OGP";
+import { useSiteMetadata } from "../hooks/useSiteMetadata";
+import { buildOGImageURL } from "../utils/buildOGImageURL";
 
 type PostSummaryData = {
   name: string;
@@ -54,7 +57,6 @@ const PostSummary = ({
   html,
 }: PostSummaryProps) => (
   <VStack
-    key={name}
     my={4}
     borderBottomWidth={"1px"}
     borderBottomStyle={"solid"}
@@ -94,10 +96,16 @@ const convertQueryToData = (data: PostSummaryQuery): PostSummaryData[] =>
   }));
 
 const IndexPage = ({ data }: IndexPageProps) => {
+  const { siteName, description, copyright } = useSiteMetadata();
   const postsData = convertQueryToData(data);
-  const posts = postsData.map(postData => <PostSummary {...postData} />);
+  const posts = postsData.map(postData => <PostSummary key={postData.name} {...postData} />);
   return (
     <Layout>
+      <OGP
+        title={siteName}
+        description={description}
+        image={buildOGImageURL({title: siteName, info: copyright})}
+      />
       <Heading pb={4}>記事一覧</Heading>
       <VStack>{posts}</VStack>
     </Layout>

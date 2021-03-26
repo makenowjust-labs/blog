@@ -3,7 +3,9 @@ module.exports = {
   siteMetadata: {
     siteName: "MakeNowJust-Labo/blog",
     github: "MakeNowJust-Labo/blog",
+    twitter: "@make_now_just",
     copyright: '(C) 2021 TSUYUSATO "MakeNowJust" Kitsune',
+    description: 'MakeNowJust-Labo のブログです。',
   },
   plugins: [
     {
@@ -24,5 +26,6 @@ module.exports = {
         ],
       },
     },
+    "gatsby-plugin-react-helmet",
   ],
 };
