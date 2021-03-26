@@ -5,7 +5,7 @@ module.exports = {
     github: "MakeNowJust-Labo/blog",
     twitter: "@make_now_just",
     copyright: '(C) 2021 TSUYUSATO "MakeNowJust" Kitsune',
-    description: 'MakeNowJust-Labo のブログです。',
+    description: "MakeNowJust-Labo のブログです。",
   },
   plugins: [
     {

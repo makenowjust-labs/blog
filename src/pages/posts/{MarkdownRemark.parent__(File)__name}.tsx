@@ -20,7 +20,10 @@ export const PostPage = (props: any) => {
       <OGP
         title={`${title} | ${siteName}`}
         description={description}
-        image={buildOGImageURL({title, info: `${dayjs(created).format("YYYY-MM-DD")} | ${siteName}`})}
+        image={buildOGImageURL({
+          title,
+          info: `${dayjs(created).format("YYYY-MM-DD")} | ${siteName}`,
+        })}
       />
       <VStack>
         <Box>

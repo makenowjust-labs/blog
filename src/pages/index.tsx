@@ -35,10 +35,10 @@ type PostSummaryQuery = {
         title: string;
         created: Date;
         updated: Date;
-      }
+      };
       excerpt: string;
     }[];
-  }
+  };
 };
 
 type PostSummaryProps = {
@@ -89,7 +89,7 @@ type IndexPageProps = {
 };
 
 const convertQueryToData = (data: PostSummaryQuery): PostSummaryData[] =>
-  data.allMarkdownRemark.nodes.map(node => ({
+  data.allMarkdownRemark.nodes.map((node) => ({
     name: node.parent.name,
     ...node.frontmatter,
     html: node.excerpt,
@@ -98,13 +98,15 @@ const convertQueryToData = (data: PostSummaryQuery): PostSummaryData[] =>
 const IndexPage = ({ data }: IndexPageProps) => {
   const { siteName, description, copyright } = useSiteMetadata();
   const postsData = convertQueryToData(data);
-  const posts = postsData.map(postData => <PostSummary key={postData.name} {...postData} />);
+  const posts = postsData.map((postData) => (
+    <PostSummary key={postData.name} {...postData} />
+  ));
   return (
     <Layout>
       <OGP
         title={siteName}
         description={description}
-        image={buildOGImageURL({title: siteName, info: copyright})}
+        image={buildOGImageURL({ title: siteName, info: copyright })}
       />
       <Heading pb={4}>記事一覧</Heading>
       <VStack>{posts}</VStack>

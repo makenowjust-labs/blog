@@ -9,21 +9,19 @@ export type OGPProps = {
   image: string;
 };
 
-export const OGP = ({title, description, image}: OGPProps) => {
+export const OGP = ({ title, description, image }: OGPProps) => {
   const { twitter } = useSiteMetadata();
   return (
     <Helmet
       title={title}
-      meta={
-        [
-          { name: 'description', content: description },
-          { name: 'twitter:card', content: 'summary' },
-          { name: 'twitter:creator', content: twitter },
-          { name: 'og:title', content: title },
-          { name: 'og:description', content: description },
-          { name: 'og:image', content: image },
-        ]
-      }
-      />
+      meta={[
+        { name: "description", content: description },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:creator", content: twitter },
+        { name: "og:title", content: title },
+        { name: "og:description", content: description },
+        { name: "og:image", content: image },
+      ]}
+    />
   );
 };
