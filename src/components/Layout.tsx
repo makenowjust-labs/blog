@@ -43,7 +43,7 @@ export const LayoutContent = ({
   const ColorModeIcon = colorMode === "light" ? SunIcon : MoonIcon;
 
   return (
-    <Container as="main" w="100vw" maxW="1280px">
+    <Container as="main" w="100vw" maxW={["1280px", null]}>
       <Stack direction={["column", "row"]}>
         <Box
           w={[null, "280px"]}

@@ -13,7 +13,7 @@ export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
   const { colorMode } = useColorMode();
   const theme = useTheme();
   const style = css`
-    max-width: calc(100vw - 2rem);
+    max-width: 100%;
 
     h1,
     h2,

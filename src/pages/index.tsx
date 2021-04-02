@@ -57,6 +57,7 @@ const PostSummary = ({
   html,
 }: PostSummaryProps) => (
   <VStack
+    width={"100%"}
     my={4}
     borderBottomWidth={"1px"}
     borderBottomStyle={"solid"}
@@ -73,7 +74,7 @@ const PostSummary = ({
         <WrapItem>更新日: {dayjs(updated).format("YYYY-MM-DD")}</WrapItem>
       </Wrap>
     </Box>
-    <Box>
+    <Box width={"100%"}>
       <MarkdownRenderer html={html} />
     </Box>
     <Box py="4">
@@ -109,7 +110,7 @@ const IndexPage = ({ data }: IndexPageProps) => {
         image={buildOGImageURL({ title: siteName, info: copyright })}
       />
       <Heading pb={4}>記事一覧</Heading>
-      <VStack>{posts}</VStack>
+      <VStack width="100%">{posts}</VStack>
     </Layout>
   );
 };

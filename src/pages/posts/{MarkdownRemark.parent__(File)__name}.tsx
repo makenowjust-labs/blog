@@ -25,7 +25,7 @@ export const PostPage = (props: any) => {
           info: `${dayjs(created).format("YYYY-MM-DD")} | ${siteName}`,
         })}
       />
-      <VStack>
+      <VStack width={"100%"}>
         <Box>
           <Heading>{title}</Heading>
           <Wrap spacing="1.5rem" justify="center">
