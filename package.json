@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.1.5",
     "dayjs": "^1.10.4",
     "framer-motion": "^3.10.6",
+    "prismjs": "^1.23.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0"
@@ -26,6 +27,7 @@
     "gatsby": "^3.0.1",
     "gatsby-plugin-react-helmet": "^4.1.0",
     "gatsby-plugin-typescript": "^3.1.0",
+    "gatsby-remark-prismjs": "^4.2.0",
     "gatsby-source-filesystem": "^3.1.0",
     "gatsby-transformer-remark": "^3.1.0",
     "katex": "^0.13.0",
