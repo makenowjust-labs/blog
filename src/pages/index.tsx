@@ -73,7 +73,7 @@ const PostSummary = ({
         <WrapItem>更新日: {dayjs(updated).format("YYYY-MM-DD")}</WrapItem>
       </Wrap>
     </Box>
-    <Box px="8">
+    <Box>
       <MarkdownRenderer html={html} />
     </Box>
     <Box py="4">

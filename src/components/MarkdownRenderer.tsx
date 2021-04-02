@@ -13,6 +13,8 @@ export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
   const { colorMode } = useColorMode();
   const theme = useTheme();
   const style = css`
+    max-width: calc(100vw - 2rem);
+
     h1,
     h2,
     h3,
@@ -24,8 +26,16 @@ export const MarkdownRenderer = ({ html }: MarkdownRendererProps) => {
     p,
     hr,
     table,
-    blockquote {
+    blockquote,
+    div,
+    pre {
       margin: ${theme.sizes[2]} ${theme.sizes[0]};
+    }
+
+    div,
+    pre,
+    .katex-display {
+      overflow: auto;
     }
 
     h1,
