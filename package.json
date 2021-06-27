@@ -22,6 +22,7 @@
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
+    "@chakra-ui/gatsby-plugin": "^2.0.1",
     "@types/react": "^17.0.3",
     "@types/react-helmet": "^6.1.0",
     "gatsby": "^3.0.1",

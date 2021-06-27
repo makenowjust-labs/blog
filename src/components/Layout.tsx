@@ -2,7 +2,6 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  ChakraProvider,
   Container,
   Heading,
   Link,
@@ -15,7 +14,6 @@ import { Link as GatsbyLink, StaticQuery, graphql } from "gatsby";
 import * as React from "react";
 
 import { useSiteMetadata } from "../hooks/useSiteMetadata";
-import theme from "../theme";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 20 20" {...props}>
@@ -96,9 +94,5 @@ export type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   const siteMetadata = useSiteMetadata();
-  return (
-    <ChakraProvider theme={theme}>
-      <LayoutContent {...siteMetadata}>{children}</LayoutContent>
-    </ChakraProvider>
-  );
+  return <LayoutContent {...siteMetadata}>{children}</LayoutContent>;
 };

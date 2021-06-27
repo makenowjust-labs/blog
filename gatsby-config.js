@@ -9,6 +9,9 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: "@chakra-ui/gatsby-plugin"
+    },
+    {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "posts",
