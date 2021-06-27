@@ -40,7 +40,7 @@ export const PostPage = (props: any) => {
 };
 
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     markdownRemark(id: { eq: $id }) {
       html
       frontmatter {
