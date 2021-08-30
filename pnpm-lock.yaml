@@ -1,13 +1,17 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@babel/core': ^7.0.0
   '@chakra-ui/gatsby-plugin': ^2.0.1
   '@chakra-ui/icons': ^1.0.6
+  '@chakra-ui/layout': ^1.4.9
   '@chakra-ui/react': ^1.3.4
+  '@chakra-ui/system': ^1.7.3
   '@emotion/react': ^11.1.5
   '@emotion/styled': ^11.1.5
   '@types/react': ^17.0.3
   '@types/react-helmet': ^6.1.0
+  babel-eslint: ^10.0.0
   dayjs: ^1.10.4
   framer-motion: ^4.1.17
   gatsby: ^3.0.1
@@ -27,10 +31,12 @@ specifiers:
   typescript: ^4.2.3
 
 dependencies:
-  '@chakra-ui/icons': 1.0.15_react@17.0.2
+  '@chakra-ui/icons': 1.0.15_beb3eeb2d477ea47016f511436674e29
+  '@chakra-ui/layout': 1.4.9_beb3eeb2d477ea47016f511436674e29
   '@chakra-ui/react': 1.6.6_8d167c97cec7349161163108e2f2e3ad
-  '@emotion/react': 11.4.1_4cd822c6044f4c1a7e1f1fea0e728f12
-  '@emotion/styled': 11.3.0_4a13a1c8be6e32a351380640be5b202d
+  '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
+  '@emotion/react': 11.4.1_56f22c50b68024c6e259393098372ce5
+  '@emotion/styled': 11.3.0_35b1fcf8648d3bb8c6845494ee391502
   dayjs: 1.10.6
   framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
   prismjs: 1.24.1
@@ -39,10 +45,12 @@ dependencies:
   react-helmet: 6.1.0_react@17.0.2
 
 devDependencies:
+  '@babel/core': 7.15.0
   '@chakra-ui/gatsby-plugin': 2.0.1_782dbaefff198812a2850100dd285912
   '@types/react': 17.0.19
   '@types/react-helmet': 6.1.2
-  gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+  babel-eslint: 10.1.0
+  gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
   gatsby-plugin-react-helmet: 4.12.0_gatsby@3.12.0+react-helmet@6.1.0
   gatsby-plugin-typescript: 3.12.0_gatsby@3.12.0
   gatsby-remark-katex: 5.9.0_gatsby@3.12.0+katex@0.13.13
@@ -664,15 +672,6 @@ packages:
       '@babel/helper-plugin-utils': 7.14.5
     dev: true
 
-  /@babel/plugin-syntax-jsx/7.14.5:
-    resolution: {integrity: sha512-ohuFIsOMXJnbOMRfX7/w7LocdR6R7whhuRD4ax8IipLcLPlZGJKkBxgHp++U4N/vKyU16/YDQr2f5seajD3jIw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/helper-plugin-utils': 7.14.5
-    dev: false
-
   /@babel/plugin-syntax-jsx/7.14.5_@babel+core@7.15.0:
     resolution: {integrity: sha512-ohuFIsOMXJnbOMRfX7/w7LocdR6R7whhuRD4ax8IipLcLPlZGJKkBxgHp++U4N/vKyU16/YDQr2f5seajD3jIw==}
     engines: {node: '>=6.9.0'}
@@ -681,7 +680,6 @@ packages:
     dependencies:
       '@babel/core': 7.15.0
       '@babel/helper-plugin-utils': 7.14.5
-    dev: true
 
   /@babel/plugin-syntax-logical-assignment-operators/7.10.4_@babel+core@7.15.0:
     resolution: {integrity: sha512-d8waShlpFDinQ5MtvGU9xDAOzKH47+FFoney2baFIoMr952hKOLp1HR7VszoZvOsV/4+RRszNY7D17ba0te0ig==}
@@ -1515,6 +1513,16 @@ packages:
       react: 17.0.2
     dev: false
 
+  /@chakra-ui/color-mode/1.1.12_react@17.0.2:
+    resolution: {integrity: sha512-w9xtfNaCirGtAzJqi6isXDIf+QvS1sfeT1okQxFlJZcG7TSM34B0BLJd3oJalZ2MFrNXkpQQhF2+JNKshrOQwQ==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      '@chakra-ui/hooks': 1.6.0_react@17.0.2
+      '@chakra-ui/utils': 1.8.2
+      react: 17.0.2
+    dev: false
+
   /@chakra-ui/control-box/1.0.15_8194fd905f3c2a4eb270d17bdb6ec109:
     resolution: {integrity: sha512-sqQXKa9MjVo1mN/XRfudoM53yKhoXm6ozbE/soTgvLQJtSZtEltXVg9O8LP/h/i/AlfUKs5Nw8qSjij/7pfb2w==}
     peerDependencies:
@@ -1542,7 +1550,7 @@ packages:
       '@emotion/react': '>=10.0.35'
       react: '>=16.8.6'
     dependencies:
-      '@emotion/react': 11.4.1_4cd822c6044f4c1a7e1f1fea0e728f12
+      '@emotion/react': 11.4.1_56f22c50b68024c6e259393098372ce5
       react: 17.0.2
     dev: false
 
@@ -1601,11 +1609,23 @@ packages:
       gatsby: ^2.29.3 || ^3.0.0
     dependencies:
       '@chakra-ui/react': 1.6.6_8d167c97cec7349161163108e2f2e3ad
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
     dev: true
 
   /@chakra-ui/hooks/1.5.5_react@17.0.2:
     resolution: {integrity: sha512-jwD+sRd+gOJvAeCM630n496CS5SAZFUHqOC7wwYN2Kj6BjCW7yHtxsq4atIlKSYJ+Ra96WNmZQ58Pr5Qj3r9Jg==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      '@chakra-ui/react-utils': 1.1.2_react@17.0.2
+      '@chakra-ui/utils': 1.8.2
+      compute-scroll-into-view: 1.0.14
+      copy-to-clipboard: 3.3.1
+      react: 17.0.2
+    dev: false
+
+  /@chakra-ui/hooks/1.6.0_react@17.0.2:
+    resolution: {integrity: sha512-5QFICaE1omNCJyVQQX62sZvRvIpI4VansN2AvZpSdrMjRiWvmBNLZN2Khr7+8j6F7uDh5LSgTxiP02vWLp12hA==}
     peerDependencies:
       react: '>=16.8.6'
     dependencies:
@@ -1627,23 +1647,25 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/icon/1.1.11_react@17.0.2:
+  /@chakra-ui/icon/1.1.11_beb3eeb2d477ea47016f511436674e29:
     resolution: {integrity: sha512-w+TkBr8eA8023j1SdhBzCFrEeU4lolf96cYVz0t/FVUBdIHYPGt56iHdaE2HYXW8Jyp15WLZcJJZQnZo91GRww==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
       react: '>=16.8.6'
     dependencies:
+      '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
       '@chakra-ui/utils': 1.8.2
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/icons/1.0.15_react@17.0.2:
+  /@chakra-ui/icons/1.0.15_beb3eeb2d477ea47016f511436674e29:
     resolution: {integrity: sha512-MMuPwmeCil9vAXceIN/Fxn6CNHbhkLofFQaKUfs+UaBsviiU2tvS0nqGaxm/9FNzLr5ithPVWpbz3uV7DXc77g==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
       react: '>=16.8.6'
     dependencies:
-      '@chakra-ui/icon': 1.1.11_react@17.0.2
+      '@chakra-ui/icon': 1.1.11_beb3eeb2d477ea47016f511436674e29
+      '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
       '@types/react': 17.0.19
       react: 17.0.2
     dev: false
@@ -1682,6 +1704,19 @@ packages:
       '@chakra-ui/icon': 1.1.11_8194fd905f3c2a4eb270d17bdb6ec109
       '@chakra-ui/react-utils': 1.1.2_react@17.0.2
       '@chakra-ui/system': 1.7.2_2305e84770652125202aaa4817ae97a9
+      '@chakra-ui/utils': 1.8.2
+      react: 17.0.2
+    dev: false
+
+  /@chakra-ui/layout/1.4.9_beb3eeb2d477ea47016f511436674e29:
+    resolution: {integrity: sha512-QfpPnz3/cB9CAk262fl26bdNH3NjsB8t5yl9sAslDQBC3Uxdft8+yKB1faZCWoa59AXm2UfHbAwKobNTECEFtw==}
+    peerDependencies:
+      '@chakra-ui/system': '>=1.0.0'
+      react: '>=16.8.6'
+    dependencies:
+      '@chakra-ui/icon': 1.1.11_beb3eeb2d477ea47016f511436674e29
+      '@chakra-ui/react-utils': 1.1.2_react@17.0.2
+      '@chakra-ui/system': 1.7.3_2305e84770652125202aaa4817ae97a9
       '@chakra-ui/utils': 1.8.2
       react: 17.0.2
     dev: false
@@ -1923,8 +1958,8 @@ packages:
       '@chakra-ui/transition': 1.3.4_6e811357ed36e65ef860931c3f3c4cd0
       '@chakra-ui/utils': 1.8.2
       '@chakra-ui/visually-hidden': 1.0.14_8194fd905f3c2a4eb270d17bdb6ec109
-      '@emotion/react': 11.4.1_4cd822c6044f4c1a7e1f1fea0e728f12
-      '@emotion/styled': 11.3.0_4a13a1c8be6e32a351380640be5b202d
+      '@emotion/react': 11.4.1_56f22c50b68024c6e259393098372ce5
+      '@emotion/styled': 11.3.0_35b1fcf8648d3bb8c6845494ee391502
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -2030,8 +2065,25 @@ packages:
       '@chakra-ui/react-utils': 1.1.2_react@17.0.2
       '@chakra-ui/styled-system': 1.12.2
       '@chakra-ui/utils': 1.8.2
-      '@emotion/react': 11.4.1_4cd822c6044f4c1a7e1f1fea0e728f12
-      '@emotion/styled': 11.3.0_4a13a1c8be6e32a351380640be5b202d
+      '@emotion/react': 11.4.1_56f22c50b68024c6e259393098372ce5
+      '@emotion/styled': 11.3.0_35b1fcf8648d3bb8c6845494ee391502
+      react: 17.0.2
+      react-fast-compare: 3.2.0
+    dev: false
+
+  /@chakra-ui/system/1.7.3_2305e84770652125202aaa4817ae97a9:
+    resolution: {integrity: sha512-061lcraf4tNB4ixpnuWetZjr3fAEmj4zHfMznmMx6MAF6lHLJR9tsCF+Cuyj6m9JPwstbBPhyb5arNRXhZGvYQ==}
+    peerDependencies:
+      '@emotion/react': ^11.0.0
+      '@emotion/styled': ^11.0.0
+      react: '>=16.8.6'
+    dependencies:
+      '@chakra-ui/color-mode': 1.1.12_react@17.0.2
+      '@chakra-ui/react-utils': 1.1.2_react@17.0.2
+      '@chakra-ui/styled-system': 1.12.2
+      '@chakra-ui/utils': 1.8.2
+      '@emotion/react': 11.4.1_56f22c50b68024c6e259393098372ce5
+      '@emotion/styled': 11.3.0_35b1fcf8648d3bb8c6845494ee391502
       react: 17.0.2
       react-fast-compare: 3.2.0
     dev: false
@@ -2179,13 +2231,14 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@emotion/babel-plugin/11.3.0:
+  /@emotion/babel-plugin/11.3.0_@babel+core@7.15.0:
     resolution: {integrity: sha512-UZKwBV2rADuhRp+ZOGgNWg2eYgbzKzQXfQPtJbu/PLy8onurxlNCLvxMQEvlr1/GudguPI5IU9qIY1+2z1M5bA==}
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
+      '@babel/core': 7.15.0
       '@babel/helper-module-imports': 7.14.5
-      '@babel/plugin-syntax-jsx': 7.14.5
+      '@babel/plugin-syntax-jsx': 7.14.5_@babel+core@7.15.0
       '@babel/runtime': 7.15.3
       '@emotion/hash': 0.8.0
       '@emotion/memoize': 0.7.5
@@ -2235,7 +2288,7 @@ packages:
     resolution: {integrity: sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==}
     dev: false
 
-  /@emotion/react/11.4.1_4cd822c6044f4c1a7e1f1fea0e728f12:
+  /@emotion/react/11.4.1_56f22c50b68024c6e259393098372ce5:
     resolution: {integrity: sha512-pRegcsuGYj4FCdZN6j5vqCALkNytdrKw3TZMekTzNXixRg4wkLsU5QEaBG5LC6l01Vppxlp7FE3aTHpIG5phLg==}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -2247,6 +2300,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      '@babel/core': 7.15.0
       '@babel/runtime': 7.15.3
       '@emotion/cache': 11.4.0
       '@emotion/serialize': 1.0.2
@@ -2272,7 +2326,7 @@ packages:
     resolution: {integrity: sha512-QQPB1B70JEVUHuNtzjHftMGv6eC3Y9wqavyarj4x4lg47RACkeSfNo5pxIOKizwS9AEFLohsqoaxGQj4p0vSIw==}
     dev: false
 
-  /@emotion/styled/11.3.0_4a13a1c8be6e32a351380640be5b202d:
+  /@emotion/styled/11.3.0_35b1fcf8648d3bb8c6845494ee391502:
     resolution: {integrity: sha512-fUoLcN3BfMiLlRhJ8CuPUMEyKkLEoM+n+UyAbnqGEsCd5IzKQ7VQFLtzpJOaCD2/VR2+1hXQTnSZXVJeiTNltA==}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -2285,10 +2339,11 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      '@babel/core': 7.15.0
       '@babel/runtime': 7.15.3
-      '@emotion/babel-plugin': 11.3.0
+      '@emotion/babel-plugin': 11.3.0_@babel+core@7.15.0
       '@emotion/is-prop-valid': 1.1.0
-      '@emotion/react': 11.4.1_4cd822c6044f4c1a7e1f1fea0e728f12
+      '@emotion/react': 11.4.1_56f22c50b68024c6e259393098372ce5
       '@emotion/serialize': 1.0.2
       '@emotion/utils': 1.0.0
       '@types/react': 17.0.19
@@ -3594,6 +3649,23 @@ packages:
     resolution: {integrity: sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==}
     dev: true
 
+  /babel-eslint/10.1.0:
+    resolution: {integrity: sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==}
+    engines: {node: '>=6'}
+    deprecated: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
+    peerDependencies:
+      eslint: '>= 4.12.1'
+    dependencies:
+      '@babel/code-frame': 7.14.5
+      '@babel/parser': 7.15.3
+      '@babel/traverse': 7.15.0
+      '@babel/types': 7.15.0
+      eslint-visitor-keys: 1.3.0
+      resolve: 1.20.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /babel-loader/8.2.2_080b9887a086cbf3e61f158e7c92b566:
     resolution: {integrity: sha512-JvTd0/D889PQBtUXJ2PXaKU/pjZDMtHA9V2ecm+eNRmmBCMR09a+fmpGTNwnJtFmFl5Ei7Vy47LjBb+L0wQ99g==}
     engines: {node: '>= 8.9'}
@@ -3680,7 +3752,7 @@ packages:
       gatsby: ^3.0.0-next.0
     dependencies:
       '@babel/core': 7.15.0
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
     dev: true
 
   /babel-plugin-transform-react-remove-prop-types/0.4.24:
@@ -5308,7 +5380,7 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-config-react-app/6.0.0_e2dade3e7740324626cafe66216e675e:
+  /eslint-config-react-app/6.0.0_bf20e01c8fc53bfa1f64c62e2891de31:
     resolution: {integrity: sha512-bpoAAC+YRfzq0dsTk+6v9aHm/uqnDwayNAXleMypGl6CpxI9oXXscVHo4fk3eJPIn+rsbtNetB4r/ZIidFIE8A==}
     engines: {node: ^10.12.0 || >=12.0.0}
     peerDependencies:
@@ -5331,6 +5403,7 @@ packages:
     dependencies:
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      babel-eslint: 10.1.0
       confusing-browser-globals: 1.0.10
       eslint: 7.32.0
       eslint-plugin-flowtype: 5.9.0_eslint@7.32.0
@@ -6255,7 +6328,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.2
       fs-exists-cached: 1.0.0
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       gatsby-core-utils: 2.12.0
       gatsby-page-utils: 1.12.0
       gatsby-telemetry: 2.12.0
@@ -6273,7 +6346,7 @@ packages:
       react-helmet: ^5.1.3 || ^6.0.0
     dependencies:
       '@babel/runtime': 7.15.3
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       react-helmet: 6.1.0_react@17.0.2
     dev: true
 
@@ -6290,7 +6363,7 @@ packages:
       '@babel/preset-typescript': 7.15.0_@babel+core@7.15.0
       '@babel/runtime': 7.15.3
       babel-plugin-remove-graphql-queries: 3.12.0_@babel+core@7.15.0+gatsby@3.12.0
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6301,7 +6374,7 @@ packages:
     peerDependencies:
       gatsby: ^3.0.0-next.0
     dependencies:
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       joi: 17.4.2
     dev: true
 
@@ -6394,7 +6467,7 @@ packages:
       katex: ^0.13.3
     dependencies:
       '@babel/runtime': 7.15.3
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       katex: 0.13.13
       rehype-parse: 7.0.1
       remark-math: 4.0.0
@@ -6412,7 +6485,7 @@ packages:
       prismjs: ^1.15.0
     dependencies:
       '@babel/runtime': 7.15.3
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       parse-numeric-range: 1.3.0
       prismjs: 1.24.1
       unist-util-visit: 2.0.3
@@ -6429,7 +6502,7 @@ packages:
       chokidar: 3.5.2
       file-type: 16.5.3
       fs-extra: 8.1.0
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       gatsby-core-utils: 2.12.0
       got: 9.6.0
       md5-file: 5.0.0
@@ -6468,7 +6541,7 @@ packages:
       gatsby: ^3.0.0-next.0
     dependencies:
       '@babel/runtime': 7.15.3
-      gatsby: 3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
       gatsby-core-utils: 2.12.0
       gray-matter: 4.0.3
       hast-util-raw: 6.1.0
@@ -6503,7 +6576,7 @@ packages:
       - supports-color
     dev: true
 
-  /gatsby/3.12.0_f31b35bdaa3b7c2fce82404f09d2dac4:
+  /gatsby/3.12.0_fccb163cdf06c35f26429c848b0c0ed0:
     resolution: {integrity: sha512-H0F2ZNLuYZAg2TyHSjvsKlYfLo9bNUoMha3W4csLeAsI8okP3HV9m0J8FXVMrK4CdGc1RXqQzNu+2HdUpdMZZQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -6559,7 +6632,7 @@ packages:
       devcert: 1.2.0
       dotenv: 8.6.0
       eslint: 7.32.0
-      eslint-config-react-app: 6.0.0_e2dade3e7740324626cafe66216e675e
+      eslint-config-react-app: 6.0.0_bf20e01c8fc53bfa1f64c62e2891de31
       eslint-plugin-flowtype: 5.9.0_eslint@7.32.0
       eslint-plugin-graphql: 4.0.0_graphql@15.5.1+typescript@4.3.5
       eslint-plugin-import: 2.24.1_eslint@7.32.0
