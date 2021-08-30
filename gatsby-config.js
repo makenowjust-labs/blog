@@ -9,7 +9,7 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "@chakra-ui/gatsby-plugin"
+      resolve: "@chakra-ui/gatsby-plugin",
     },
     {
       resolve: "gatsby-source-filesystem",
