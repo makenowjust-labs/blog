@@ -8,9 +8,7 @@ module.exports = {
     description: "MakeNowJust-Labo のブログです。",
   },
   plugins: [
-    {
-      resolve: "@chakra-ui/gatsby-plugin",
-    },
+    "@chakra-ui/gatsby-plugin",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -34,5 +32,6 @@ module.exports = {
       },
     },
     "gatsby-plugin-react-helmet",
+    "gatsby-plugin-pnpm",
   ],
 };
