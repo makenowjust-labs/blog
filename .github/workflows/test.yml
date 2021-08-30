@@ -20,5 +20,5 @@ jobs:
         with:
           version: 6.12.1
           run_install: true
-      - run: npm run lint
-      - run: npm run typecheck
+      - run: pnpm run lint
+      - run: pnpm run typecheck
