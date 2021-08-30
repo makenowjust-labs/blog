@@ -16,30 +16,30 @@
     "@chakra-ui/system": "1.7.3",
     "@emotion/react": "11.4.1",
     "@emotion/styled": "11.3.0",
-    "dayjs": "^1.10.4",
-    "framer-motion": "^4.1.17",
-    "prismjs": "^1.23.0",
+    "dayjs": "1.10.6",
+    "framer-motion": "4.1.17",
+    "prismjs": "1.24.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@chakra-ui/gatsby-plugin": "2.0.1",
-    "@types/react": "^17.0.3",
-    "@types/react-helmet": "^6.1.0",
+    "@types/react": "17.0.19",
+    "@types/react-helmet": "6.1.2",
     "babel-eslint": "^10.0.0",
     "gatsby": "^3.0.1",
-    "gatsby-plugin-pnpm": "^1.2.8",
+    "gatsby-plugin-pnpm": "1.2.8",
     "gatsby-plugin-react-helmet": "^4.1.0",
     "gatsby-plugin-typescript": "^3.1.0",
     "gatsby-remark-katex": "^5.5.0",
     "gatsby-remark-prismjs": "^5.5.0",
     "gatsby-source-filesystem": "^3.1.0",
     "gatsby-transformer-remark": "^4.5.0",
-    "katex": "^0.13.0",
-    "prettier": "^2.2.1",
+    "katex": "0.13.16",
+    "prettier": "2.3.2",
     "remark-math": "^4.0.0",
-    "typescript": "^4.2.3"
+    "typescript": "4.4.2"
   }
 }
