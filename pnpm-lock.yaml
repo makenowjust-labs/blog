@@ -15,6 +15,7 @@ specifiers:
   dayjs: ^1.10.4
   framer-motion: ^4.1.17
   gatsby: ^3.0.1
+  gatsby-plugin-pnpm: ^1.2.8
   gatsby-plugin-react-helmet: ^4.1.0
   gatsby-plugin-typescript: ^3.1.0
   gatsby-remark-katex: ^5.5.0
@@ -51,6 +52,7 @@ devDependencies:
   '@types/react-helmet': 6.1.2
   babel-eslint: 10.1.0
   gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
+  gatsby-plugin-pnpm: 1.2.8_gatsby@3.12.0
   gatsby-plugin-react-helmet: 4.12.0_gatsby@3.12.0+react-helmet@6.1.0
   gatsby-plugin-typescript: 3.12.0_gatsby@3.12.0
   gatsby-remark-katex: 5.9.0_gatsby@3.12.0+katex@0.13.13
@@ -6336,6 +6338,16 @@ packages:
       lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /gatsby-plugin-pnpm/1.2.8_gatsby@3.12.0:
+    resolution: {integrity: sha512-rcjkU6Dvl8jO+SJFlvynYnTr2AHsYwSaRZvoxv/Y+pauZWZKjsMqjaiec7qGqomvbHGPuRfv8Fy9y5JPG/PW6Q==}
+    peerDependencies:
+      gatsby: ~2.x.x || ~3.x.x
+    dependencies:
+      gatsby: 3.12.0_fccb163cdf06c35f26429c848b0c0ed0
+      lodash.get: 4.4.2
+      lodash.uniq: 4.5.0
     dev: true
 
   /gatsby-plugin-react-helmet/4.12.0_gatsby@3.12.0+react-helmet@6.1.0:
