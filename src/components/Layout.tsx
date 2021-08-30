@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
   VStack,
-  useColorMode,
 } from "@chakra-ui/react";
 import { Link as GatsbyLink, StaticQuery, graphql } from "gatsby";
 import * as React from "react";
@@ -37,9 +36,6 @@ export const LayoutContent = ({
   copyright,
   children,
 }: LayoutContentProps) => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const ColorModeIcon = colorMode === "light" ? SunIcon : MoonIcon;
-
   return (
     <Container as="main" w="100vw" maxW={["1280px", null]}>
       <Stack direction={["column", "row"]}>
@@ -70,15 +66,6 @@ export const LayoutContent = ({
         </Box>
         <Box w={[null, "1000px"]} pt={["1rem", "3rem"]}>
           <VStack>
-            <Box textAlign="right" width="100%">
-              <Button
-                display="inline"
-                variant="ghost"
-                onClick={toggleColorMode}
-              >
-                <ColorModeIcon />
-              </Button>
-            </Box>
             {children}
             <Text pb={"1rem"}>{copyright}</Text>
           </VStack>
