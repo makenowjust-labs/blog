@@ -37,7 +37,7 @@
     "gatsby-remark-prismjs": "5.10.0",
     "gatsby-source-filesystem": "3.13.0",
     "gatsby-transformer-remark": "4.10.0",
-    "katex": "0.13.16",
+    "katex": "0.13.17",
     "prettier": "2.3.2",
     "remark-math": "5.1.0",
     "typescript": "4.4.2"
