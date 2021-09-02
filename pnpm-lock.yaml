@@ -22,7 +22,7 @@ specifiers:
   gatsby-remark-prismjs: 5.10.0
   gatsby-source-filesystem: 3.13.0
   gatsby-transformer-remark: 4.10.0
-  katex: 0.13.17
+  katex: 0.13.18
   prettier: 2.3.2
   prismjs: 1.24.1
   react: 17.0.2
@@ -55,11 +55,11 @@ devDependencies:
   gatsby-plugin-pnpm: 1.2.8_gatsby@3.13.0
   gatsby-plugin-react-helmet: 4.13.0_gatsby@3.13.0+react-helmet@6.1.0
   gatsby-plugin-typescript: 3.13.0_gatsby@3.13.0
-  gatsby-remark-katex: 5.10.0_gatsby@3.13.0+katex@0.13.17
+  gatsby-remark-katex: 5.10.0_gatsby@3.13.0+katex@0.13.18
   gatsby-remark-prismjs: 5.10.0_gatsby@3.13.0+prismjs@1.24.1
   gatsby-source-filesystem: 3.13.0_gatsby@3.13.0
   gatsby-transformer-remark: 4.10.0_gatsby@3.13.0
-  katex: 0.13.17
+  katex: 0.13.18
   prettier: 2.3.2
   remark-math: 5.1.0
   typescript: 4.4.2
@@ -6209,7 +6209,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /gatsby-remark-katex/5.10.0_gatsby@3.13.0+katex@0.13.17:
+  /gatsby-remark-katex/5.10.0_gatsby@3.13.0+katex@0.13.18:
     resolution: {integrity: sha512-K/WxPs69NaLsNLp+AgFO2SGgzBlgvWv931zuQyYz0rtEBSctCMva6dCfC0NbKyEXHsnO9tp8eE23YFTl2V+sLA==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
@@ -6218,7 +6218,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.3
       gatsby: 3.13.0_ce7008a929e4d8201da49bb37c720131
-      katex: 0.13.17
+      katex: 0.13.18
       rehype-parse: 7.0.1
       remark-math: 4.0.0
       unified: 9.2.2
@@ -7846,8 +7846,8 @@ packages:
       commander: 6.2.1
     dev: true
 
-  /katex/0.13.17:
-    resolution: {integrity: sha512-Mkxj7uXs9xBRBIWGhcvf0K2c1DAbPqETjEebjur04fqJ4UXfj1ky9vrgkNJIwJJ4J4owS69vAqgBkKyr4Lh0eQ==}
+  /katex/0.13.18:
+    resolution: {integrity: sha512-a3dC4NSVSDU3O1WZbTnOiA8rVNJ2lSiomOl0kmckCIGObccIHXof7gAseIY0o1gjEspe+34ZeSEX2D1ChFKIvA==}
     hasBin: true
     dependencies:
       commander: 6.2.1
