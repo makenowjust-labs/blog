@@ -23,7 +23,7 @@ specifiers:
   gatsby-source-filesystem: 3.13.0
   gatsby-transformer-remark: 4.10.0
   katex: 0.13.18
-  prettier: 2.4.0
+  prettier: 2.4.1
   prismjs: 1.24.1
   react: 17.0.2
   react-dom: 17.0.2
@@ -60,7 +60,7 @@ devDependencies:
   gatsby-source-filesystem: 3.13.0_gatsby@3.13.0
   gatsby-transformer-remark: 4.10.0_gatsby@3.13.0
   katex: 0.13.18
-  prettier: 2.4.0
+  prettier: 2.4.1
   remark-math: 5.1.0
   typescript: 4.4.3
 
@@ -10013,8 +10013,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier/2.4.0:
-    resolution: {integrity: sha512-DsEPLY1dE5HF3BxCRBmD4uYZ+5DCbvatnolqTqcxEgKVZnL2kUfyu7b8pPQ5+hTBkdhU9SLUmK0/pHb07RE4WQ==}
+  /prettier/2.4.1:
+    resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
