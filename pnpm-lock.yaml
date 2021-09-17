@@ -24,7 +24,7 @@ specifiers:
   gatsby-transformer-remark: 4.11.0
   katex: 0.13.18
   prettier: 2.4.1
-  prismjs: 1.24.1
+  prismjs: 1.25.0
   react: 17.0.2
   react-dom: 17.0.2
   react-helmet: 6.1.0
@@ -40,7 +40,7 @@ dependencies:
   '@emotion/styled': 11.3.0_0e84cd4180e3cc07ef7e794d535f6838
   dayjs: 1.10.7
   framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
-  prismjs: 1.24.1
+  prismjs: 1.25.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-helmet: 6.1.0_react@17.0.2
@@ -56,7 +56,7 @@ devDependencies:
   gatsby-plugin-react-helmet: 4.14.0_gatsby@3.14.0+react-helmet@6.1.0
   gatsby-plugin-typescript: 3.14.0_gatsby@3.14.0
   gatsby-remark-katex: 5.11.0_gatsby@3.14.0+katex@0.13.18
-  gatsby-remark-prismjs: 5.11.0_gatsby@3.14.0+prismjs@1.24.1
+  gatsby-remark-prismjs: 5.11.0_gatsby@3.14.0+prismjs@1.25.0
   gatsby-source-filesystem: 3.14.0_gatsby@3.14.0
   gatsby-transformer-remark: 4.11.0_gatsby@3.14.0
   katex: 0.13.18
@@ -6453,7 +6453,7 @@ packages:
       - supports-color
     dev: true
 
-  /gatsby-remark-prismjs/5.11.0_gatsby@3.14.0+prismjs@1.24.1:
+  /gatsby-remark-prismjs/5.11.0_gatsby@3.14.0+prismjs@1.25.0:
     resolution: {integrity: sha512-WrS074GqW0st5chlYxTrFxLZLjAubWvNdw23DYW8qcaAfnH527hmgEDQgynjVnkSxhxbhnhTqT5MYWBdTBLk5A==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
@@ -6463,7 +6463,7 @@ packages:
       '@babel/runtime': 7.15.4
       gatsby: 3.14.0_debfcb3ae18d4d900b09d45e6a9326ab
       parse-numeric-range: 1.3.0
-      prismjs: 1.24.1
+      prismjs: 1.25.0
       unist-util-visit: 2.0.3
     dev: true
 
@@ -10002,8 +10002,8 @@ packages:
       react-is: 16.13.1
     dev: true
 
-  /prismjs/1.24.1:
-    resolution: {integrity: sha512-mNPsedLuk90RVJioIky8ANZEwYm5w9LcvCXrxHlwf4fNVSn8jEipMybMkWUyyF0JhnC+C4VcOVSBuHRKs1L5Ow==}
+  /prismjs/1.25.0:
+    resolution: {integrity: sha512-WCjJHl1KEWbnkQom1+SzftbtXMKQoezOCYs5rECqMN+jP+apI7ftoflyqigqzopSO3hMhTEb0mFClA8lkolgEg==}
     dev: false
 
   /process-nextick-args/2.0.1:
