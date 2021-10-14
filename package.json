@@ -26,7 +26,7 @@
   "devDependencies": {
     "@babel/core": "7.15.8",
     "@chakra-ui/gatsby-plugin": "2.0.1",
-    "@types/react": "17.0.29",
+    "@types/react": "17.0.30",
     "@types/react-helmet": "6.1.4",
     "babel-eslint": "10.1.0",
     "gatsby": "3.14.2",
