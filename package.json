@@ -14,7 +14,7 @@
     "@chakra-ui/layout": "1.4.10",
     "@chakra-ui/react": "1.6.10",
     "@chakra-ui/system": "1.7.4",
-    "@emotion/react": "11.4.1",
+    "@emotion/react": "11.5.0",
     "@emotion/styled": "11.3.0",
     "dayjs": "1.10.7",
     "framer-motion": "4.1.17",
