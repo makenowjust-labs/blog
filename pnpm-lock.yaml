@@ -14,7 +14,7 @@ specifiers:
   babel-eslint: 10.1.0
   dayjs: 1.10.7
   framer-motion: 4.1.17
-  gatsby: 4.0.0
+  gatsby: 4.0.1
   gatsby-plugin-pnpm: 1.2.8
   gatsby-plugin-react-helmet: 5.0.0
   gatsby-plugin-typescript: 4.0.0
@@ -47,18 +47,18 @@ dependencies:
 
 devDependencies:
   '@babel/core': 7.15.8
-  '@chakra-ui/gatsby-plugin': 2.0.1_b2613d79c2b39ed72eab2c20ab111d04
+  '@chakra-ui/gatsby-plugin': 2.0.1_70ff08c1a10165b6de9fee44e571cb12
   '@types/react': 17.0.32
   '@types/react-helmet': 6.1.4
   babel-eslint: 10.1.0
-  gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
-  gatsby-plugin-pnpm: 1.2.8_gatsby@4.0.0
-  gatsby-plugin-react-helmet: 5.0.0_gatsby@4.0.0+react-helmet@6.1.0
-  gatsby-plugin-typescript: 4.0.0_gatsby@4.0.0
-  gatsby-remark-katex: 6.0.0_gatsby@4.0.0+katex@0.13.18
-  gatsby-remark-prismjs: 6.0.0_gatsby@4.0.0+prismjs@1.25.0
-  gatsby-source-filesystem: 4.0.0_gatsby@4.0.0
-  gatsby-transformer-remark: 5.0.0_gatsby@4.0.0
+  gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
+  gatsby-plugin-pnpm: 1.2.8_gatsby@4.0.1
+  gatsby-plugin-react-helmet: 5.0.0_gatsby@4.0.1+react-helmet@6.1.0
+  gatsby-plugin-typescript: 4.0.0_gatsby@4.0.1
+  gatsby-remark-katex: 6.0.0_gatsby@4.0.1+katex@0.13.18
+  gatsby-remark-prismjs: 6.0.0_gatsby@4.0.1+prismjs@1.25.0
+  gatsby-source-filesystem: 4.0.0_gatsby@4.0.1
+  gatsby-transformer-remark: 5.0.0_gatsby@4.0.1
   katex: 0.13.18
   prettier: 2.4.1
   remark-math: 5.1.0
@@ -197,7 +197,7 @@ packages:
       '@babel/compat-data': 7.15.0
       '@babel/core': 7.15.8
       '@babel/helper-validator-option': 7.14.5
-      browserslist: 4.16.8
+      browserslist: 4.17.4
       semver: 6.3.0
     dev: true
 
@@ -1656,14 +1656,14 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/gatsby-plugin/2.0.1_b2613d79c2b39ed72eab2c20ab111d04:
+  /@chakra-ui/gatsby-plugin/2.0.1_70ff08c1a10165b6de9fee44e571cb12:
     resolution: {integrity: sha512-+Gy72AcPGdM6TIoY2RZou+3q2pkGkOzSmohyLGfz6XzWoMKYO8lWk38jKGnB7wyVQ3MR1AM+0hQTab75B0cukg==}
     peerDependencies:
       '@chakra-ui/react': '>=1.0.0'
       gatsby: ^2.29.3 || ^3.0.0
     dependencies:
       '@chakra-ui/react': 1.6.10_248a81ee03fd6874b038887e62812a60
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
     dev: true
 
   /@chakra-ui/hooks/1.6.1_react@17.0.2:
@@ -3540,7 +3540,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.19.1
       get-intrinsic: 1.1.1
       is-string: 1.0.7
     dev: true
@@ -3565,7 +3565,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.19.1
     dev: true
 
   /array.prototype.flatmap/1.2.4:
@@ -3574,7 +3574,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.19.1
       function-bind: 1.1.1
     dev: true
 
@@ -3757,7 +3757,7 @@ packages:
       - supports-color
     dev: true
 
-  /babel-plugin-remove-graphql-queries/4.0.0_@babel+core@7.15.8+gatsby@4.0.0:
+  /babel-plugin-remove-graphql-queries/4.0.0_@babel+core@7.15.8+gatsby@4.0.1:
     resolution: {integrity: sha512-tb3kq+l3VTpMIC4tAvc7z2mxLD+VvHHqMOIF4HjsfdJeP7iW9U0aK5ZYkPyhpYScJrvzQs7Ajwl8JwxwBFEwHQ==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -3766,7 +3766,7 @@ packages:
     dependencies:
       '@babel/core': 7.15.8
       '@babel/runtime': 7.15.4
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       gatsby-core-utils: 3.0.0
     dev: true
 
@@ -3974,18 +3974,6 @@ packages:
       node-releases: 1.1.75
     dev: true
 
-  /browserslist/4.16.8:
-    resolution: {integrity: sha512-sc2m9ohR/49sWEbPj14ZSSZqp+kbi16aLao42Hmn3Z8FpjuMaq2xCA2l4zl9ITfyzvnvyE0hcg62YkIGKxgaNQ==}
-    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
-    hasBin: true
-    dependencies:
-      caniuse-lite: 1.0.30001251
-      colorette: 1.3.0
-      electron-to-chromium: 1.3.814
-      escalade: 3.1.1
-      node-releases: 1.1.75
-    dev: true
-
   /browserslist/4.17.4:
     resolution: {integrity: sha512-Zg7RpbZpIJRW3am9Lyckue7PLytvVxxhJj1CaJVlCWENsGEAOlnlt8X0ZxGRPp7Bt9o8tIRM5SEXy4BCPMJjLQ==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -4116,10 +4104,6 @@ packages:
       caniuse-lite: 1.0.30001270
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
-    dev: true
-
-  /caniuse-lite/1.0.30001251:
-    resolution: {integrity: sha512-HOe1r+9VkU4TFmnU70z+r7OLmtR+/chB1rdcJUeQlAinjEeb0cKL20tlAtOagNZhbrtLnCvV19B4FmF1rgzl6A==}
     dev: true
 
   /caniuse-lite/1.0.30001270:
@@ -5080,10 +5064,6 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /electron-to-chromium/1.3.814:
-    resolution: {integrity: sha512-0mH03cyjh6OzMlmjauGg0TLd87ErIJqWiYxMcOLKf5w6p0YEOl7DJAj7BDlXEFmCguY5CQaKVOiMjAMODO2XDw==}
-    dev: true
-
   /electron-to-chromium/1.3.876:
     resolution: {integrity: sha512-a6LR4738psrubCtGx5HxM/gNlrIsh4eFTNnokgOqvQo81GWd07lLcOjITkAXn2y4lIp18vgS+DGnehj+/oEAxQ==}
     dev: true
@@ -5201,29 +5181,6 @@ packages:
     resolution: {integrity: sha512-d51brTeqC+BHlwF0BhPtcYgF5nlzf9ZZ0ZIUQNZpc9ZB9qw5IJ2diTrBY9jlCJkTLITYPjmiX6OWCwH+fuyNgQ==}
     dependencies:
       stackframe: 1.2.0
-    dev: true
-
-  /es-abstract/1.18.5:
-    resolution: {integrity: sha512-DDggyJLoS91CkJjgauM5c0yZMjiD1uK3KcaCeAmffGwZ+ODWzOkPN4QwRbsK5DOFf06fywmyLci3ZD8jLGhVYA==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      call-bind: 1.0.2
-      es-to-primitive: 1.2.1
-      function-bind: 1.1.1
-      get-intrinsic: 1.1.1
-      has: 1.0.3
-      has-symbols: 1.0.2
-      internal-slot: 1.0.3
-      is-callable: 1.2.4
-      is-negative-zero: 2.0.1
-      is-regex: 1.1.4
-      is-string: 1.0.7
-      object-inspect: 1.11.0
-      object-keys: 1.1.1
-      object.assign: 4.1.2
-      string.prototype.trimend: 1.0.4
-      string.prototype.trimstart: 1.0.4
-      unbox-primitive: 1.0.1
     dev: true
 
   /es-abstract/1.19.1:
@@ -6230,7 +6187,7 @@ packages:
       micromatch: 4.0.4
     dev: true
 
-  /gatsby-plugin-page-creator/4.0.0_gatsby@4.0.0:
+  /gatsby-plugin-page-creator/4.0.0_gatsby@4.0.1:
     resolution: {integrity: sha512-JCNlfQaO8NLLSoprlEUE5EzzMB9erWUeMTcc1m10OL34mLGwHBr+7cE9EERg4Ez/ajD7iRsERjRnl1/WiZCgRw==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6241,10 +6198,10 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.2
       fs-exists-cached: 1.0.0
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       gatsby-core-utils: 3.0.0
       gatsby-page-utils: 2.0.0
-      gatsby-plugin-utils: 2.0.0_gatsby@4.0.0
+      gatsby-plugin-utils: 2.0.0_gatsby@4.0.1
       gatsby-telemetry: 3.0.0
       globby: 11.0.4
       lodash: 4.17.21
@@ -6252,17 +6209,17 @@ packages:
       - supports-color
     dev: true
 
-  /gatsby-plugin-pnpm/1.2.8_gatsby@4.0.0:
+  /gatsby-plugin-pnpm/1.2.8_gatsby@4.0.1:
     resolution: {integrity: sha512-rcjkU6Dvl8jO+SJFlvynYnTr2AHsYwSaRZvoxv/Y+pauZWZKjsMqjaiec7qGqomvbHGPuRfv8Fy9y5JPG/PW6Q==}
     peerDependencies:
       gatsby: ~2.x.x || ~3.x.x
     dependencies:
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       lodash.get: 4.4.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /gatsby-plugin-react-helmet/5.0.0_gatsby@4.0.0+react-helmet@6.1.0:
+  /gatsby-plugin-react-helmet/5.0.0_gatsby@4.0.1+react-helmet@6.1.0:
     resolution: {integrity: sha512-UoaVYIwimGkedhoJ7OP/BOVFsmSdiuGE1/OyVmv9Y6J8Umk0mGXOXi4aktljMaPKoHyp67WpGtG30g52GvNxTQ==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6270,11 +6227,11 @@ packages:
       react-helmet: ^5.1.3 || ^6.0.0
     dependencies:
       '@babel/runtime': 7.15.4
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       react-helmet: 6.1.0_react@17.0.2
     dev: true
 
-  /gatsby-plugin-typescript/4.0.0_gatsby@4.0.0:
+  /gatsby-plugin-typescript/4.0.0_gatsby@4.0.1:
     resolution: {integrity: sha512-m9bS2VA4XZ8eGpGGgNkUJ1KxMOFVixVHdmOaCQWSt4W61WW+NsKys0D+8UxI3dRc5KDmSps1iYAvMOqG6e41xw==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6286,20 +6243,20 @@ packages:
       '@babel/plugin-proposal-optional-chaining': 7.14.5_@babel+core@7.15.8
       '@babel/preset-typescript': 7.15.0_@babel+core@7.15.8
       '@babel/runtime': 7.15.4
-      babel-plugin-remove-graphql-queries: 4.0.0_@babel+core@7.15.8+gatsby@4.0.0
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      babel-plugin-remove-graphql-queries: 4.0.0_@babel+core@7.15.8+gatsby@4.0.1
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /gatsby-plugin-utils/2.0.0_gatsby@4.0.0:
+  /gatsby-plugin-utils/2.0.0_gatsby@4.0.1:
     resolution: {integrity: sha512-RN++hR/gU6orPHlnDM3CUd4DnDdTcGS3vkjHnAvo+Wli7H8yHEt4baoK20f/V3AOOCxwen8TypFH3Uy5iVAjyg==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.15.4
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       joi: 17.4.2
     dev: true
 
@@ -6385,7 +6342,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /gatsby-remark-katex/6.0.0_gatsby@4.0.0+katex@0.13.18:
+  /gatsby-remark-katex/6.0.0_gatsby@4.0.1+katex@0.13.18:
     resolution: {integrity: sha512-hPmJcx3SH+DyZLPG8Rn5HH+8BTK2Kv2z32OdYbD5HFenyh2Mht5ZeGewKpNBRn5Hhthm2voddLH6HmCKCaMT2w==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6393,7 +6350,7 @@ packages:
       katex: ^0.13.3
     dependencies:
       '@babel/runtime': 7.15.4
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       katex: 0.13.18
       rehype-parse: 7.0.1
       remark-math: 4.0.0
@@ -6403,7 +6360,7 @@ packages:
       - supports-color
     dev: true
 
-  /gatsby-remark-prismjs/6.0.0_gatsby@4.0.0+prismjs@1.25.0:
+  /gatsby-remark-prismjs/6.0.0_gatsby@4.0.1+prismjs@1.25.0:
     resolution: {integrity: sha512-YR2u0xDlsDyWil0lsbuuhOtd+hxWPF4vv4bih/v/zbureOO9TDy3fmQsO1I5z/muU2psxRSWjOcx9Zqpn48aww==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6411,13 +6368,13 @@ packages:
       prismjs: ^1.15.0
     dependencies:
       '@babel/runtime': 7.15.4
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       parse-numeric-range: 1.3.0
       prismjs: 1.25.0
       unist-util-visit: 2.0.3
     dev: true
 
-  /gatsby-source-filesystem/4.0.0_gatsby@4.0.0:
+  /gatsby-source-filesystem/4.0.0_gatsby@4.0.1:
     resolution: {integrity: sha512-LQPTaAOt2i740qzAtR9oFk8h2a60JZv90nJqfLxgVbHdbRiH1KnCbXLYMmzhsLfhfOUiwG5KMOT7icZpESRNnA==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6428,7 +6385,7 @@ packages:
       fastq: 1.12.0
       file-type: 16.5.3
       fs-extra: 10.0.0
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       gatsby-core-utils: 3.0.0
       got: 9.6.0
       md5-file: 5.0.0
@@ -6459,14 +6416,14 @@ packages:
       node-fetch: 2.6.5
     dev: true
 
-  /gatsby-transformer-remark/5.0.0_gatsby@4.0.0:
+  /gatsby-transformer-remark/5.0.0_gatsby@4.0.1:
     resolution: {integrity: sha512-tP8fZz0nZR54OmU/nc6qvPnjIlXhqebnNWKbxC+siBLuOkZ2rsdB8meropeC95qrHXiUe+wOmV251fXd0pWupA==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.15.4
-      gatsby: 4.0.0_944dd639e4e01a40a2c577324ae2c636
+      gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
       gatsby-core-utils: 3.0.0
       gray-matter: 4.0.3
       hast-util-raw: 6.1.0
@@ -6502,8 +6459,8 @@ packages:
       - supports-color
     dev: true
 
-  /gatsby/4.0.0_944dd639e4e01a40a2c577324ae2c636:
-    resolution: {integrity: sha512-tLQ+8ppmRswnuSCMCElJYNTDKiwY89RQE/O85ETfeYVfFmGOKdgY1u/q85QFbGrY2+pkf5ZVaWd206u0jEMOhw==}
+  /gatsby/4.0.1_944dd639e4e01a40a2c577324ae2c636:
+    resolution: {integrity: sha512-TR6G4oZtI3B+c3dFKoUvbq6bO2SpgZ+YMdpeVLJ9ibHWy8xq5VS+q4eR2qJy1EdgHM3EIGBf0B+7c4Y2vVzBtA==}
     engines: {node: '>=14.15.0'}
     hasBin: true
     requiresBuild: true
@@ -6535,7 +6492,7 @@ packages:
       babel-plugin-add-module-exports: 1.0.4
       babel-plugin-dynamic-import-node: 2.3.3
       babel-plugin-lodash: 3.3.4
-      babel-plugin-remove-graphql-queries: 4.0.0_@babel+core@7.15.8+gatsby@4.0.0
+      babel-plugin-remove-graphql-queries: 4.0.0_@babel+core@7.15.8+gatsby@4.0.1
       babel-preset-gatsby: 2.0.0_e1653be9bb1ba61f1a557763f907716a
       better-opn: 2.1.1
       bluebird: 3.7.2
@@ -6583,9 +6540,9 @@ packages:
       gatsby-graphiql-explorer: 2.0.0
       gatsby-legacy-polyfills: 2.0.0
       gatsby-link: 4.0.0_e79e440aa138c33796214ce0f2cea230
-      gatsby-plugin-page-creator: 4.0.0_gatsby@4.0.0
-      gatsby-plugin-typescript: 4.0.0_gatsby@4.0.0
-      gatsby-plugin-utils: 2.0.0_gatsby@4.0.0
+      gatsby-plugin-page-creator: 4.0.0_gatsby@4.0.1
+      gatsby-plugin-typescript: 4.0.0_gatsby@4.0.1
+      gatsby-plugin-utils: 2.0.0_gatsby@4.0.1
       gatsby-react-router-scroll: 5.0.0_e79e440aa138c33796214ce0f2cea230
       gatsby-telemetry: 3.0.0
       gatsby-worker: 1.0.0
@@ -9165,7 +9122,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.19.1
     dev: true
 
   /object.fromentries/2.0.4:
@@ -9174,7 +9131,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.19.1
       has: 1.0.3
     dev: true
 
@@ -9198,7 +9155,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.19.1
     dev: true
 
   /on-finished/2.3.0:
