@@ -13,7 +13,7 @@ specifiers:
   '@types/react-helmet': 6.1.4
   babel-eslint: 10.1.0
   dayjs: 1.10.7
-  framer-motion: 4.1.17
+  framer-motion: 5.0.0
   gatsby: 4.0.1
   gatsby-plugin-pnpm: 1.2.8
   gatsby-plugin-react-helmet: 5.0.0
@@ -34,12 +34,12 @@ specifiers:
 dependencies:
   '@chakra-ui/icons': 1.0.16_abf521da32678fe96b8c3046cf20739f
   '@chakra-ui/layout': 1.4.10_abf521da32678fe96b8c3046cf20739f
-  '@chakra-ui/react': 1.6.10_248a81ee03fd6874b038887e62812a60
+  '@chakra-ui/react': 1.6.10_d5b45c9de2968213bb497c7da29c94d8
   '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
   '@emotion/react': 11.5.0_9e833fa7e78175ea1f108716ab5f5ee5
   '@emotion/styled': 11.3.0_f6e027d2d55b9365a28b9f210bd0a00d
   dayjs: 1.10.7
-  framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+  framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
   prismjs: 1.25.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -1451,7 +1451,7 @@ packages:
       '@babel/helper-validator-identifier': 7.15.7
       to-fast-properties: 2.0.0
 
-  /@chakra-ui/accordion/1.3.8_d271f19db16d06f6063d36368dff37a6:
+  /@chakra-ui/accordion/1.3.8_79a84bf1f909da5c071d1527e02fff91:
     resolution: {integrity: sha512-LsdRGct1hLEDUyuZp6db2VOYCvBXN1rdJEmnqJWFp8ppePApdccwow74dDQRuZSwe3B/JLBUQ54Cdk4YUH2aAg==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -1462,7 +1462,7 @@ packages:
       '@chakra-ui/icon': 1.1.12_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/react-utils': 1.1.2_react@17.0.2
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
-      '@chakra-ui/transition': 1.3.6_6e811357ed36e65ef860931c3f3c4cd0
+      '@chakra-ui/transition': 1.3.6_framer-motion@5.0.0+react@17.0.2
       '@chakra-ui/utils': 1.8.3
       react: 17.0.2
     transitivePeerDependencies:
@@ -1529,7 +1529,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/checkbox/1.5.8_d271f19db16d06f6063d36368dff37a6:
+  /@chakra-ui/checkbox/1.5.8_79a84bf1f909da5c071d1527e02fff91:
     resolution: {integrity: sha512-eZK720TfnZ2aYs34MpfCyAou94TS5qjarAlE/UjkOH4XhZH49Pf6Ck6ai+7hrALn7yi61qVt0MoE5Dd2KsedYA==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -1541,7 +1541,7 @@ packages:
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
       '@chakra-ui/utils': 1.8.3
       '@chakra-ui/visually-hidden': 1.0.15_abf521da32678fe96b8c3046cf20739f
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
     dev: false
 
@@ -1662,7 +1662,7 @@ packages:
       '@chakra-ui/react': '>=1.0.0'
       gatsby: ^2.29.3 || ^3.0.0
     dependencies:
-      '@chakra-ui/react': 1.6.10_248a81ee03fd6874b038887e62812a60
+      '@chakra-ui/react': 1.6.10_d5b45c9de2968213bb497c7da29c94d8
       gatsby: 4.0.1_944dd639e4e01a40a2c577324ae2c636
     dev: true
 
@@ -1762,7 +1762,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/menu/1.7.6_d271f19db16d06f6063d36368dff37a6:
+  /@chakra-ui/menu/1.7.6_79a84bf1f909da5c071d1527e02fff91:
     resolution: {integrity: sha512-3O0zSvZrJmReM8iaeZ447KY4swMT/al0QJyloO7LNa3ex4uNQRw9ff5YXgKk+EURNvRwI75Lc2tEwpOHGNczWw==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -1775,13 +1775,13 @@ packages:
       '@chakra-ui/popper': 2.3.0_react@17.0.2
       '@chakra-ui/react-utils': 1.1.2_react@17.0.2
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
-      '@chakra-ui/transition': 1.3.6_6e811357ed36e65ef860931c3f3c4cd0
+      '@chakra-ui/transition': 1.3.6_framer-motion@5.0.0+react@17.0.2
       '@chakra-ui/utils': 1.8.3
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/modal/1.9.2_01b324aa1ba4d5b5efe1a92ab2e42535:
+  /@chakra-ui/modal/1.9.2_4dcb6cadd4d5f42c811469513c056eb0:
     resolution: {integrity: sha512-5QPDca8q1YB0XgB6Whuj1B0dzRzSuYQS7demz3TOuEWHKcmNSz/hx3YprMFgEVEx0Awg3HaWomnyj7AG+m/2dQ==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -1795,10 +1795,10 @@ packages:
       '@chakra-ui/portal': 1.2.10_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/react-utils': 1.1.2_react@17.0.2
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
-      '@chakra-ui/transition': 1.3.6_6e811357ed36e65ef860931c3f3c4cd0
+      '@chakra-ui/transition': 1.3.6_framer-motion@5.0.0+react@17.0.2
       '@chakra-ui/utils': 1.8.3
       aria-hidden: 1.1.3
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-remove-scroll: 2.4.1_fdf648e80cd72b304aa4ab0697f7348b
@@ -1836,7 +1836,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/popover/1.8.5_d271f19db16d06f6063d36368dff37a6:
+  /@chakra-ui/popover/1.8.5_79a84bf1f909da5c071d1527e02fff91:
     resolution: {integrity: sha512-SM10pQEIRSM7Y0Ygnuv0Skzxm8NES/UP9qcrfrFLJOMjmVxf52NZBPcNA4pIMEM4ocSHq6AyCHzhTXHr8a7HpQ==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -1849,7 +1849,7 @@ packages:
       '@chakra-ui/react-utils': 1.1.2_react@17.0.2
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
       '@chakra-ui/utils': 1.8.3
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
     dev: false
 
@@ -1941,7 +1941,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@chakra-ui/react/1.6.10_248a81ee03fd6874b038887e62812a60:
+  /@chakra-ui/react/1.6.10_d5b45c9de2968213bb497c7da29c94d8:
     resolution: {integrity: sha512-eIPBRRssimuM+T1zIGtZ+2910BvjOirb85/iPfqJj2uQCCy/FGQvPUpU7QYJt30zsgyRzJGe/G7D8cJO0MFlzg==}
     peerDependencies:
       '@emotion/react': ^11.0.0
@@ -1950,12 +1950,12 @@ packages:
       react: '>=16.8.6'
       react-dom: '>=16.8.6'
     dependencies:
-      '@chakra-ui/accordion': 1.3.8_d271f19db16d06f6063d36368dff37a6
+      '@chakra-ui/accordion': 1.3.8_79a84bf1f909da5c071d1527e02fff91
       '@chakra-ui/alert': 1.2.8_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/avatar': 1.2.11_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/breadcrumb': 1.2.9_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/button': 1.4.5_abf521da32678fe96b8c3046cf20739f
-      '@chakra-ui/checkbox': 1.5.8_d271f19db16d06f6063d36368dff37a6
+      '@chakra-ui/checkbox': 1.5.8_79a84bf1f909da5c071d1527e02fff91
       '@chakra-ui/close-button': 1.1.12_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/control-box': 1.0.16_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/counter': 1.1.10_react@17.0.2
@@ -1969,11 +1969,11 @@ packages:
       '@chakra-ui/layout': 1.4.10_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/live-region': 1.0.15_react@17.0.2
       '@chakra-ui/media-query': 1.1.3_9e3a78dfba036b009b8d57e96d780dbb
-      '@chakra-ui/menu': 1.7.6_d271f19db16d06f6063d36368dff37a6
-      '@chakra-ui/modal': 1.9.2_01b324aa1ba4d5b5efe1a92ab2e42535
+      '@chakra-ui/menu': 1.7.6_79a84bf1f909da5c071d1527e02fff91
+      '@chakra-ui/modal': 1.9.2_4dcb6cadd4d5f42c811469513c056eb0
       '@chakra-ui/number-input': 1.2.11_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/pin-input': 1.6.6_abf521da32678fe96b8c3046cf20739f
-      '@chakra-ui/popover': 1.8.5_d271f19db16d06f6063d36368dff37a6
+      '@chakra-ui/popover': 1.8.5_79a84bf1f909da5c071d1527e02fff91
       '@chakra-ui/popper': 2.3.0_react@17.0.2
       '@chakra-ui/portal': 1.2.10_react-dom@17.0.2+react@17.0.2
       '@chakra-ui/progress': 1.1.15_abf521da32678fe96b8c3046cf20739f
@@ -1985,21 +1985,21 @@ packages:
       '@chakra-ui/slider': 1.4.1_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/spinner': 1.1.13_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/stat': 1.1.13_abf521da32678fe96b8c3046cf20739f
-      '@chakra-ui/switch': 1.2.11_d271f19db16d06f6063d36368dff37a6
+      '@chakra-ui/switch': 1.2.11_79a84bf1f909da5c071d1527e02fff91
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
       '@chakra-ui/table': 1.2.7_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/tabs': 1.5.6_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/tag': 1.1.13_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/textarea': 1.1.15_abf521da32678fe96b8c3046cf20739f
       '@chakra-ui/theme': 1.10.4_@chakra-ui+system@1.7.4
-      '@chakra-ui/toast': 1.3.2_bc75e66f708117437427b7bf295cb28f
-      '@chakra-ui/tooltip': 1.3.12_bc75e66f708117437427b7bf295cb28f
-      '@chakra-ui/transition': 1.3.6_6e811357ed36e65ef860931c3f3c4cd0
+      '@chakra-ui/toast': 1.3.2_77df53e0eef778c77568f7bb0a3d8628
+      '@chakra-ui/tooltip': 1.3.12_77df53e0eef778c77568f7bb0a3d8628
+      '@chakra-ui/transition': 1.3.6_framer-motion@5.0.0+react@17.0.2
       '@chakra-ui/utils': 1.8.3
       '@chakra-ui/visually-hidden': 1.0.15_abf521da32678fe96b8c3046cf20739f
       '@emotion/react': 11.5.0_9e833fa7e78175ea1f108716ab5f5ee5
       '@emotion/styled': 11.3.0_f6e027d2d55b9365a28b9f210bd0a00d
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     transitivePeerDependencies:
@@ -2079,13 +2079,13 @@ packages:
       csstype: 3.0.8
     dev: false
 
-  /@chakra-ui/switch/1.2.11_d271f19db16d06f6063d36368dff37a6:
+  /@chakra-ui/switch/1.2.11_79a84bf1f909da5c071d1527e02fff91:
     resolution: {integrity: sha512-3cZmLR0dQLQSrGQ8lJgsdxUNrek8ZpMdA8pzFASKOhge3goeHsbiyxFutbYagBYLmS573kFVHu/o/RDVnP5xxA==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
       react: '>=16.8.6'
     dependencies:
-      '@chakra-ui/checkbox': 1.5.8_d271f19db16d06f6063d36368dff37a6
+      '@chakra-ui/checkbox': 1.5.8_79a84bf1f909da5c071d1527e02fff91
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
       '@chakra-ui/utils': 1.8.3
       react: 17.0.2
@@ -2181,7 +2181,7 @@ packages:
       '@chakra-ui/utils': 1.8.3
     dev: false
 
-  /@chakra-ui/toast/1.3.2_bc75e66f708117437427b7bf295cb28f:
+  /@chakra-ui/toast/1.3.2_77df53e0eef778c77568f7bb0a3d8628:
     resolution: {integrity: sha512-uREAV+UoPvbTktQXgGhaExOX4RIKAlj54K9yOojO2FOBDCywtq0TdlI4eMk/dZvlz2SIuTWveK/C4CHBBbcd4Q==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -2194,15 +2194,15 @@ packages:
       '@chakra-ui/hooks': 1.6.1_react@17.0.2
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
       '@chakra-ui/theme': 1.10.4_@chakra-ui+system@1.7.4
-      '@chakra-ui/transition': 1.3.6_6e811357ed36e65ef860931c3f3c4cd0
+      '@chakra-ui/transition': 1.3.6_framer-motion@5.0.0+react@17.0.2
       '@chakra-ui/utils': 1.8.3
       '@reach/alert': 0.13.2_react-dom@17.0.2+react@17.0.2
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /@chakra-ui/tooltip/1.3.12_bc75e66f708117437427b7bf295cb28f:
+  /@chakra-ui/tooltip/1.3.12_77df53e0eef778c77568f7bb0a3d8628:
     resolution: {integrity: sha512-zF4pWU//9YSIR3D9cljO+BNlYettKXqgVermTg8z7KvKMmgH+Ni99OA7aWQ6g3vii9LzJryi5kUdxfApoLCm9Q==}
     peerDependencies:
       '@chakra-ui/system': '>=1.0.0'
@@ -2217,19 +2217,19 @@ packages:
       '@chakra-ui/system': 1.7.4_5a47a31437ffba27a84f7efb2b21ce86
       '@chakra-ui/utils': 1.8.3
       '@chakra-ui/visually-hidden': 1.0.15_abf521da32678fe96b8c3046cf20739f
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /@chakra-ui/transition/1.3.6_6e811357ed36e65ef860931c3f3c4cd0:
+  /@chakra-ui/transition/1.3.6_framer-motion@5.0.0+react@17.0.2:
     resolution: {integrity: sha512-P6H88iHWwElGpqrH3RoEhWTZToFw3ZQx2XyJhVUHNroavkxQ48wyRcoFIQ/btKAInQ+5xyyKISRLZlvAuy6ONg==}
     peerDependencies:
       framer-motion: 3.x || 4.x
       react: '>=16.8.6'
     dependencies:
       '@chakra-ui/utils': 1.8.3
-      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      framer-motion: 5.0.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
     dev: false
 
@@ -6011,18 +6011,18 @@ packages:
       map-cache: 0.2.2
     dev: true
 
-  /framer-motion/4.1.17_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-thx1wvKzblzbs0XaK2X0G1JuwIdARcoNOW7VVwjO8BUltzXPyONGAElLu6CiCScsOQRI7FIk/45YTFtJw5Yozw==}
+  /framer-motion/5.0.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-5X2ng9Cil9srkS9+ynxYmQf02yDnEUueGiGq20+sRdh7OiwLb7QWnw4Jysj/MiL3VYSMtGLd+zKFlH/HQB285A==}
     peerDependencies:
       react: '>=16.8 || ^17.0.0'
       react-dom: '>=16.8 || ^17.0.0'
     dependencies:
-      framesync: 5.3.0
+      framesync: 6.0.1
       hey-listen: 1.0.8
-      popmotion: 9.3.6
+      popmotion: 10.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      style-value-types: 4.1.4
+      style-value-types: 5.0.0
       tslib: 2.3.1
     optionalDependencies:
       '@emotion/is-prop-valid': 0.8.8
@@ -6030,6 +6030,12 @@ packages:
 
   /framesync/5.3.0:
     resolution: {integrity: sha512-oc5m68HDO/tuK2blj7ZcdEBRx3p1PjrgHazL8GYEpvULhrtGIFbQArN6cQS2QhW8mitffaB+VYzMjDqBxxQeoA==}
+    dependencies:
+      tslib: 2.3.1
+    dev: false
+
+  /framesync/6.0.1:
+    resolution: {integrity: sha512-fUY88kXvGiIItgNC7wcTOl0SNRCVXMKSWW2Yzfmn7EKNc+MpCzcz9DhdHcdjbrtN3c6R4H5dTY2jiCpPdysEjA==}
     dependencies:
       tslib: 2.3.1
     dev: false
@@ -9553,12 +9559,12 @@ packages:
     resolution: {integrity: sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==}
     dev: true
 
-  /popmotion/9.3.6:
-    resolution: {integrity: sha512-ZTbXiu6zIggXzIliMi8LGxXBF5ST+wkpXGEjeTUDUOCdSQ356hij/xjeUdv0F8zCQNeqB1+PR5/BB+gC+QLAPw==}
+  /popmotion/10.0.2:
+    resolution: {integrity: sha512-8vgx02LL7Odk/kwSGigAnlPRLJK+Dfked571ZAHGzkxPNWThkU5mQX0xPmibIMAULZehWBV7hGN7LSCpaV3cfw==}
     dependencies:
-      framesync: 5.3.0
+      framesync: 6.0.1
       hey-listen: 1.0.8
-      style-value-types: 4.1.4
+      style-value-types: 5.0.0
       tslib: 2.3.1
     dev: false
 
@@ -11412,8 +11418,8 @@ packages:
       inline-style-parser: 0.1.1
     dev: true
 
-  /style-value-types/4.1.4:
-    resolution: {integrity: sha512-LCJL6tB+vPSUoxgUBt9juXIlNJHtBMy8jkXzUJSBzeHWdBu6lhzHqCvLVkXFGsFIlNa2ln1sQHya/gzaFmB2Lg==}
+  /style-value-types/5.0.0:
+    resolution: {integrity: sha512-08yq36Ikn4kx4YU6RD7jWEv27v4V+PUsOGa4n/as8Et3CuODMJQ00ENeAVXAeydX4Z2j1XHZF1K2sX4mGl18fA==}
     dependencies:
       hey-listen: 1.0.8
       tslib: 2.3.1
