@@ -29,7 +29,7 @@
     "@types/react": "17.0.33",
     "@types/react-helmet": "6.1.4",
     "babel-eslint": "10.1.0",
-    "gatsby": "4.0.1",
+    "gatsby": "4.0.2",
     "gatsby-plugin-pnpm": "1.2.8",
     "gatsby-plugin-react-helmet": "5.0.0",
     "gatsby-plugin-typescript": "4.0.0",
