@@ -22,7 +22,7 @@ specifiers:
   gatsby-remark-prismjs: 6.0.0
   gatsby-source-filesystem: 4.0.0
   gatsby-transformer-remark: 5.0.0
-  katex: 0.13.20
+  katex: 0.15.0
   prettier: 2.4.1
   prismjs: 1.25.0
   react: 17.0.2
@@ -55,11 +55,11 @@ devDependencies:
   gatsby-plugin-pnpm: 1.2.8_gatsby@4.0.2
   gatsby-plugin-react-helmet: 5.0.0_gatsby@4.0.2+react-helmet@6.1.0
   gatsby-plugin-typescript: 4.0.0_gatsby@4.0.2
-  gatsby-remark-katex: 6.0.0_gatsby@4.0.2+katex@0.13.20
+  gatsby-remark-katex: 6.0.0_gatsby@4.0.2+katex@0.15.0
   gatsby-remark-prismjs: 6.0.0_gatsby@4.0.2+prismjs@1.25.0
   gatsby-source-filesystem: 4.0.0_gatsby@4.0.2
   gatsby-transformer-remark: 5.0.0_gatsby@4.0.2
-  katex: 0.13.20
+  katex: 0.15.0
   prettier: 2.4.1
   remark-math: 5.1.0
   typescript: 4.4.4
@@ -4326,6 +4326,11 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
+  /commander/8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
+    dev: true
+
   /common-tags/1.8.0:
     resolution: {integrity: sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==}
     engines: {node: '>=4.0.0'}
@@ -6348,7 +6353,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /gatsby-remark-katex/6.0.0_gatsby@4.0.2+katex@0.13.20:
+  /gatsby-remark-katex/6.0.0_gatsby@4.0.2+katex@0.15.0:
     resolution: {integrity: sha512-hPmJcx3SH+DyZLPG8Rn5HH+8BTK2Kv2z32OdYbD5HFenyh2Mht5ZeGewKpNBRn5Hhthm2voddLH6HmCKCaMT2w==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -6357,7 +6362,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.4
       gatsby: 4.0.2_944dd639e4e01a40a2c577324ae2c636
-      katex: 0.13.20
+      katex: 0.15.0
       rehype-parse: 7.0.1
       remark-math: 4.0.0
       unified: 9.2.2
@@ -7967,6 +7972,13 @@ packages:
     hasBin: true
     dependencies:
       commander: 6.2.1
+    dev: true
+
+  /katex/0.15.0:
+    resolution: {integrity: sha512-gbJfervLbq+MtaRrO9tbPQXGeI6J5EbATNYFoRe8LUWejbUSg8CQAl7NAbbEklYAtdjW0CvoKvXN5CIEmQJ6Ww==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
     dev: true
 
   /keyv/3.1.0:
