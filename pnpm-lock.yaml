@@ -28,7 +28,7 @@ specifiers:
   react: 17.0.2
   react-dom: 17.0.2
   react-helmet: 6.1.0
-  remark-math: 5.1.0
+  remark-math: 5.1.1
   typescript: 4.4.4
 
 dependencies:
@@ -61,7 +61,7 @@ devDependencies:
   gatsby-transformer-remark: 5.1.2_gatsby@4.1.3
   katex: 0.15.1
   prettier: 2.4.1
-  remark-math: 5.1.0
+  remark-math: 5.1.1
   typescript: 4.4.4
 
 packages:
@@ -10541,8 +10541,8 @@ packages:
       - supports-color
     dev: true
 
-  /remark-math/5.1.0:
-    resolution: {integrity: sha512-Igu6p5+Ks8NWX+CzosHHG4r+ETMQIPscoTYPhNPk+ROauJnPEWPFeIe6JdaM1Z+ctHurpIDyYaLRXzgzZAhYSQ==}
+  /remark-math/5.1.1:
+    resolution: {integrity: sha512-cE5T2R/xLVtfFI4cCePtiRn+e6jKMtFDR3P8V3qpv8wpKjwvHoBA4eJzvX+nVrnlNy0911bdGmuspCSwetfYHw==}
     dependencies:
       '@types/mdast': 3.0.9
       mdast-util-math: 2.0.0
