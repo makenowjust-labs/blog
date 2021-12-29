@@ -30,7 +30,7 @@
     "@types/react-helmet": "6.1.4",
     "babel-eslint": "10.1.0",
     "gatsby": "4.2.0",
-    "gatsby-plugin-pnpm": "1.2.8",
+    "gatsby-plugin-pnpm": "1.2.10",
     "gatsby-plugin-react-helmet": "5.2.0",
     "gatsby-plugin-typescript": "4.2.0",
     "gatsby-remark-katex": "6.2.0",
