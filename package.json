@@ -27,7 +27,7 @@
     "@babel/core": "7.15.8",
     "@chakra-ui/gatsby-plugin": "2.0.1",
     "@types/react": "17.0.39",
-    "@types/react-helmet": "6.1.4",
+    "@types/react-helmet": "6.1.5",
     "babel-eslint": "10.1.0",
     "gatsby": "4.2.0",
     "gatsby-plugin-pnpm": "1.2.8",

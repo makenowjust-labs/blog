@@ -10,7 +10,7 @@ specifiers:
   '@emotion/react': 11.5.0
   '@emotion/styled': 11.3.0
   '@types/react': 17.0.39
-  '@types/react-helmet': 6.1.4
+  '@types/react-helmet': 6.1.5
   babel-eslint: 10.1.0
   dayjs: 1.10.7
   framer-motion: 5.0.0
@@ -49,7 +49,7 @@ devDependencies:
   '@babel/core': 7.15.8
   '@chakra-ui/gatsby-plugin': 2.0.1_651cdb3d9a4b13105661dc60a98129ba
   '@types/react': 17.0.39
-  '@types/react-helmet': 6.1.4
+  '@types/react-helmet': 6.1.5
   babel-eslint: 10.1.0
   gatsby: 4.2.0_944dd639e4e01a40a2c577324ae2c636
   gatsby-plugin-pnpm: 1.2.8_gatsby@4.2.0
@@ -3022,8 +3022,8 @@ packages:
       '@types/react': 17.0.39
     dev: true
 
-  /@types/react-helmet/6.1.4:
-    resolution: {integrity: sha512-jyx50RNZXVaTGHY3MsoRPNpeiVk8b0XTPgD/O6KHF6COTDnG/+lRjPYvTK5nfWtR3xDOux0w6bHLAsaHo2ZLTA==}
+  /@types/react-helmet/6.1.5:
+    resolution: {integrity: sha512-/ICuy7OHZxR0YCAZLNg9r7I9aijWUWvxaPR6uTuyxe8tAj5RL4Sw1+R6NhXUtOsarkGYPmaHdBDvuXh2DIN/uA==}
     dependencies:
       '@types/react': 17.0.39
     dev: true
