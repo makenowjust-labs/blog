@@ -2,7 +2,7 @@
 title: Brzozowski のアルゴリズムとは結局何なのか
 created: 2021-03-19
 updated: 2021-03-21
-description: >-
+description: |-
   2回のリバースと決定化を行う DFA の最小化アルゴリズムは Brzozowski のアルゴリズムとして知られています。
   この記事では、Brzozowski のアルゴリズムで求まる最小 DFA がどのようなものなのかを解説します。
 ---
