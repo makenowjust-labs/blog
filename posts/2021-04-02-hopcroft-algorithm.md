@@ -16,13 +16,14 @@ description: |-
 
 この記事では、Hopcroft のアルゴリズムの実装に加えて、その正しさの証明や計算量の解析を行います。
 
+<!-- read more -->
+
 # 実装と解説
 
 この記事で説明する内容は、次の参考文献の内容を元にしています。
 これは Hopcroft のアルゴリズムの原論文 (のはず) です。
 
 > Hopcroft, John. "An n log n algorithm for minimizing states in a finite automaton." Theory of machines and computations. Academic Press, 1971. 189-196. ([PDF](http://i.stanford.edu/pub/cstr/reports/cs/tr/71/190/CS-TR-71-190.pdf))
-
 ## 実装
 
 さっそくですが、Ruby による実装を紹介します。
@@ -34,7 +35,6 @@ require 'set'
 #
 # 参考: https://en.wikipedia.org/wiki/Partition_refinement
 class PartitionRefinement
-
   # 元となる集合でデータ構造を初期化する。
   def initialize(values)
     block = Set.new(values)
@@ -70,7 +70,6 @@ class PartitionRefinement
         result << [block, new_block]
       end
     end
-
     result
   end
 

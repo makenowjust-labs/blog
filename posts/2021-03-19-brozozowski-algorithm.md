@@ -16,12 +16,13 @@ Brzozowski 微分などで知られる [Janusz Brzozowski](<https://en.wikipedia
 ](https://qiita.com/make_now_just/items/471d272442803796e37a))、これによって構成される DFA がどのようなものなのかは説明していませんでした。
 今回のこの記事では、Brozozowski のアルゴリズムで求まる最小 DFA がどのようなものなのかを別の角度から少し解説したいと思います。
 
+<!-- read more -->
+
 # 解説
 
 この記事で説明する内容は、次の参考文献の「3. Brzozowski's algorithm」の内容を元にしています。
 
 > Garcıa, P., D. López, and M. Vázquez de Parga. DFA minimization: from Brzozowski to Hopcroft. Technical report, Universidad Politécnica de Valencia. Informes técnicos de investigación DSIC-TLCC, 2013. ([PDF](https://m.riunet.upv.es/bitstream/handle/10251/27623/partial%20rev%20determ.pdf))
-
 ## 準備
 
 $X$ を集合として、$x$ が $S$ に含まれるとき $x \subseteq X$ と表し、$Y$ が $X$ の部分集合であるとき $Y \subseteq X$ で表します。

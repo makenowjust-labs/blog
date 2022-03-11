@@ -1,7 +1,9 @@
-# blog
+# makenowjust-labs/blog
 
-> MakeNowJust-Labo's blog.
+> MakeNowJust Laboratory Tech Blog
 
 ## License
 
-CC0-1.0
+CC-0
+
+(C) 2021-2022 TSUYUSATO "MakeNowJust" Kitsune

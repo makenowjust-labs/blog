@@ -1,0 +1,42 @@
+name: Main
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type Check
+        run: npm run typecheck
+
+  deploy:
+    needs: [lint]
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: out
