@@ -3,8 +3,8 @@
   "scripts": {
     "build": "next build && next export",
     "dev": "next-remote-watch posts",
-    "format": "prettier --write '**/*.{css,json,ts,tsx}' && next lint --fix",
-    "lint": "prettier --check '**/*.{css,json,ts,tsx}' && next lint",
+    "format": "prettier --write '**/*.{css,json,md,ts,tsx}' && next lint --fix",
+    "lint": "prettier --check '**/*.{css,json,md,ts,tsx}' && next lint",
     "typecheck": "tsc -p ."
   },
   "dependencies": {

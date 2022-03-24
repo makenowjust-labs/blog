@@ -24,6 +24,7 @@ description: |-
 これは Hopcroft のアルゴリズムの原論文 (のはず) です。
 
 > Hopcroft, John. "An n log n algorithm for minimizing states in a finite automaton." Theory of machines and computations. Academic Press, 1971. 189-196. ([PDF](http://i.stanford.edu/pub/cstr/reports/cs/tr/71/190/CS-TR-71-190.pdf))
+
 ## 実装
 
 さっそくですが、Ruby による実装を紹介します。

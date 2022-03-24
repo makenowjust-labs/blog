@@ -45,7 +45,7 @@ const Post: NextPage<Props> = ({ title, created, description, content }) => {
       <div className="pb-5 border-b-2">
         <h1 className="pb-5 pl-4 text-2xl font-bold text-stone-900">{title}</h1>
         <div
-          className="pb-5 pl-8 prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose prose-stone prose-h4:text-md"
+          className="pb-5 pl-8 max-w-full prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h1:border-b-2 prose prose-stone prose-h4:text-md"
           dangerouslySetInnerHTML={{ __html: content }}
         />
         <div className="pl-4 text-sm text-right text-stone-800">{created}</div>

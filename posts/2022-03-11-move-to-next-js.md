@@ -7,7 +7,7 @@ description: |-
 ---
 
 元々は GatsbyJS で作られていたこのブログを、Next.js で書き直して復活させました。
-放置している間にもいくつか記事にしたい事柄があったのですが、元の仕組みでは記事を書く気が起きず、結果的に1年近く放置することになってしまいました。
+放置している間にもいくつか記事にしたい事柄があったのですが、元の仕組みでは記事を書く気が起きず、結果的に 1 年近く放置することになってしまいました。
 
 この記事では「なぜ GatsbyJS から移行したのか」と「他のフレームワークを比較した結果」、そして「最終的な技術スタック」について説明します。
 
@@ -41,7 +41,7 @@ PNPM はパッケージマネージャで、Yarn や NPM などと比べて高�
 
 そもそも GatsbyJS 自体はそんなに悪いと思っていないのなら、問題のあるライブラリなどを外して GatsbyJS で作り直せばいいんじゃない？　という意見もあるかと思います。
 
-それでも良かったのですが、GatsbyJS はビルドに Webpack を使っていて、2022年の開発体験としては Webpack の速度はイケてないな、という気がしたので、今回は GatsbyJS 以外の選択肢を検討することにしました。
+それでも良かったのですが、GatsbyJS はビルドに Webpack を使っていて、2022 年の開発体験としては Webpack の速度はイケてないな、という気がしたので、今回は GatsbyJS 以外の選択肢を検討することにしました。
 
 ## Astro.build
 
@@ -50,7 +50,7 @@ PNPM はパッケージマネージャで、Yarn や NPM などと比べて高�
 他にも、スクロールを監視してコンポーネントが描画領域に入ったところで JavaScript をロードして実行するようにできたり、かなり先進的な特徴を持ったフレームワークのように思います。
 
 少し使ってみて良かったと感じたところは、React や Vue、Svelte など好きなライブラリでコンポーネントを記述して、組み合わせて使えるところがまず面白いと感じました。
-それと、Astro.build 独自の `astro` ファイルのシンタックスも、スクリプト部分のインデントが1つ減るという意味で悪くないなと思いました。
+それと、Astro.build 独自の `astro` ファイルのシンタックスも、スクリプト部分のインデントが 1 つ減るという意味で悪くないなと思いました。
 
 しかし、`npm init` したあとのファイルをエディタで開くと、エディタではエラーになるけど実際はビルドできる、といったエコシステム周りで不十分なところがあったり、
 とくに致命的なところとして、組込みの Markdown サポートでは数式を含むものを上手く扱えないという問題がありました。
@@ -92,10 +92,10 @@ PNPM はパッケージマネージャで、Yarn や NPM などと比べて高�
 - [tailwindcss](https://tailwindcss.com)
 - [daisyUI](https://daisyui.com)
 - [markdown-it](https://markdown-it.github.io)
-  * [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki)
-  * [markdown-it-texmath](https://github.com/goessner/markdown-it-texmath)
+  - [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki)
+  - [markdown-it-texmath](https://github.com/goessner/markdown-it-texmath)
 
-tailwindcss はユーティリティ指向の CSS フレームワークで、最近というかここ1年くらい流行っている気がします。
+tailwindcss はユーティリティ指向の CSS フレームワークで、最近というかここ 1 年くらい流行っている気がします。
 daisyUI は tailwindcss 上の UI コンポーネントライブラリで、細かいところを tailwindcss で調整できるのがいいところだと思います。
 デザインは daisyUI にあるものを優先して使いつつ、細かいところは tailwindcss で整える、というようにしていきました。
 なんか昔よりも tailwindcss が使いやすくなった気がしたけど、多分それは自分が CSS に慣れただけな気もしています。
