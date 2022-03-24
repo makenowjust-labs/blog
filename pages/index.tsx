@@ -41,9 +41,9 @@ const Home: NextPage<Props> = ({ posts }) => {
 
 function HomeAbstract() {
   return (
-    <>
+    <div className="py-5 pr-4">
       <h2 className="pb-5 text-2xl font-bold text-stone-900">概要</h2>
-      <div className="pb-5 pl-8 prose prose-stone text-md">
+      <div className="pb-5 pl-8 max-w-full prose prose-stone text-md">
         <p>
           <a href="https://github.com/makenowjust">@makenowjust</a>{" "}
           の技術ブログです。
@@ -59,7 +59,7 @@ function HomeAbstract() {
           </a>
         </p>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -75,14 +75,14 @@ function HomePostList({ posts }: Props) {
 
 function HomePost({ title, slug, created, excerpt }: Post) {
   return (
-    <div className="py-5 border-b-2">
+    <div className="py-5 pr-4 border-b-2">
       <h2 className="pb-5 pl-4 text-2xl font-bold text-stone-900">
         <Link passHref={true} href={`/post/${slug}`}>
           <a className="hover:underline hover:cursor-pointer">{title}</a>
         </Link>
       </h2>
       <div
-        className="pb-5 pl-8 prose prose-stone"
+        className="pb-5 pl-8 max-w-full prose prose-stone"
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <div className="pb-5 pl-8 text-center">
