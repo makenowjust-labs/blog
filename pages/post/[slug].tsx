@@ -24,6 +24,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext<Query>) {
   const post = await load(slug);
   return {
     props: {
+      slug,
       title: post.title,
       created: post.created,
       description: post.description,
@@ -33,15 +34,26 @@ export async function getStaticProps({ params }: GetStaticPropsContext<Query>) {
 }
 
 export type Props = {
+  slug: string;
   title: string;
   created: string;
   description: string;
   content: string;
 };
 
-const Post: NextPage<Props> = ({ title, created, description, content }) => {
+const Post: NextPage<Props> = ({
+  slug,
+  title,
+  created,
+  description,
+  content,
+}) => {
   return (
-    <Layout title={title} description={description}>
+    <Layout
+      title={title}
+      description={description}
+      ogImage={`post/${slug}.png`}
+    >
       <div className="pb-5 border-b-2">
         <h1 className="pb-5 pl-4 text-2xl font-bold text-stone-900">{title}</h1>
         <div
