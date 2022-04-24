@@ -3,8 +3,6 @@ import Layout from "../../components/Layout";
 import { render } from "../../lib/markdown";
 import { load, list } from "../../lib/post";
 
-const BLOG_BASE_URL = "https://makenowjust-labs.github.io/blog/";
-
 type Query = {
   slug: string;
 };
@@ -54,7 +52,7 @@ const Post: NextPage<Props> = ({
     <Layout
       title={title}
       description={description}
-      ogImage={`${BLOG_BASE_URL}/post/${slug}.png`}
+      ogImage={`post/${slug}.png`}
     >
       <div className="pb-5 border-b-2">
         <h1 className="pb-5 pl-4 text-2xl font-bold text-stone-900">{title}</h1>

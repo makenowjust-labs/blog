@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import Hero from "./Hero";
 import Navbar from "./Navbar";
 
+const BLOG_BASE_URL = "https://makenowjust-labs.github.io/blog/";
 const BLOG_TITLE = "makenowjust-labs/blog";
 const BLOG_DESCRIPTION = "MakeNowJust Laboratory Tech Blog";
 const BLOG_AUTHOR = 'TSUYUSATO "MakeNowJust" Kitsune';
@@ -30,7 +31,9 @@ export default function Layout({
         <title>{page}</title>
         <meta name="description" content={description ?? BLOG_DESCRIPTION} />
         <meta property="og:site_name" content={BLOG_TITLE} />
-        {ogImage && <meta property="og:image" content={ogImage} />}
+        {ogImage && (
+          <meta property="og:image" content={`${BLOG_BASE_URL}/${ogImage}`} />
+        )}
         <meta name="twitter:site" content={BLOG_TWITTER} />
       </Head>
       <Navbar title={BLOG_TITLE} repo={BLOG_REPO} twitter={BLOG_TWITTER} />
