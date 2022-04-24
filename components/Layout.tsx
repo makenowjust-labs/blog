@@ -30,6 +30,7 @@ export default function Layout({
       <Head>
         <title>{page}</title>
         <meta name="description" content={description ?? BLOG_DESCRIPTION} />
+        <meta property="og:title" content={page} />
         <meta property="og:site_name" content={BLOG_TITLE} />
         {ogImage && (
           <meta property="og:image" content={`${BLOG_BASE_URL}/${ogImage}`} />
