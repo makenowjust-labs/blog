@@ -34,7 +34,8 @@ export default function Layout({
         {ogImage && (
           <meta property="og:image" content={`${BLOG_BASE_URL}/${ogImage}`} />
         )}
-        <meta name="twitter:site" content={BLOG_TWITTER} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content={`@${BLOG_TWITTER}`} />
       </Head>
       <Navbar title={BLOG_TITLE} repo={BLOG_REPO} twitter={BLOG_TWITTER} />
       <Hero title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
