@@ -52,7 +52,9 @@ const Post: NextPage<Props> = ({
     <Layout
       title={title}
       description={description}
+      ogUrl={`post/${slug}`}
       ogImage={`post/${slug}.png`}
+      ogType="article"
     >
       <div className="pb-5 border-b-2">
         <h1 className="pb-5 pl-4 text-2xl font-bold text-stone-900">{title}</h1>
