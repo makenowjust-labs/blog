@@ -11,7 +11,7 @@
     "@types/katex": "0.14.0",
     "dayjs": "1.11.2",
     "gray-matter": "4.0.3",
-    "katex": "0.15.3",
+    "katex": "0.15.6",
     "markdown-it": "13.0.1",
     "markdown-it-shiki": "0.5.1",
     "markdown-it-texmath": "0.9.7",
