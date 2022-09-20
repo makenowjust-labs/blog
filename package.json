@@ -34,7 +34,7 @@
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-tailwindcss": "3.6.2",
-    "next-remote-watch": "1.0.0",
+    "next-remote-watch": "2.0.0",
     "postcss": "8.4.16",
     "prettier": "2.7.1",
     "skia-canvas": "1.0.0",
