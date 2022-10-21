@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@types/katex": "0.14.0",
-    "dayjs": "1.11.5",
+    "dayjs": "1.11.6",
     "gray-matter": "4.0.3",
     "katex": "0.16.2",
     "markdown-it": "13.0.1",
