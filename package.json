@@ -27,7 +27,7 @@
     "@types/markdown-it": "12.2.3",
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",
-    "autoprefixer": "10.4.12",
+    "autoprefixer": "10.4.13",
     "budoux": "0.2.0",
     "daisyui": "2.33.0",
     "eslint": "8.26.0",
