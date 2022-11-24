@@ -12,7 +12,7 @@ export default function Hero({ title, description }: Props) {
         <div className="max-w-md text-center">
           <h1 className="pb-5 text-3xl font-bold text-stone-900">
             <Link passHref={true} href="/">
-              <a className="hover:underline hover:cursor-pointer">{title}</a>
+              <a className="hover:cursor-pointer hover:underline">{title}</a>
             </Link>
           </h1>
           <p className="text-lg text-stone-800">{description}</p>

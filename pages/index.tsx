@@ -43,7 +43,7 @@ function HomeAbstract() {
   return (
     <div className="py-5 pr-4">
       <h2 className="pb-5 text-2xl font-bold text-stone-900">概要</h2>
-      <div className="pb-5 pl-8 max-w-full prose prose-stone text-md">
+      <div className="text-md prose-stone prose max-w-full pb-5 pl-8">
         <p>
           <a href="https://github.com/makenowjust">@makenowjust</a>{" "}
           の技術ブログです。
@@ -75,22 +75,22 @@ function HomePostList({ posts }: Props) {
 
 function HomePost({ title, slug, created, excerpt }: Post) {
   return (
-    <div className="py-5 pr-4 border-b-2">
+    <div className="border-b-2 py-5 pr-4">
       <h2 className="pb-5 pl-4 text-2xl font-bold text-stone-900">
         <Link passHref={true} href={`/post/${slug}`}>
-          <a className="hover:underline hover:cursor-pointer">{title}</a>
+          <a className="hover:cursor-pointer hover:underline">{title}</a>
         </Link>
       </h2>
       <div
-        className="pb-5 pl-8 max-w-full prose prose-stone"
+        className="prose-stone prose max-w-full pb-5 pl-8"
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <div className="pb-5 pl-8 text-center">
         <Link passHref={true} href={`/post/${slug}`}>
-          <a className="normal-case btn btn-ghost btn-block">この記事を読む</a>
+          <a className="btn-ghost btn-block btn normal-case">この記事を読む</a>
         </Link>
       </div>
-      <div className="pl-4 text-sm text-right text-stone-800">{created}</div>
+      <div className="pl-4 text-right text-sm text-stone-800">{created}</div>
     </div>
   );
 }
