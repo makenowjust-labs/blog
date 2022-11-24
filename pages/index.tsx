@@ -77,8 +77,11 @@ function HomePost({ title, slug, created, excerpt }: Post) {
   return (
     <div className="py-5 pr-4 border-b-2">
       <h2 className="pb-5 pl-4 text-2xl font-bold text-stone-900">
-        <Link passHref={true} href={`/post/${slug}`}>
-          <a className="hover:underline hover:cursor-pointer">{title}</a>
+        <Link
+          passHref={true}
+          href={`/post/${slug}`}
+          className="hover:underline hover:cursor-pointer">
+          {title}
         </Link>
       </h2>
       <div
@@ -86,8 +89,11 @@ function HomePost({ title, slug, created, excerpt }: Post) {
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <div className="pb-5 pl-8 text-center">
-        <Link passHref={true} href={`/post/${slug}`}>
-          <a className="normal-case btn btn-ghost btn-block">この記事を読む</a>
+        <Link
+          passHref={true}
+          href={`/post/${slug}`}
+          className="normal-case btn btn-ghost btn-block">
+          この記事を読む
         </Link>
       </div>
       <div className="pl-4 text-sm text-right text-stone-800">{created}</div>

@@ -11,8 +11,11 @@ export default function Navbar({ title, repo, twitter }: Props) {
   return (
     <header className="sticky top-0 left-0 z-20 bg-white opacity-90 navbar">
       <div className="navbar-start">
-        <Link passHref={true} href="/">
-          <a className="text-stone-900 normal-case btn btn-ghost">{title}</a>
+        <Link
+          passHref={true}
+          href="/"
+          className="text-stone-900 normal-case btn btn-ghost">
+          {title}
         </Link>
       </div>
       <div className="navbar-end">
