@@ -52,7 +52,7 @@ export default function Layout({
       </Head>
       <Navbar title={BLOG_TITLE} repo={BLOG_REPO} twitter={BLOG_TWITTER} />
       <Hero title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
-      <main className="p-2 mx-auto max-w-3xl min-h-screen lg:px-0">
+      <main className="mx-auto min-h-screen max-w-3xl p-2 lg:px-0">
         {children}
       </main>
       <Footer

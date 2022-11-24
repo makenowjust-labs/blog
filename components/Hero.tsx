@@ -11,7 +11,11 @@ export default function Hero({ title, description }: Props) {
       <div className="hero-content">
         <div className="max-w-md text-center">
           <h1 className="pb-5 text-3xl font-bold text-stone-900">
-            <Link passHref={true} href="/" className="hover:underline hover:cursor-pointer">
+            <Link
+              passHref={true}
+              href="/"
+              className="hover:cursor-pointer hover:underline"
+            >
               {title}
             </Link>
           </h1>
