@@ -26,7 +26,7 @@
     "@tailwindcss/typography": "0.5.8",
     "@types/markdown-it": "12.2.3",
     "@types/node": "18.11.10",
-    "@types/react": "18.0.25",
+    "@types/react": "18.0.26",
     "autoprefixer": "10.4.13",
     "budoux": "0.2.1",
     "daisyui": "2.42.1",
