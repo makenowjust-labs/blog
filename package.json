@@ -15,7 +15,7 @@
     "markdown-it": "13.0.1",
     "markdown-it-shiki": "0.8.1",
     "markdown-it-texmath": "1.0.0",
-    "next": "13.3.0",
+    "next": "13.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.8.0"
@@ -31,7 +31,7 @@
     "budoux": "0.5.1",
     "daisyui": "2.51.5",
     "eslint": "8.38.0",
-    "eslint-config-next": "13.3.0",
+    "eslint-config-next": "13.3.1",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-tailwindcss": "3.11.0",
     "next-remote-watch": "2.0.0",
