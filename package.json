@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@fontsource/noto-sans-jp": "5.0.0",
-    "@fontsource/share-tech-mono": "4.5.9",
+    "@fontsource/share-tech-mono": "5.0.0",
     "@tailwindcss/typography": "0.5.9",
     "@types/markdown-it": "12.2.3",
     "@types/node": "18.16.13",
