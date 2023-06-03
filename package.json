@@ -29,7 +29,7 @@
     "@types/react": "18.2.8",
     "autoprefixer": "10.4.14",
     "budoux": "0.5.1",
-    "daisyui": "2.52.0",
+    "daisyui": "3.0.1",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "eslint-config-prettier": "8.8.0",
