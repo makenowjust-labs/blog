@@ -21,8 +21,8 @@
     "react-icons": "4.10.1"
   },
   "devDependencies": {
-    "@fontsource/noto-sans-jp": "5.0.3",
-    "@fontsource/share-tech-mono": "5.0.3",
+    "@fontsource/noto-sans-jp": "5.0.4",
+    "@fontsource/share-tech-mono": "5.0.4",
     "@tailwindcss/typography": "0.5.9",
     "@types/markdown-it": "12.2.3",
     "@types/node": "18.16.19",
