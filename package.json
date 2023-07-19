@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build && next export && zx ./scripts/og-image-cover.mjs && zx ./scripts/og-image.mjs",
+    "build": "next build && zx ./scripts/og-image-cover.mjs && zx ./scripts/og-image.mjs",
     "dev": "next-remote-watch posts",
     "format": "prettier --write '**/*.{css,json,md,mjs,ts,tsx}' && next lint --fix",
     "lint": "prettier --check '**/*.{css,json,md,mjs,ts,tsx}' && next lint",

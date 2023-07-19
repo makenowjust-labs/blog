@@ -13,13 +13,13 @@ export default function Footer({ year, author, github, twitter }: Props) {
       <div className="flex justify-center pb-5">
         <a
           href={`https://github.com/${github}`}
-          className="btn-ghost btn text-lg"
+          className="btn btn-ghost text-lg"
         >
           <FaGithubAlt />
         </a>
         <a
           href={`https://twitter.com/${twitter}`}
-          className="btn-ghost btn text-lg"
+          className="btn btn-ghost text-lg"
         >
           <FaTwitter />
         </a>

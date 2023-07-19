@@ -43,7 +43,7 @@ function HomeAbstract() {
   return (
     <div className="py-5 pr-4">
       <h2 className="pb-5 text-2xl font-bold text-stone-900">概要</h2>
-      <div className="text-md prose-stone prose max-w-full pb-5 pl-8">
+      <div className="text-md prose prose-stone max-w-full pb-5 pl-8">
         <p>
           <a href="https://github.com/makenowjust">@makenowjust</a>{" "}
           の技術ブログです。
@@ -86,14 +86,14 @@ function HomePost({ title, slug, created, excerpt }: Post) {
         </Link>
       </h2>
       <div
-        className="prose-stone prose max-w-full pb-5 pl-8"
+        className="prose prose-stone max-w-full pb-5 pl-8"
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <div className="pb-5 pl-8 text-center">
         <Link
           passHref={true}
           href={`/post/${slug}`}
-          className="btn-ghost btn-block btn normal-case"
+          className="btn btn-ghost btn-block normal-case"
         >
           この記事を読む
         </Link>

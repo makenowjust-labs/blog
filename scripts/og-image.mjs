@@ -11,16 +11,16 @@ const parser = loadDefaultJapaneseParser();
 
 // Load fonts from `@fontsource/noto-sans-jp` and `@fontsource/share-tech-mono`.
 FontLibrary.use("Noto Sans JP", [
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-all-100-normal.woff",
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-all-300-normal.woff",
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-all-400-normal.woff",
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-all-500-normal.woff",
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-all-700-normal.woff",
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-all-900-normal.woff",
+  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-100-normal.woff",
+  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-300-normal.woff",
+  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-400-normal.woff",
+  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-500-normal.woff",
+  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-700-normal.woff",
+  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-900-normal.woff",
 ]);
 
 FontLibrary.use("Share Tech Mono", [
-  "./node_modules/@fontsource/share-tech-mono/files/share-tech-mono-all-400-normal.woff",
+  "./node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff",
 ]);
 
 // Load background image.

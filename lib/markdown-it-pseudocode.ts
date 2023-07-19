@@ -25,7 +25,7 @@ const highlighted = (s: string): Highlighted => {
 };
 
 /** The `markdown-it` plugin for providing `pseudocode` fence block. */
-export default (md: MarkdownIt) => {
+const pseudocode = (md: MarkdownIt) => {
   let captionCount = 0;
   const oldHighlight = md.options.highlight;
   md.options.highlight = (code, lang, attrs) => {
@@ -40,3 +40,5 @@ export default (md: MarkdownIt) => {
     }
   };
 };
+
+export default pseudocode;

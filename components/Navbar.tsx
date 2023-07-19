@@ -14,7 +14,7 @@ export default function Navbar({ title, repo, twitter }: Props) {
         <Link
           passHref={true}
           href="/"
-          className="btn-ghost btn normal-case text-stone-900"
+          className="btn btn-ghost normal-case text-stone-900"
         >
           {title}
         </Link>
@@ -22,13 +22,13 @@ export default function Navbar({ title, repo, twitter }: Props) {
       <div className="navbar-end">
         <a
           href={`https://github.com/${repo}`}
-          className="btn-ghost btn-circle btn text-2xl"
+          className="btn btn-circle btn-ghost text-2xl"
         >
           <FaGithub />
         </a>
         <a
           href={`https://twitter.com/${twitter}`}
-          className="btn-ghost btn-circle btn text-2xl"
+          className="btn btn-circle btn-ghost text-2xl"
         >
           <FaTwitter />
         </a>
