@@ -9,7 +9,7 @@ export type Props = {
 
 export default function Navbar({ title, repo, twitter }: Props) {
   return (
-    <header className="navbar sticky top-0 left-0 z-20 bg-white opacity-90">
+    <header className="navbar sticky left-0 top-0 z-20 bg-white opacity-90">
       <div className="navbar-start">
         <Link
           passHref={true}

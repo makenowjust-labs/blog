@@ -9,7 +9,7 @@ export type Props = {
 
 export default function Footer({ year, author, github, twitter }: Props) {
   return (
-    <footer className="mx-auto max-w-3xl py-5 px-2 lg:px-0">
+    <footer className="mx-auto max-w-3xl px-2 py-5 lg:px-0">
       <div className="flex justify-center pb-5">
         <a
           href={`https://github.com/${github}`}

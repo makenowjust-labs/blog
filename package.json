@@ -16,6 +16,7 @@
     "markdown-it-shiki": "0.9.0",
     "markdown-it-texmath": "1.0.0",
     "next": "13.4.10",
+    "pseudocode": "2.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.10.1"
@@ -34,7 +35,7 @@
     "eslint-config-next": "13.4.10",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-tailwindcss": "3.13.0",
-    "next-remote-watch": "2.0.0",
+    "next-remote-watch": "morantron/next-remote-watch#next-13-support",
     "postcss": "8.4.26",
     "prettier": "2.8.8",
     "skia-canvas": "1.0.1",

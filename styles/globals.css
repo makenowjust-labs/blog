@@ -1,4 +1,5 @@
 @import "katex/dist/katex.min.css";
+@import "pseudocode/build/pseudocode.min.css";
 
 @tailwind base;
 @tailwind components;
@@ -7,4 +8,12 @@
 .katex-display {
   @apply overflow-x-auto;
   @apply overflow-y-hidden;
+}
+
+.katex-ps-funcname {
+  font-family: KaTeX_Main, "Times New Roman", Times, serif;
+  font-weight: 400;
+  font-variant: small-caps;
+  font-style: normal;
+  text-transform: none;
 }
