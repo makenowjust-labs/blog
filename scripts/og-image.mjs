@@ -50,7 +50,7 @@ await Promise.all(
     ctx.fillText(
       dayjs(created).format("YYYY/MM/DD"),
       (1200 - 630) / 2 + 50,
-      150
+      150,
     );
 
     // Draw title.
@@ -77,5 +77,5 @@ await Promise.all(
     ctx.fillText(BLOG_TITLE, (1200 - 630) / 2 + 580 - m.width, 564);
 
     canvas.saveAsSync(`./out/post/${path.basename(file, ".md")}.png`);
-  })
+  }),
 );

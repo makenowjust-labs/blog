@@ -21,7 +21,7 @@ export const list = async (): Promise<Post[]> => {
     files.map(async (file) => {
       const slug = basename(file, ".md");
       return await load(slug);
-    })
+    }),
   );
   return list.sort((a, b) => (a.created >= b.created ? -1 : 1));
 };
