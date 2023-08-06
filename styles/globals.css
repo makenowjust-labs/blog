@@ -17,3 +17,58 @@
   font-style: normal;
   text-transform: none;
 }
+
+.prose code::before {
+  content: "`";
+  @apply opacity-0;
+}
+
+.prose pre code::before {
+  content: "";
+}
+
+.prose code:hover::before {
+  @apply opacity-100;
+}
+
+.prose pre code:hover::before {
+  content: "";
+}
+
+.prose code::after {
+  @apply opacity-0;
+  content: "`";
+}
+
+.prose pre code::after {
+  content: "";
+}
+
+.prose code:hover::after {
+  @apply opacity-100;
+}
+
+.prose pre code:hover::after {
+  content: "";
+}
+
+.prose eq .katex::before {
+  @apply font-mono;
+  @apply opacity-0;
+  content: "$";
+  opacity: 0;
+}
+
+.prose eq .katex:hover::before {
+  @apply opacity-100;
+}
+
+.prose eq .katex::after {
+  @apply font-mono;
+  @apply opacity-0;
+  content: "$";
+}
+
+.prose eq .katex:hover::after {
+  @apply opacity-100;
+}

@@ -86,7 +86,7 @@ function HomePost({ title, slug, created, excerpt }: Post) {
         </Link>
       </h2>
       <div
-        className="prose prose-stone max-w-full pb-5 pl-8"
+        className="prose-h4:text-md prose prose-stone max-w-full pb-5 pl-8 prose-h1:border-b-2 prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-code:px-0"
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <div className="pb-5 pl-8 text-center">
