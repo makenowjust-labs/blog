@@ -313,7 +313,6 @@ Earley法はJay Earleyが1968年に提案したCFGの解析手法の1つ[^2]で�
 SPAはCFG全体を表現できる力があることが知られています。
 
 [^4]: Frohme, Markus, and Bernhard Steffen. "[Compositional learning of mutually recursive procedural systems.](https://link.springer.com/article/10.1007/s10009-021-00634-y)" International Journal on Software Tools for Technology Transfer 23 (2021): 521-543.
-
 [^5]: 他にも**Context-Free Process System**や**Recursive State Machine** (**RSM**) と呼ぶこともあるらしいです。
 
 例えば次の図のSPAは、`"({()})({})"`のような`(...)`と`{...}`が交互に入れ子になって並んでいる場合にマッチするオートマトンとなっています。
