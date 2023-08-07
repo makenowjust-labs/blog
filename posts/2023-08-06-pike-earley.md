@@ -1,7 +1,7 @@
 ---
 title: "Pike VMとEarley法の関係についてRubyで実装して考えてみる"
 created: 2023-08-06
-updated: 2023-08-06
+updated: 2023-08-07
 description: |
   文脈自由文法 (CFG) の構文解析手法であるEarley法は、正規表現マッチングの実現方法であるPike VMの発展系として考えることができます。
   この記事ではそれらの関係をRubyでの実装を通じて解説します。
@@ -309,10 +309,12 @@ Earley法はJay Earleyが1968年に提案したCFGの解析手法の1つ[^2]で�
 
 ## Procedural Automaton
 
-**Procedural Automaton**とは、「他のオートマトンを呼び出すことができる」オートマトンの拡張で、呼び出すオートマトンをすべてまとめた複数のオートマトンのまとまりを**System of Procedural Automata** (**SPA**)と呼びます[^4]。
+**Procedural Automaton**とは、「他のオートマトンを呼び出すことができる」オートマトンの拡張で、呼び出すオートマトンをすべてまとめた複数のオートマトンのまとまりを**System of Procedural Automata** (**SPA**)と呼びます[^4][^5]。
 SPAはCFG全体を表現できる力があることが知られています。
 
 [^4]: Frohme, Markus, and Bernhard Steffen. "[Compositional learning of mutually recursive procedural systems.](https://link.springer.com/article/10.1007/s10009-021-00634-y)" International Journal on Software Tools for Technology Transfer 23 (2021): 521-543.
+
+[^5]: 他にも**Context-Free Process System**や**Recursive State Machine** (**RSM**) と呼ぶこともあるらしいです。
 
 例えば次の図のSPAは、`"({()})({})"`のような`(...)`と`{...}`が交互に入れ子になって並んでいる場合にマッチするオートマトンとなっています。
 
@@ -570,7 +572,7 @@ p EarleyVM.new(spa_example, "({(}))").run   # => false
 NFAの非決定性を同時に遷移してシミュレートしていく方法の延長線でCFGを構文解析する、という考えがEarley法の発端だと思われます。
 そのため、実装という観点から見るとEarley法がPike VMの拡張になるのも道理でしょう。
 
-Earley法は、計算量的にはLR法にも負けず劣らずのアルゴリズムなのですが、実際に実装してみると途中に生成する (キューに追加する) オブジェクトの生成なので、想像よりも遅くなりがちです。
+Earley法は、計算量的にはLR法にも負けず劣らずのアルゴリズムなのですが、実際に実装してみると途中に生成する (キューに追加する) オブジェクトの生成がボトルネックになって、想像よりも遅くなりがちです。
 また、今回は実装しませんでしたが、実際に利用するためには構文解析後に構文木を構築する必要があります。
 そのためのデータ構造など、工夫できる点は色々あるので、挑戦してみると面白いと思います。
 
