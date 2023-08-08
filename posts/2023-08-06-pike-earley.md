@@ -1,7 +1,7 @@
 ---
 title: "Pike VMとEarley法の関係についてRubyで実装して考えてみる"
 created: 2023-08-06
-updated: 2023-08-07
+updated: 2023-08-08
 description: |
   文脈自由文法 (CFG) の構文解析手法であるEarley法は、正規表現マッチングの実現方法であるPike VMの発展系として考えることができます。
   この記事ではそれらの関係をRubyでの実装を通じて解説します。
@@ -11,7 +11,7 @@ description: |
 これは[Go言語の正規表現実装](https://pkg.go.dev/regexp)や[Rustの`regex` crate](https://docs.rs/regex/latest/regex/)で使われている手法であり、正規表現$r$と入力文字列$w$に対して$O(|r| \times |w|)$の計算量でマッチングができるのが特徴です。
 
 **Earley法**はJay Earleyの提案した文脈自由文法 (CFG) の構文解析手法の1つです。
-すべてのCFGを構文解析できる手法で最悪計算量は$O({|w|}^3)$ですが、無曖昧であれば$O({|w|}^2)$で、決定的であれば$O({|w|})$で解析ができるのが特徴です。
+すべてのCFGを構文解析できる手法で最悪計算量は$O({|w|}^3)$ですが、無曖昧であれば$O({|w|}^2)$で、決定的であれば$O({|w|})$で構文解析ができます。
 
 実装してみると分かりますが、Pike VMとEarley法には類似している点があり、Earley法をPike VMの発展系のように考えることができます。
 この記事ではPike VMとEarley法の<u>Rubyでの実装</u>を通じて、それらの関係を解説します。
@@ -55,7 +55,7 @@ Pike VMはOn-the-fly構成に基づくマッチング手法となっています
 
 ## Pike VMでのNFA
 
-Pike VMはVMという名前の通りVMによってマッチングをします。
+Pike VMはVMという名前の通りVMによってマッチングを行ないます。
 そのため、正規表現はVMの命令列に変換されるのですが、実はそれらの命令はNFAの辺とラベルとして理解する方が分かりやすいです。
 そこで、VMの命令をNFA風の図で説明します。
 
@@ -218,7 +218,7 @@ pp example_regex.to_nfa
 それではPike VMの実装をします。
 
 最初に書いたとおり、Pike VMはOn-the-fly構築を用いてマッチングを行ないます。
-実際には、次のような流れでマッチングを行います。
+具体的には、次のような流れになります。
 
 1. 0文字目のキューに初期状態を追加
 2. 現在の文字のキューから状態を読み込み、その状態の命令 (遷移) を実行
@@ -229,7 +229,7 @@ pp example_regex.to_nfa
 4. 文字を進めて次のキューで2と3を繰り返す
 5. 最後のキューに命令が`Match`の状態が残っていたらマッチと判定
 
-つまり、空文字列で遷移できる部分を可能な限り遷移して、文字列による遷移で次の文字に移動する、というのを幅優先探索の要領で繰り返していきます。
+つまり、空文字列で遷移できる部分を可能な限り遷移して、$\mathsf{Char}$命令による遷移で次の文字に移動する、というのを幅優先探索の要領で繰り返していきます。
 
 これをコードにします。
 
@@ -277,7 +277,7 @@ class PikeVM
 end
 ```
 
-この`PikeVM`クラスのコンストラクタにNFAとマッチングしたい文字列を渡して、`run`メソッドを呼ぶとマッチングが実行されます。
+この`PikeVM`クラスにNFAとマッチングしたい文字列を渡して、`run`メソッドを呼ぶとマッチングが実行されます。
 
 ```ruby
 # `example_regex`は`/a*|ab/`
@@ -305,7 +305,7 @@ Earley法はJay Earleyが1968年に提案したCFGの解析手法の1つ[^2]で�
 [^3]: Leo, Joop MIM. "[A general context-free parsing algorithm running in linear time on every LR (k) grammar without using lookahead.](https://www.sciencedirect.com/science/article/pii/030439759190180A)" Theoretical computer science 82.1 (1991): 165-176.
 
 実はEarley法は、<u>Pike VMによるマッチングをProcedural Automatonに拡張したもの</u>と考えることができます。
-このProcedural AutomatonやPike VMをこれに対応するために拡張する方法について説明していきます。
+Procedural AutomatonやPike VMをこれに対応するために拡張する方法について説明していきます。
 
 ## Procedural Automaton
 
@@ -313,7 +313,7 @@ Earley法はJay Earleyが1968年に提案したCFGの解析手法の1つ[^2]で�
 SPAはCFG全体を表現できる力があることが知られています。
 
 [^4]: Frohme, Markus, and Bernhard Steffen. "[Compositional learning of mutually recursive procedural systems.](https://link.springer.com/article/10.1007/s10009-021-00634-y)" International Journal on Software Tools for Technology Transfer 23 (2021): 521-543.
-[^5]: 他にも**Context-Free Process System**や**Recursive State Machine** (**RSM**) と呼ぶこともあるらしいです。
+[^5]: 他にも同等のものを**Context-Free Process System**や**Recursive State Machine** (**RSM**) と呼ぶこともあるらしいです。
 
 例えば次の図のSPAは、`"({()})({})"`のような`(...)`と`{...}`が交互に入れ子になって並んでいる場合にマッチするオートマトンとなっています。
 
@@ -385,7 +385,7 @@ $$
 \end{array}
 $$
 
-このとき$A \to \texttt{'('}\ B\ \texttt{')'}$に対応するオーマトンは次のような一直線ものになります。
+このとき$A \to \texttt{'('}\ B\ \texttt{')'}$に対応するオーマトンは次のような一直線のものになります。
 
 <center>
 
@@ -570,6 +570,10 @@ p EarleyVM.new(spa_example, "({(}))").run   # => false
 というわけでPike VMとEarley法について解説しました。
 NFAの非決定性を同時に遷移してシミュレートしていく方法の延長線でCFGを構文解析する、という考えがEarley法の発端だと思われます。
 そのため、実装という観点から見るとEarley法がPike VMの拡張になるのも道理でしょう。
+
+今回のPike VMの実装はEarley法の解説にスムーズにつなげるため、よくある実装とは少し異なった形になっています。
+まず、すべての文字列上の位置のキューを保存していますが、Pike VMであれば現在のキューと次のキューの2つだけで十分です。
+また、空文字列で遷移できる部分を一度にすべて遷移することで、キューに追加するのは$\mathsf{Char}$命令と$\mathsf{Match}$命令の状態だけで十分になります。
 
 Earley法は、計算量的にはLR法にも負けず劣らずのアルゴリズムなのですが、実際に実装してみると途中に生成する (キューに追加する) オブジェクトの生成がボトルネックになって、想像よりも遅くなりがちです。
 また、今回は実装しませんでしたが、実際に利用するためには構文解析後に構文木を構築する必要があります。
