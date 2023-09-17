@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "next build && zx ./scripts/og-image-cover.mjs && zx ./scripts/og-image.mjs",
-    "dev": "next-remote-watch posts",
+    "dev": "next",
     "format": "prettier --write '**/*.{css,json,md,mjs,ts,tsx}' && next lint --fix",
     "lint": "prettier --check '**/*.{css,json,md,mjs,ts,tsx}' && next lint",
     "typecheck": "tsc -p ."
@@ -37,7 +37,6 @@
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-tailwindcss": "3.13.0",
-    "next-remote-watch": "morantron/next-remote-watch#next-13-support",
     "postcss": "8.4.29",
     "prettier": "3.0.3",
     "skia-canvas": "1.0.1",
