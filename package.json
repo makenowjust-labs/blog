@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/katex": "0.16.3",
     "@types/markdown-it-footnote": "^3.0.0",
-    "dayjs": "1.11.9",
+    "dayjs": "1.11.10",
     "gray-matter": "4.0.3",
     "katex": "0.16.8",
     "markdown-it": "13.0.1",
