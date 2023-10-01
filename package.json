@@ -29,7 +29,7 @@
     "@tailwindcss/typography": "0.5.10",
     "@types/markdown-it": "13.0.2",
     "@types/node": "18.18.1",
-    "@types/react": "18.2.23",
+    "@types/react": "18.2.24",
     "autoprefixer": "10.4.16",
     "budoux": "0.5.2",
     "daisyui": "3.8.2",
