@@ -27,7 +27,7 @@
     "@fontsource/noto-sans-jp": "5.0.16",
     "@fontsource/share-tech-mono": "5.0.8",
     "@tailwindcss/typography": "0.5.10",
-    "@types/markdown-it": "13.0.5",
+    "@types/markdown-it": "13.0.6",
     "@types/node": "20.8.10",
     "@types/react": "18.2.36",
     "autoprefixer": "10.4.16",
