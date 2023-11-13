@@ -43,7 +43,6 @@ const Home: NextPage<Props> = ({ posts, prev }) => {
 function HomeAbstract() {
   return (
     <div className="py-5 pr-4">
-      <h2 className="pb-5 text-2xl font-bold text-stone-900">概要</h2>
       <div className="text-md prose prose-stone max-w-full pb-5 pl-8">
         <p>
           <a href="https://github.com/makenowjust">@makenowjust</a>{" "}
