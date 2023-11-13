@@ -1,12 +1,14 @@
 import type { NextPage } from "next";
-import Link from "next/link";
 
-import { list } from "../lib/post";
+import { loadPage } from "../lib/post";
 import { render } from "../lib/markdown";
 import Layout from "../components/Layout";
+import Pagination from "../components/Pagination";
+import PostPreview, { Props as Post } from "../components/PostPreview";
 
 export async function getStaticProps() {
-  const posts = (await list()).map((post) => ({
+  const { posts: originalPosts, prev } = await loadPage(0);
+  const posts = originalPosts.map((post) => ({
     title: post.title,
     slug: post.slug,
     created: post.created,
@@ -15,26 +17,25 @@ export async function getStaticProps() {
   return {
     props: {
       posts,
+      prev,
     },
   };
 }
 
 type Props = {
   posts: Post[];
+} & PaginationProps;
+
+type PaginationProps = {
+  prev: number | null;
 };
 
-type Post = {
-  title: string;
-  slug: string;
-  created: string;
-  excerpt: string;
-};
-
-const Home: NextPage<Props> = ({ posts }) => {
+const Home: NextPage<Props> = ({ posts, prev }) => {
   return (
     <Layout>
       <HomeAbstract />
       <HomePostList posts={posts} />
+      <HomePagination prev={prev} />
     </Layout>
   );
 };
@@ -63,8 +64,8 @@ function HomeAbstract() {
   );
 }
 
-function HomePostList({ posts }: Props) {
-  const nodes = posts.map((post, key) => <HomePost {...post} key={key} />);
+function HomePostList({ posts }: { posts: Post[] }) {
+  const nodes = posts.map((post, key) => <PostPreview {...post} key={key} />);
   return (
     <>
       <h2 className="text-2xl font-bold text-stone-900">記事</h2>
@@ -73,32 +74,11 @@ function HomePostList({ posts }: Props) {
   );
 }
 
-function HomePost({ title, slug, created, excerpt }: Post) {
+function HomePagination({ prev }: PaginationProps) {
+  const prevPage = prev !== null ? `/page/${prev + 1}` : null;
   return (
-    <div className="border-b-2 py-5 pr-4">
-      <h2 className="pb-5 pl-4 text-2xl font-bold text-stone-900">
-        <Link
-          passHref={true}
-          href={`/post/${slug}`}
-          className="hover:cursor-pointer hover:underline"
-        >
-          {title}
-        </Link>
-      </h2>
-      <div
-        className="prose-h4:text-md prose prose-stone max-w-full pb-5 pl-8 prose-h1:border-b-2 prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-code:px-0"
-        dangerouslySetInnerHTML={{ __html: excerpt }}
-      />
-      <div className="pb-5 pl-8 text-center">
-        <Link
-          passHref={true}
-          href={`/post/${slug}`}
-          className="btn btn-ghost btn-block normal-case"
-        >
-          この記事を読む
-        </Link>
-      </div>
-      <div className="pl-4 text-right text-sm text-stone-800">{created}</div>
+    <div className="px-4 py-5">
+      <Pagination next={null} prev={prevPage} />
     </div>
   );
 }

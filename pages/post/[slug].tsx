@@ -1,14 +1,15 @@
 import type { NextPage, GetStaticPropsContext } from "next";
 import Layout from "../../components/Layout";
 import { render } from "../../lib/markdown";
-import { load, list } from "../../lib/post";
+import { load, loadAll } from "../../lib/post";
 
 type Query = {
   slug: string;
 };
 
 export async function getStaticPaths() {
-  const posts = (await list()).map((post) => ({
+  const originalPosts = await loadAll();
+  const posts = originalPosts.map((post) => ({
     slug: post.slug,
   }));
   return {
