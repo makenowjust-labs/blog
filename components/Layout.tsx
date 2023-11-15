@@ -18,6 +18,7 @@ export type Props = React.PropsWithChildren<{
   ogUrl?: string;
   ogImage?: string;
   ogType?: string;
+  categories?: string[];
 }>;
 
 export default function Layout({
@@ -26,6 +27,7 @@ export default function Layout({
   ogUrl,
   ogImage,
   ogType,
+  categories,
   children,
 }: Props) {
   const page = title ? `${title} | ${BLOG_TITLE}` : BLOG_TITLE;
@@ -56,6 +58,7 @@ export default function Layout({
         {children}
       </main>
       <Footer
+        categories={categories ?? []}
         author={BLOG_AUTHOR}
         year={BLOG_YEAR}
         github={BLOG_GITHUB}

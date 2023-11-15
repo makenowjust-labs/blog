@@ -4,13 +4,20 @@ export type Props = {
   title: string;
   slug: string;
   created: string;
+  category: string;
   excerpt: string;
 };
 
-export default function PostPreview({ title, slug, created, excerpt }: Props) {
+export default function PostPreview({
+  title,
+  slug,
+  created,
+  category,
+  excerpt,
+}: Props) {
   return (
     <div className="border-b-2 py-5 pr-4">
-      <h2 className="pb-5 pl-4 text-2xl font-bold text-stone-900">
+      <h2 className="pb-2 pl-4 text-2xl font-bold text-stone-900">
         <Link
           passHref={true}
           href={`/post/${slug}`}
@@ -19,6 +26,11 @@ export default function PostPreview({ title, slug, created, excerpt }: Props) {
           {title}
         </Link>
       </h2>
+      <div className="pb-4 pl-4">
+        <Link className="badge badge-neutral" href={`/category/${category}/1`}>
+          {category}
+        </Link>
+      </div>
       <div
         className="prose-h4:text-md prose prose-stone max-w-full pb-5 pl-8 prose-h1:border-b-2 prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-code:px-0"
         dangerouslySetInnerHTML={{ __html: excerpt }}

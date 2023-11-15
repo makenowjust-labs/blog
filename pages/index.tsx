@@ -1,21 +1,24 @@
 import type { NextPage } from "next";
 
-import { loadPage } from "../lib/post";
+import { computeCategories, loadPage } from "../lib/post";
 import { render } from "../lib/markdown";
 import Layout from "../components/Layout";
 import Pagination from "../components/Pagination";
 import PostPreview, { Props as Post } from "../components/PostPreview";
 
 export async function getStaticProps() {
+  const categories = await computeCategories();
   const { posts: originalPosts, prev } = await loadPage(0);
   const posts = originalPosts.map((post) => ({
     title: post.title,
     slug: post.slug,
     created: post.created,
+    category: post.category,
     excerpt: render(post.excerpt),
   }));
   return {
     props: {
+      categories: categories.map((data) => data.category),
       posts,
       prev,
     },
@@ -23,6 +26,7 @@ export async function getStaticProps() {
 }
 
 type Props = {
+  categories: string[];
   posts: Post[];
 } & PaginationProps;
 
@@ -30,9 +34,9 @@ type PaginationProps = {
   prev: number | null;
 };
 
-const Home: NextPage<Props> = ({ posts, prev }) => {
+const Home: NextPage<Props> = ({ categories, posts, prev }) => {
   return (
-    <Layout>
+    <Layout categories={categories}>
       <HomeAbstract />
       <HomePostList posts={posts} />
       <HomePagination prev={prev} />

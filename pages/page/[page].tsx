@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticPropsContext } from "next";
 
-import { computePaginationInfo, loadPage } from "../../lib/post";
+import { computeCategories, computePagination, loadPage } from "../../lib/post";
 import { render } from "../../lib/markdown";
 import Layout from "../../components/Layout";
 import Pagination from "../../components/Pagination";
@@ -11,7 +11,7 @@ type Query = {
 };
 
 export async function getStaticPaths() {
-  const { total } = await computePaginationInfo();
+  const { total } = await computePagination();
   const pages = Array.from({ length: total }, (_, page) => page + 1).filter(
     (page) => page !== 1,
   );
@@ -24,12 +24,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext<Query>) {
+  const categories = await computeCategories();
   const page = Number.parseInt(params!.page, 10);
   const { posts: originalPosts, next, prev } = await loadPage(page - 1);
   const posts = originalPosts.map((post) => ({
     title: post.title,
     slug: post.slug,
     created: post.created,
+    category: post.category,
     excerpt: render(post.excerpt),
   }));
   return {
@@ -37,12 +39,14 @@ export async function getStaticProps({ params }: GetStaticPropsContext<Query>) {
       posts,
       next,
       prev,
+      categories: categories.map((data) => data.category),
     },
   };
 }
 
 type Props = {
   posts: Post[];
+  categories: string[];
 } & PaginationProps;
 
 type PaginationProps = {
@@ -50,9 +54,9 @@ type PaginationProps = {
   prev: number | null;
 };
 
-const Page: NextPage<Props> = ({ posts, next, prev }) => {
+const Page: NextPage<Props> = ({ posts, next, prev, categories }) => {
   return (
-    <Layout>
+    <Layout categories={categories}>
       <PagePostList posts={posts} />
       <PagePagination next={next} prev={prev} />
     </Layout>

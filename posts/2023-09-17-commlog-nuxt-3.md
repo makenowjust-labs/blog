@@ -5,6 +5,7 @@ updated: 2023-09-17
 description: |
   commlogをNuxt 3に移行したので、その記録を報告します。
   Nuxt 3の他にTailwind CSSやMock Service Worker (msw)、Bun、Netlify Buildなど様々なライブラリ・開発ツールを利用し、これまでよりもモダンな構成にできたのではないかと思います。
+category: フロントエンド
 ---
 
 [commlog](https://commlog.quine.codes)はこれまでNuxt 2を利用してきました。

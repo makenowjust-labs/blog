@@ -4,6 +4,7 @@ created: 2022-03-11
 updated: 2022-03-11
 description: |-
   GatsbyJS で作られていたこのブログを Next.js に移行したので、技術スタックなどの説明をします。
+category: フロントエンド
 ---
 
 元々は GatsbyJS で作られていたこのブログを、Next.js で書き直して復活させました。

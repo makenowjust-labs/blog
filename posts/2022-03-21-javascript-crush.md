@@ -5,6 +5,7 @@ updated: 2022-03-21
 description: |-
   JavaScript の単純な minification を越えた自己解凍的圧縮技術である、
   JS Crush や Roadroller について、その内部で使われているテクニックも含めて解説します。
+category: フロントエンド
 ---
 
 JavaScript のソースコードを小さくする方法として [UglifyJS] や [Terser] といった minification ツールを用いるものが良く知られています。
