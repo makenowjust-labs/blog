@@ -28,7 +28,7 @@
     "@fontsource/share-tech-mono": "5.0.8",
     "@tailwindcss/typography": "0.5.10",
     "@types/markdown-it": "13.0.7",
-    "@types/node": "20.10.3",
+    "@types/node": "20.10.4",
     "@types/react": "18.2.42",
     "autoprefixer": "10.4.16",
     "budoux": "0.6.1",
