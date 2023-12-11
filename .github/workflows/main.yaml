@@ -3,7 +3,8 @@ name: Main
 on:
   push:
     branches: [main]
-  pull_request: {}
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -11,15 +12,15 @@ jobs:
     name: Lint
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: '17'
+          bun-version: latest
       - name: Install
-        run: npm ci
+        run: bun install
       - name: Lint
-        run: npm run lint
+        run: bun run lint
       - name: Type Check
-        run: npm run typecheck
+        run: bun run typecheck
 
   deploy:
     needs: [lint]
@@ -28,9 +29,9 @@ jobs:
     name: Deploy to GitHub Pages
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: '20'
+          bun-version: latest
       - uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.next/cache
@@ -38,11 +39,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Install
-        run: npm ci
+        run: bun install
       - name: Build
-        run: npm run build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        run: bun run build
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: out
+          path: out

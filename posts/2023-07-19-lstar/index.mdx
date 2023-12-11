@@ -1,0 +1,417 @@
+---
+title: "L*について説明してみる"
+created: 2023-07-19
+updated: 2023-12-10
+description: |
+  Automata Learningアルゴリズムの代表であるL*について説明します。
+tags:
+  - 形式言語
+  - オートマトン理論
+---
+
+Automata Learning とは、未知の (ブラックボックス) システムに対する入力とその出力から、システムの振舞いを有限状態オートマトンとして再現する手法です。
+これは、仕様が形式化されていないシステムに対して形式的な手法を適用するための足掛りになるなど、近年重要な技術となっています。
+
+Angluin による$L\ast$は Automata Learning のアルゴリズムの中でも最も代表的な存在です。
+$L\ast$は未知の正規言語を教師を使って学習するアルゴリズムで、多くの Automata Learning の基礎となっています。
+
+この記事では$L\ast$の、その原理やアルゴリズムの詳細について解説します。
+
+{/* read more */}
+
+import Image from "next/legacy/image";
+
+import slide1Image from "./images/slide1.png";
+import slide2Image from "./images/slide2.png";
+import slide3Image from "./images/slide3.png";
+import slide4Image from "./images/slide4.png";
+import slide5Image from "./images/slide5.png";
+
+# $L\ast$について
+
+$L\ast$は[Dana Angluin](https://en.wikipedia.org/wiki/Dana_Angluin)によって提案された Automata Learning のアルゴリズムです[\[1\]](#cite1)。
+教師を用いて、未知の正規言語のオートマトン (DFA) による表現を学習できます。
+
+ここで言う「未知」というのは、オートマトンや正規表現でどのように表すのかは定かではない、という状況を表します。
+$L = \{ w\ |\ w\text{は長さが3の倍数} \}$や$L = \{ w\ |\ w\text{は}aba\text{と}bab\text{を含む} \}$のように文章で言語が定義されている場合や、もっと現実的な例では、学習したい言語は既にコンパイルされたプログラムで受理される文字列として定義されるような状況をイメージしてください。
+
+$L\ast$について、まずはじめに動作の大雑把なイメージを説明します。
+
+## $L\ast$の動作のイメージ
+
+$L\ast$の登場人物は「教師 (Teacher)」と「学習者 (Learner)」の二人です。
+
+この例では、$L = \{ w\ |\ w\text{は長さが3の倍数} \}$を$L\ast$で学習する様子を説明していきます。
+
+1. 学習者は学習対象のシステムを予想して仮説 (Hypothesis) となるオートマトンを構築し、それが正しいかどうかを教師に問いかけます。
+
+   <Image src={slide1Image} alt="" />
+
+2. 教師はその仮説が正しいかどうかを答えます。間違っている場合、反例となる入力も同時に返します。
+
+   <Image src={slide2Image} alt="" />
+
+3. 学習者は反例を元に、仮説のオートマトンを修正します。
+
+   <Image src={slide3Image} alt="" />
+
+4. 修正した仮説のオートマトンが正しいかを、再度教師に問いかけます。
+
+   <Image src={slide4Image} alt="" />
+
+5. 仮説のオートマトンが正しい場合、$L\ast$が終了します。
+
+   <Image src={slide5Image} alt="" />
+
+このように学習者が教師に問いかけを繰り返して、仮説を学習対象のオートマトンに近付けていくのが$L\ast$となります。
+
+## $L\ast$の詳細
+
+それでは、学習者はどのようにして仮説のオートマトンを構築・修正していくのでしょうか？
+ここからは、$L\ast$の詳細について説明していきます。
+
+なお、この説明は Hames Worrell の講義ノート[\[2\]](#cite2)を元にしています。
+
+### 教師
+
+ここまで教師と言ってきましたが、具体的には次の 2 つのクエリ (関数) の組として定義されます。
+
+- $\mathsf{MEMBER}(w)$: 文字列$w$が学習対象のオートマトンで受理されるかどうかを判定するクエリ。
+- $\mathsf{EQUIV}(\mathcal{H})$: 仮説のオートマトン$\mathcal{H}$が学習対象のオートマトンと等しいかどうかを判定するクエリ。違う場合は反例となる文字列を返します。
+
+### $Q$と$T$
+
+$L\ast$では$Q$と$T$という 2 つの文字列の集合を、空文字列のみの集合$\{ \varepsilon \}$から更新していき、この文字列の集合によって仮説のオートマトンを構築します。
+それぞれ、次のような役割になります。
+
+- $Q$: 仮説のオートマトンの状態集合となる文字列の集合。
+- $T$: $Q$の各文字列の末尾に連結したときに、受理されるかどうかで区別できる文字列の集合。
+
+これだけだとよく分からないので、さらなる説明のために$T$による等価性$\equiv_T$を次のように定義します。
+
+$$
+q_1 \equiv_T q_2 \iff \forall t \in T.\: \mathsf{MEMBER}(q_1 \cdot t) = \mathsf{MEMBER}(q_2 \cdot t)
+$$
+
+$q_1 \equiv_T q_2$のとき「$q_1$と$q_2$は$T$によって等価」と呼び、そうでない場合 ($q_1 \not\equiv_T q_2$) 「$q_1$と$q_2$は$T$によって区別される」と呼ぶことにします。
+
+このとき、$Q$は$T$によって区別される文字列の集合と説明できます。
+つまり、$Q$は次の分離性 (Separability) 条件を満たすものとします。
+
+$$
+\forall q_1, q_2 \in Q.\ (q_1 = q_2 \iff q_1 \equiv_T q_2)
+$$
+
+さらに、$Q$と$T$からオートマトンを構築するために、次の閉鎖性 (Closedness) 条件を考えます。
+
+$$
+\forall q_1 \in Q, \sigma \in \Sigma.\: \exists q_2 \in Q.\: q_1 \cdot \sigma \equiv_T q_2
+$$
+
+$Q$と$T$が分離性条件と閉鎖性条件を満たしているとき、次のようにして仮説の DFA $\mathcal{H}(Q, T)$を構築できます。
+
+$$
+\begin{array}{l}
+\mathcal{H}(Q, T) = (\Sigma, Q, \varepsilon, F, \delta) \\
+\text{where} \\
+\quad\begin{array}{rcl}
+F &=& \{ q\ |\ q \in Q \land \mathsf{MEMBER}(q) \} \\
+\delta(q, \sigma) &=& q'\ \text{s.t.}\ q' \equiv_T q \cdot \sigma
+\end{array}
+\end{array}
+$$
+
+分離性条件により$\delta$は決定的に定義されて、閉鎖性条件により$\delta$が正しく定義されることに注意してください。
+
+### $Q$と$T$の更新方法
+
+$L\ast$は次のような手順のアルゴリズムになります。
+
+1. $Q$と$T$を$\{ \varepsilon \}$で初期化
+2. $Q$を閉鎖性を満たすように更新する
+3. 仮説の DFA $\mathcal{H} = \mathcal{H}(Q, T)$を構築し、$\mathsf{EQUIV}(\mathcal{H})$を呼ぶ
+4. $\mathsf{EQUIV}(\mathcal{H})$が成功した場合は、$\mathcal{H}$を返す
+5. $\mathsf{EQUIV}(\mathcal{H})$が失敗した場合は、反例を分割して必要な$q', t'$を求め$Q, T$に追加する
+6. 2 から 6 を$\mathsf{EQUIV}(\mathcal{H})$が成功するまで繰り返す
+
+ここで問題となるのは、手順 2 や 5 で$Q$や$T$をどのようにして更新していくかです。
+これらの更新方法について説明していきます。
+
+まず、手順 2 の$Q$を閉鎖性を満たすように更新していく方法について説明します。
+手順 1 で$Q = \{ \varepsilon \}$としたときや、手順 5 で$Q$に$q'$を追加したあと、$Q$と$T$は閉鎖性を満たしていない可能性があります。
+そこで、閉鎖性を満たすように足りない文字列を$Q$に追加する必要があります。
+
+これを行う関数は次のようになります。
+
+```pseudocode
+\begin{algorithm}
+\caption{Correct $Q$ to satisfy closedness.}
+\begin{algorithmic}
+\FUNCTION{Close}{$Q, T$}
+  \FOR{$q \in Q$}
+    \FOR{$\sigma \in \Sigma$}
+      \IF{$\lnot \exists q' \in Q.\: q \cdot \sigma \equiv_T q'$}
+        \STATE $Q \gets Q \cup \{ q \cdot \sigma \}$
+      \ENDIF
+    \ENDFOR
+  \ENDFOR
+  \RETURN $Q$
+\ENDFUNCTION
+\end{algorithmic}
+\end{algorithm}
+```
+
+内容はシンプルで、各状態$q$とアルファベット$\sigma$について、$q \cdot \sigma$と$T$によって等価な状態が存在するかを調べて、無い場合は$q \cdot \sigma$を追加する、といったものになっています。
+
+次に、手順 5 の反例を分割する方法について説明します。
+
+これは、次のような関数で実現できます。
+ただし、$w$は$\mathsf{EQUIV}(\mathcal{H})$の返した反例の文字列で、$\mathcal{H}$は仮定の DFA です。
+
+```pseudocode
+\begin{algorithm}
+\caption{Split the given counterexample.}
+\begin{algorithmic}
+\FUNCTION{Split}{$w, \mathcal{H}$}
+  \STATE $\mathcal{H} = (\Sigma, Q, q_0, F, \delta)$
+  \STATE $q \gets q_0,\ i \gets 1$
+  \WHILE{$\mathbf{true}$}
+    \STATE $q \gets \delta(q, w_i),\ i \gets i + 1$
+    \IF{$\mathsf{MEMBER}(q \cdot w_i \dots w_{|w|}) \ne \mathsf{MEMBER}(w)$}
+      \RETURN $(w_1 \dots w_{i-1}, w_i \dots w_{|w|})$
+    \ENDIF
+  \ENDWHILE
+\ENDFUNCTION
+\end{algorithmic}
+\end{algorithm}
+```
+
+$w$は反例の文字列のため、どこかしらには$\mathsf{MEMBER}(q \cdot w_i \dots w_{|w|}) \ne \mathsf{MEMBER}(w)$となる状態$q$があり、アルゴリズムは正しく分割結果を返します。
+
+### $L\ast$アルゴリズム
+
+最後に、上で定義した関数を使った$L\ast$のアルゴリズムを疑似コードで示します。
+
+```pseudocode
+\begin{algorithm}
+\caption{The $L\ast$ algorithm.}
+\begin{algorithmic}
+\FUNCTION{Learn}{}
+  \STATE $Q \gets \{ \varepsilon \},\ T \gets \{ \varepsilon \}$
+  \WHILE{$\mathbf{true}$}
+    \STATE $Q \gets$ \CALL{Close}{$Q, T$}
+    \STATE $\mathcal{H} = \mathcal{H}(Q, T)$
+    \STATE $\mathnormal{result} = \mathsf{EQUIV}(\mathcal{H})$
+    \IF{$\mathnormal{result}$ is success}
+      \RETURN $\mathcal{H}$
+    \ENDIF
+    \STATE Now, $\mathnormal{result}$ is a counterexample $w$.
+    \STATE $(q', t') =$ \CALL{Split}{$w, \mathcal{H}$}
+    \STATE $Q \gets Q \cup \{ q' \},\ T \gets T \cup \{ t' \}$
+  \ENDWHILE
+\ENDFUNCTION
+\end{algorithmic}
+\end{algorithm}
+```
+
+大体前の説明の通りになっているのが分かるのではないかと思います。
+
+## アルゴリズムの分析
+
+$L\ast$の正確性や停止性、計算量について少し分析します。
+
+### 正確性・停止性
+
+$L\ast$は$\mathsf{EQUIV}(\mathcal{H})$に成功した場合に停止するため、教師が正しければ結果の DFA は学習対象のオートマトンと等価なものになるはずです。
+
+一方、$L\ast$がいずれ停止するという保証はどこにあるのでしょうか？
+これは、次の[Myhill-Nerode の定理](https://ja.wikipedia.org/wiki/マイヒル–ネローデの定理)から説明できます。
+
+> 言語$L$の同値関係$\equiv_L$を$w_1 \equiv_L w_2 \iff \forall w \in \Sigma^\ast.\: (w_1 w \in L \iff w_2 w \in L)$で定義し、$\equiv_L$による同値類$[w]_L = \{ w' \in \Sigma^\ast | w \equiv_L w' \}$で定義する。
+> このとき同値類$[w]_L$の数が有限である、かつそのときに限り$L$は正規言語である。
+
+関数<span className="katex-ps-funcname">Learn</span>のループでは、一周毎に$Q$の要素が少なくとも 1 つは増加してきます。
+$Q$の各要素は$T$によって区別できるのですが、これはつまり学習対象の言語では$Q$の各要素はそれぞれ別の同値類に入ることを意味します。
+よって、$Q$が無尽蔵に増え続けるということは起こり得ず、同値類の数程度 (つまり最小オートマトンの状態数) のループ回数で停止するはずだと分かります。
+さらに、同値類が異なるように状態を分けていることから、$L\ast$の結果の DFA は最小 DFA となることも分かります。
+
+### 計算量
+
+計算量として、$\mathsf{EQUIV}(\mathcal{H})$や$\mathsf{MEMBER}(w)$の呼び出される回数について考察します。
+ここでの$Q$と$T$はアルゴリズムが結果を返す直前の$Q$と$T$とします。
+
+まず、$\mathsf{EQUIV}(\mathcal{H})$の呼び出される回数は、単純に$|T| - 1$回のはずです。
+
+次に、$\mathsf{MEMBER}(w)$の呼び出される回数を考えます。
+
+$\equiv_T$の中でも$O(|T|)$回呼び出されることに注意すると、関数<span className="katex-ps-funcname">Close</span>で呼び出される回数は$O(|Q||\Sigma||Q||T|)$回程度だと分かります。
+ただし、$q \in Q, t \in T$に対する$\mathsf{MEMBER}(q \cdot t)$の呼び出しは$\equiv_T$の中で何度も行なわれるので、結果をキャッシュすることで、呼び出し回数を$O((|Q||\Sigma| + |Q|)|T|)$回程度にできます。
+
+また、関数<span className="katex-ps-funcname">Split</span>の中で呼び出される回数は、反例の文字列さを$w$として$O(|w|)$回程度のはずです。
+$|w|$は無尽蔵に大きくなりそうに思えますが、もし$\mathsf{EQUIV}(\mathcal{H})$が常に最小の反例を返すのであれば$|w|$は最小 NFA の大きさ$|Q|$以下となるはずなので、実際にはそれほど大きくなりません。
+さらに、分割点の探索を$\mathsf{MEMBER}(q_{i-1} \cdot w_i \dots w_{|w|}) \ne \mathsf{MEMBER}(q_i \cdot w_{i+1} \dots w_{|w|})$となる位置$i$を 2 分探索で探すことで$O(\log |w|)$で実現できます。
+
+$|T| \le |Q|$であることを踏まえてまとめると、$O(((|Q||\Sigma| + |Q|)|T| + \log |w|)|T|) = O(|Q| (|Q|^2 |\Sigma| + \log |w|))$程度だと分かります。
+今一効率が良いと言えるのか分かりませんが、多項式時間で未知の正規言語の DFA が求められるというのは意外なことだと思います。
+
+## 実装
+
+ここまで理解すれば実装は難しくないのではないかと思います。
+参考までに Ruby による実装を残しておきます。
+
+```ruby
+class DFA
+  def initialize(state_set, initial, accept_set, delta)
+    @state_set = state_set
+    @initial = initial
+    @accept_set = accept_set
+    @delta = delta
+  end
+
+  def run(w)
+    q, i = @initial, 0
+    while i < w.size && q
+      q, i = @delta[q][w[i]], i + 1
+    end
+    i == w.size && @accept_set.include?(q)
+  end
+end
+
+class LStar
+  def initialize(alphabet, teacher)
+    @alphabet = alphabet
+    @teacher = teacher
+    @state_set = ['']
+    @tests = ['']
+  end
+
+  def learn
+    loop do
+      delta = close
+      h = make_hypothesis(delta)
+      result = @teacher.find_counterexample(h)
+      return h unless result
+      new_state, new_test = split(delta, result)
+      @state_set << new_state unless @state_set.include?(new_state)
+      @tests << new_test unless @tests.include?(new_test)
+    end
+  end
+
+  def distinguish?(w1, w2)
+    @tests.any? { |t| @teacher.member?(w1 + t) != @teacher.member?(w2 + t) }
+  end
+
+  def close
+    delta = {}
+    @state_set.each do |state|
+      delta[state] = {}
+      @alphabet.each do |a|
+        next_state = @state_set.find { |q| !distinguish?(state + a, q) }
+        unless next_state
+          next_state = state + a
+          @state_set << next_state
+        end
+        delta[state][a] = next_state
+      end
+    end
+    delta
+  end
+
+  def split(delta, w)
+    q, i = '', 0
+    expected = @teacher.member?(w)
+    loop do
+      unless @teacher.member?(delta[q][w[i]] + w[i+1..]) == expected
+        return [q + w[i], w[i+1..]]
+      end
+      q, i = delta[q][w[i]], i + 1
+    end
+  end
+
+  def make_hypothesis(delta)
+    DFA.new(
+      @state_set,
+      '',
+      @state_set.filter { |q| @teacher.member?(q) },
+      delta
+    )
+  end
+end
+```
+
+使い方は次のように`member?`と`find_counterexample`メソッドを持ったクラスを用意して、それを`teacher`として`LStar`を作り、`learn`メソッドを呼び出します。
+下の例では$L = \{ w\ |\ w\text{は長さが3の倍数} \}$の場合の学習を行なっています。
+
+```ruby
+class SampleTeacher
+  def member?(w)
+    w.size % 3 == 0
+  end
+
+  def find_counterexample(h)
+    10.times.map { 'a' * _1 }.find { |w| h.run(w) != member?(w) }
+  end
+end
+
+teacher = SampleTeacher.new
+learner = LStar.new(['a'], teacher)
+dfa = learner.learn
+pp dfa
+```
+
+ちなみに、あまり効率の良い実装ではないことには注意してください。
+工夫できるところは色々あるので、より効率的な実装を追求してみてもいいでしょう。
+
+### 反例の見つけ方
+
+実際に実装をしてみると悩むのが、どうやって反例を見つけるか、という点だと思います。
+上の例はアルファベットが 1 種類の単純なものなので、適当な回数繰り返して試せばいいのですが、アルファベットが複数あるとこの方法も使えません。
+
+代表的な方法は、DFA をランダムに遷移して文字列を生成する方法です。
+初期状態からランダムに何度か遷移して、その遷移に使った文字列で反例を探します。
+この方法は効率的ですが、ランダム性があるため場合によっては学習が不完全に打ち切られてしまう可能性があります。
+
+他にも W method や WP method と呼ばれる決定的な方法も存在します[\[3\]](#cite3)。
+
+[LearnLib](https://github.com/LearnLib/learnlib)であれば、これらの方法を試すことができるので、使ってみるといいかもしれません。
+
+## 発展
+
+**Mealy 機械への応用**:
+少し工夫することで[Mealy 機械](https://ja.wikipedia.org/wiki/ミーリ・マシン)を学習することもできます。
+具体的には$\mathsf{MEMBER}(w)$の結果を受理したかどうかではなく、最後の遷移の出力とすることで Mealy 機械の学習が可能となります。
+
+**Compisitional Automata Learning**:
+冒頭で書いた通り、近年 Automata Learning は形式検証への応用が盛んに行なわれています。
+しかし、対象のシステムのオートマトンでの状態数が大きい場合、現実的な時間で学習が行なえない場合があります。
+そういった問題を解決するために、現実のシステムは複数のコンポーネントから構成されていることに注目して、複数コンポーネントからなるオートマトンを学習する Compisitional Automata Learning の手法が研究されています[\[4\]](#cite4) [\[5\]](#cite5)。
+
+# あとがき
+
+永らく書こうと思って放置していた$L\ast$についての記事をまとめることができました。
+
+$L\ast$は有限状態オートマトンの有限性が如実に現れた興味深いアルゴリズムだと思います。
+さらに、実用上の重要性も高まっており、研究対象としても興味深いのではないかと考えています。
+
+あと本文とは直接関係ないのですが、この記事のために Markdown 中に`pseudocode`を書けるようにしてみました。
+[pseudocode.js](https://github.com/SaswatPadhi/pseudocode.js)を使っています。
+どうだったでしょうか。
+
+終わりに、結構長い記事になってしまいましたが、最後まで目を通していただきありがとうございました。
+
+# 参考文献
+
+1. <a name="cite1"></a> Angluin, Dana. "Learning regular sets from queries and counterexamples."
+   Information and computation 75.2 (1987): 87-106.
+2. <a name="cite2"></a> James Worrell. "Exactly Learning Regular Languages Using
+   Membership and Equivalence Queries." Lecture notes by James Worrell, University
+   of Oxford. [https://www.cs.ox.ac.uk/people/james.worrell/DFA-learning.pdf](https://www.cs.ox.ac.uk/people/james.worrell/DFA-learning.pdf)
+3. <a name="cite3"></a> Khendek, Fujiwara Bochmann, et al. "Test selection based
+   on finite state models." IEEE Transactions on software engineering 17.591-603
+   (1991): 10-1109.
+4. <a name="cite4"></a> Labbaf, Faezeh, et al. "Compositional Learning for Interleaving
+   Parallel Automata." Foundations of Software Science and Computation Structures
+   LNCS 13992 (2023): 413.
+5. <a name="cite5"></a> Neele, Thomas, and Matteo Sammartino. "Compositional Automata
+   Learning of Synchronous Systems." International Conference on Fundamental Approaches
+   to Software Engineering. Cham: Springer Nature Switzerland, 2023.
