@@ -1,7 +1,7 @@
 ---
 title: "演算子の結合規則のバリエーションについて"
 created: 2023-12-04
-updated: 2023-12-04
+updated: 2023-12-12
 description: |
   演算子には左結合や右結合といった結合規則が存在します。
   最近RPrecという演算子の優先順位に基づく構文解析の実装を行なったため、これらについて理解が深まりました。
@@ -9,6 +9,7 @@ description: |
 tags:
   - 形式言語
   - 構文解析
+  - Ruby
 ---
 
 最近[RPrec](https://github.com/makenowjust/rprec)という演算子の優先順位に基づいて構文解析を行うRubyのライブラリを実装しました。
@@ -33,7 +34,7 @@ tags:
 
 `README.md`から取ってきた例ですが、次のコードは四則演算を含む簡単な式の構文を定義して、パースしています。
 
-```ruby
+```ruby showLineNumbers
 grammar = RPrec::DSL.build do
   prec :main => :add_sub
 

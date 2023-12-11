@@ -1,7 +1,7 @@
 ---
 title: "commlogのNuxt 3移行録"
 created: 2023-09-17
-updated: 2023-09-17
+updated: 2023-12-12
 description: |
   commlogをNuxt 3に移行したので、その記録を報告します。
   Nuxt 3の他にTailwind CSSやMock Service Worker (msw)、Bun、Netlify Buildなど様々なライブラリ・開発ツールを利用し、これまでよりもモダンな構成にできたのではないかと思います。
@@ -55,9 +55,11 @@ import commlogRepoImage from "./images/commlog-repo.png";
 
 まず初めに、既存のコードをすべて削除して、Nuxt 3プロジェクトのセットアップコマンドである`nuxi init`を実行しました。
 
-```console
-$ bunx nuxi@latest init commlog
-```
+<div class="not-prose mockup-code">
+  <pre data-prefix="$">
+    <code>bunx nuxi@latest init commlog</code>
+  </pre>
+</div>
 
 今回は開発に[Bun](https://bun.sh)を使うことにしたので、`bunx`を使ってコマンドを実行しています。
 

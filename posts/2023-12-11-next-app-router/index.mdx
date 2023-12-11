@@ -1,0 +1,218 @@
+---
+title: "ブログを App Router へ移行しました"
+created: 2023-12-11
+updated: 2023-12-11
+description: |
+  このブログのNext.jsで実装されています。
+  これまではPages Routerを利用していたのですが、「カテゴリ機能」を追加する過程で気になる点が出てきたため、今回App Routerへと移行しました。
+  この記事では、その中で得た知見をまとめます。
+tags:
+  - フロントエンド
+  - JavaScript
+---
+
+このブログは現在 (2023年12月11日付) Next.jsで実装されています ([移行の際の記事](https://makenowjust-labs.github.io/blog/post/2022-03-11-move-to-next-js))。
+
+これまでは実装に[Pages Router](https://nextjs.org/docs/pages)を使っていました。
+最近「カテゴリ機能」(現在は「タグ機能」) を追加したのですが、その際にカテゴリの一覧の取得をすべてのページの`getStaticProps`で行わなければならず、不便に感じていました。
+そうした問題の解消のために、[App Router](https://nextjs.org/docs/app)へと移行しました。
+
+他にもOGP画像の生成に[satori](https://github.com/vercel/satori)を使うようにしたり、GitHub PagesへのデプロイをGitHub Actionsで成果物をアップロードする形にしたり、色々と修正をしました。
+それらの実装を通じて学んだことを、この記事では整理します。
+
+{/* read more */}
+
+import Image from "next/legacy/image";
+
+import categoryListImage from "./images/category-list.png";
+
+# これまでの実装と問題点
+
+これまでこのブログは次のような実装になっていました。
+
+- Next.jsの[Pages Router](https://nextjs.org/docs/pages)を使って[SSG](https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation)。
+- SSG時にMarkdownファイルを読み込んで描画。
+- OGP画像を[skia-canvas](https://github.com/samizdatco/skia-canvas)を使って生成。
+
+このような実装になった経緯は「[Next.jsに移行した際の記事](https://makenowjust-labs.github.io/blog/post/2022-03-11-move-to-next-js)」と「[OGP画像の生成を実装した際の記事](https://makenowjust-labs.github.io/blog/post/2022-04-25-og-image)」を参照してください。
+
+さて、最近このブログに「カテゴリ機能」を導入しました。
+これはブログの記事にカテゴリを設定できて、それらの一覧を見れるようにする機能です。
+
+「カテゴリ一覧」はページの下部に表示されていて、そのカテゴリの記事の一覧のページへと飛べるようになっています。
+
+<figure>
+  <div className="not-prose border-2 border-slate-700 rounded-lg p-2">
+    <Image src={categoryListImage} alt="「カテゴリ一覧」のスクリーンショット" />
+  </div>
+  <figcaption className="text-center">
+    「カテゴリ一覧」のスクリーンショット (現在は「タグ一覧」になっています)
+  </figcaption>
+</figure>
+
+この機能は各ページの`getStaticProps`でカテゴリ一覧を取得して、それを`Footer`コンポーネントへと渡すことで実現されていました ([参考](https://github.com/makenowjust-labs/blog/blob/2e0ef3bd98925ee67c2767dced32248ba7b8faa7/pages/index.tsx#L10))。
+
+一応、この方法でも正しく実装できるのですが、すべてのページの`getStaticProps`でカテゴリ一覧を取得する必要がありました。
+そのため、新しいページを追加した際にカテゴリ一覧の取得を忘れないようにする必要があったり、ページに共通して表示する要素を増やす場合に (例えば最新記事一覧)、同じように全てのページにそのデータ取得するコードを追加する必要があり、かなり煩雑でバグの原因にもなりやすいように思えます。
+
+今回はNext.jsのApp Routerへと移行し、Server Componentを上手く利用することで、こういった問題を解決しました。
+
+# App Routerとは
+
+[App Router](https://nextjs.org/docs/app)はNext.jsのバージョン13から追加された、新しいファイルベースのルーティングの仕組みです。
+
+以前のPage Routerとの主な違いは次の通りです。
+
+- ファイルを`app`ディレクトリに配置する。
+- 1つのディレクトリが1つのパスに対応して、その中に`page.tsx`や`layout.tsx`を配置する。
+- コンポーネントはデフォルトで[Server Component](https://nextjs.org/docs/app/building-your-application/rendering/server-components)になる。
+
+この中で重要なのは、コンポーネントがServer Componentになるという点です。
+
+Server Componentは (一応) Reactの機能の1つで、サーバーで描画する際に非同期でデータを取得するようなコンポーネントが利用できるようになるものです。
+つまり、`async`関数をReactのコンポーネントとして記述できるようなり、例えば次のような関数をコンポーネントとして使えるようになります。
+
+```js {4} showLineNumbers
+import fs from "fs/promises";
+
+const ReadMe = async () => {
+  const contents = await fs.readFile("README.md", "utf-8");
+  return (
+    <div>
+      <h1>README.mdの中身</h1>
+      <pre>
+        <code>{contents}</code>
+      </pre>
+    </div>
+  );
+};
+```
+
+このコンポーネント場合、サーバーでの描画中に`README.md`の内容が取得されて、描画されることになります。
+
+Server Componentの子要素として、さらにServer Componentをネストさせることもできます。
+その場合も同様に、**子要素で非同期なデータの取得が可能**になります。
+今回はこれがとても重要で、今まではページに対応するファイルの`getStaticProps`で一度に取得するしかなかったデータを、レイアウトファイルの中でも取得できるようになるわけです。
+
+というわけでApp Routerへの移行を決定しました。
+
+# 移行の流れ
+
+ここからは、実際の移行の流れを説明していきます。
+
+## 方針
+
+commlogのときと同様に、今回もアプリを1から作り直すことで移行しました。
+というのも、MarkdownからMDXへの移行などの他の課題も一度に解決してしまおうと思ったためです。
+修正点が多くなるのは分かっていたので、完全に作り直した方が結果的に楽だろうという判断でした。
+意外と元のコードと変わらなかった部分も多いので、今回の場合はどちらでも良かった気がします。
+
+さて、最初は`create-next-app`を実行しました。
+
+<div class="not-prose mockup-code">
+  <pre data-prefix="$">
+    <code>bunx create-next-app blog</code>
+  </pre>
+</div>
+
+色々聞かれたけれど、基本的にはデフォルトのままだったと思います。
+
+また、`bunx`を利用していることから分かるように、今回は[Bun](https://bun.sh)を利用しています。
+Bunを使ったことによる問題は今のところ1つだけでした。
+それなりにやれているのではないかと思います。
+
+## MDXへの移行
+
+最初に行ったのはMarkdownから[MDX](https://mdxjs.com)への移行です。
+
+MDXはMarkdown中にJavaScriptやJSXを記述できるようにしたマークアップ言語です。
+JSXが記述できるので、Next.jsの`<Image>`コンポーネントを使えるようになるなど、様々な利益があります。
+今回もいくつかの箇所でMDXの機能を利用しています。
+
+Next.jsでは[`@next/mdx`を追加する](https://nextjs.org/docs/pages/building-your-application/configuring/mdx)ことで、`.mdx`ファイルが`import`できるようになったり、`app`ディレクトリに置いた`mdx`ファイルがルーティングのパスとして認識されるようになったりします。
+
+今回悩んだのは、MDXファイルをどのようにNext.jsのルーティングに反映させるかでした。
+
+実装を始めた当初は、`app/post`ディレクトリ以下に各記事のMDXファイルを配置することで、Next.jsのルーティングに反映させる方法を考えていました。
+しかし、この方法ではレイアウトから現在描画しようとしているMDXファイルのfrontmatterを取得できず、ページのタイトルなどを上手く設定できなそうだったため、別の方法を取ることにしました。
+
+そこで取ったのが、記事は`posts`ディレクトリに配置して、`app/post/[slug]/page.tsx`から`[slug]`パラメータに応じて動的`import`する、という方法になります。
+こうすることでMDXファイルのfrontmatterを見てページのタイトルなどを設定できるようにしました。
+また、関連する画像ファイルなども近くに置けるようになったので、悪くない選択だったと思っています。
+
+ただ、必要な情報を`metadata`として`export`する`rehype`のプラグインを作れば`app`ディレクトリに置く方針でも上手くいったような気もします。
+
+## `excerpt`の取得
+
+MDXファイルの`excerpt` (トップページなどで表示される記事の冒頭の抜粋) をどうやって取得するかは課題の1つでした。
+
+これまでは[`gray-matter`](https://github.com/jonschlinkert/gray-matter)の機能を利用していました。
+しかし、MDXではこれを直接利用することはできません。
+
+最初は、[`rehype-infer-description-meta`](https://github.com/rehypejs/rehype-infer-description-meta)が利用できないかと模索していました。
+`rehype-infer-description-meta`は`rehype`のプラグインで、処理中の文書の抜粋を取得して、`file.data.meta.description`や`file.data.meta.descriptionHast`にその値を設定します。
+この設定した値をどうにかしてMDXから`export`すればいいと思い、[`remark-mdx-frontmatter`](https://github.com/remcohaszing/remark-mdx-frontmatter)を参考にそのような`rehype`の自前のプラグインを実装しました。
+
+しかし、`rehype-infer-description-meta`の中で行っているのは`hast-util-excerpt`というライブラリを呼び出しているだけだったので、最終的には`excerpt`を取得する処理もそれを使って自前で実装し、プラグインとして作りました。
+
+そうして実装したのが[`rehype-mdx-excerpt.mjs`](https://github.com/makenowjust-labs/blog/blob/e699a862519fe199b297fbfd1836abe137a74307/src/rehype-mdx-excerpt.mjs)になります。
+
+また、以前の実装でもMarkdown-Itのプラグインとして実装していた`pseudocode`の対応も、同じくプラグインとして実装しています。
+
+## `Image`の問題
+
+せっかくMDXを使えるようになったのだから`next/image`を使おうとしたところ、次のようなエラーが出てしまいました。
+
+```
+Unhandled Runtime Error
+Error: Cannot access Image.propTypes on the server. You cannot dot into a client module from a server component. You can only pass the imported name through.
+```
+
+恐らくNext.jsのバグのようで[Issueもある](https://github.com/vercel/next.js/issues/58888)ので、ひとまず様子を見つつ、今回は一旦`next/legacy/image`を代わりに使うことで解決しました。
+本当にこれでいいのかよく分かりませんが、そもそもSSGの場合画像の最適化なども適用されないため、`<Image>`の役目は画像のサイズを確保しておくくらいなので、そこまで問題にならないでしょう。
+
+## satoriを使ったOGP画像の生成
+
+OGP画像の生成をBunで実行してみたところ、skia-canvasの読み込みでエラーになってしまいました。
+skia-canvasはBunに対応していないようなので、別の方法を取る必要がありそうでした。
+
+[satori](https://github.com/vercel/satori)はJSXで書かれたHTMLのサブセットからSVGを生成するライブラリです。
+テキストのフォントをパスに変換したりしてくれるのでその後にSVGを描画することでスムーズに画像ファイルが得られます。
+また、CSSの`flex`プロパティによるレイアウトをサポートしているため、そこそこ複雑なレイアウトができます。
+
+今回はこのsatoriで出力したSVGを[resvg-js](https://github.com/yisibl/resvg-js)で描画することで、画像ファイルを生成することにしました。
+
+工夫をしたのは、タイトルの改行の制御です。
+以前の実装と同様に[budoux](https://github.com/google/budoux)を用いたのですが、satoriは`<wbr>`要素などはサポートしていません。
+そこで、分かち書きされた部分を`<span>`に入れて、`flex-wrap`を`wrap`に生成することで、`flex`コンテナの幅を越えた子要素が次の行になるようにすることで、いい感じに改行されるようにしました。
+この方法は[こちらの記事](https://retrorocket.biz/archives/use-budoux-with-satori)を参考にしました。
+
+## GitHub Pagesへのデプロイ
+
+最後に、GitHub Pagesへの少し変更しました。
+
+これまでは`gh-pages`ブランチにpushしていたのですが、GitHub Actionsを使って成果物をアップロードしてデプロイする方式に変更しました。
+
+これには次の2つのGitHub Actionsを利用します。
+
+- [`actions/upload-pages-artifact`](https://github.com/actions/upload-pages-artifact)
+- [`actions/deploy-pages`](https://github.com/actions/deploy-pages)
+
+ブランチが減った分cloneなどが多少早くなるのかもしれません。
+他のプロジェクトもこっちの方法にしたいな (とくにcommit数が膨大なdiary)。
+
+# まとめ
+
+というわけで、今回はブログのApp Routerへの移行に合わせて、ブログを全面的に書き直しました。
+
+最終的に次のようなことを行いました。
+
+- Bunへの切替。
+- App Routerを利用したSSGへの移行。
+- MarkdownからMDXへの切替。
+- satoriを使ってOGP画像を描画。
+- GitHub Actionsを使ったGitHub Pagesへのデプロイの実装。
+
+全体的に今後も管理しやすい実装になったのではないかと思います。
+
+それでは、最後まで目を通していただきありがとうございました。

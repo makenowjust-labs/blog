@@ -18,26 +18,42 @@
   text-transform: none;
 }
 
-code[data-line-numbers] {
-  counter-reset: line;
+figure[data-rehype-pretty-code-figure] pre {
+  @apply p-0;
 }
 
-code[data-line-numbers] > [data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-
-  /* Other styling */
-  display: inline-block;
-  width: 1em;
-  margin-right: 2em;
-  text-align: right;
-  color: gray;
+figure[data-rehype-pretty-code-figure] code {
+  @apply my-2 leading-7;
 }
 
-code[data-line-numbers-max-digits="2"] > [data-line]::before {
-  width: 1.5em;
+figure[data-rehype-pretty-code-figure] code > span[data-line] {
+  @apply px-2;
 }
 
-code[data-line-numbers-max-digits="3"] > [data-line]::before {
-  width: 2em;
+figure[data-rehype-pretty-code-figure] code[data-line-numbers] {
+  @apply [counter-reset:line];
+}
+
+figure[data-rehype-pretty-code-figure]
+  code[data-line-numbers]
+  span[data-line]::before {
+  @apply mr-3 inline-block w-4 text-right text-gray-400
+    content-[counter(line)]
+    [counter-increment:line];
+}
+
+figure[data-rehype-pretty-code-figure]
+  code[data-line-numbers-max-digits="3"]
+  span[data-line]::before {
+  @apply w-6;
+}
+
+figure[data-rehype-pretty-code-figure] span[data-highlighted-line] {
+  @apply bg-gray-600;
+}
+
+figure[data-rehype-pretty-code-figure]
+  code[data-line-numbers]
+  span[data-highlighted-line]::before {
+  @apply text-gray-100;
 }

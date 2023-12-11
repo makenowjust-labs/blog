@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 
-import "./globals.css";
 import {
   BLOG_AUTHOR,
   BLOG_BASE_URL,
@@ -15,6 +14,9 @@ import {
   BLOG_TWITTER,
   BLOG_YEAR,
 } from "@/src/meta";
+import { getTagNames } from "@/src/post";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: BLOG_TITLE,
@@ -33,7 +35,9 @@ export const metadata: Metadata = {
 
 export type Props = React.PropsWithChildren<{}>;
 
-export default function RootLayout({ children }: Props) {
+export default async function RootLayout({ children }: Props) {
+  const tags = await getTagNames();
+
   return (
     <html lang="ja">
       <body>
@@ -47,6 +51,7 @@ export default function RootLayout({ children }: Props) {
           year={BLOG_YEAR}
           github={BLOG_GITHUB}
           twitter={BLOG_TWITTER}
+          tags={tags}
         />
       </body>
     </html>

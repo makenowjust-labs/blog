@@ -4,7 +4,11 @@ import daisyui from "daisyui";
 import typography from "@tailwindcss/typography";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./app/**/*.{js,jsx,mdx,ts,tsx}",
+    "./components/**/*.{js,jsx,mdx,ts,tsx}",
+    "./posts/**/*.{js,jsx,mdx,ts,tsx}",
+  ],
   theme: {
     extend: {
       typography: {
@@ -22,7 +26,7 @@ const config: Config = {
     },
   },
   daisyui: {
-    themes: ["white"],
+    themes: ["light"],
   },
   plugins: [typography, daisyui],
 };
