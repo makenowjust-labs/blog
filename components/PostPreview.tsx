@@ -38,7 +38,7 @@ export default function PostPreview({
       <div className="pl-4 text-right text-sm text-stone-800">{time}</div>
       <div className="pb-4 pl-4">{tagNodes}</div>
       <MdxWrapper>{children}</MdxWrapper>
-      <div className="pb-5 pl-8 text-center">
+      <div className="pb-5 pl-4 text-center">
         <Link
           passHref={true}
           href={`/post/${slug}`}
