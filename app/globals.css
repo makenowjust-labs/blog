@@ -1,27 +1,43 @@
+@import "katex/dist/katex.min.css";
+@import "pseudocode/build/pseudocode.min.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.katex-display {
+  @apply overflow-x-auto;
+  @apply overflow-y-hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.katex-ps-funcname {
+  font-family: KaTeX_Main, "Times New Roman", Times, serif;
+  font-weight: 400;
+  font-variant: small-caps;
+  font-style: normal;
+  text-transform: none;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  /* Other styling */
+  display: inline-block;
+  width: 1em;
+  margin-right: 2em;
+  text-align: right;
+  color: gray;
+}
+
+code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  width: 1.5em;
+}
+
+code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  width: 2em;
 }
