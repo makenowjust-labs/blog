@@ -1,10 +1,11 @@
-import { glob } from "glob";
+import { glob } from "zx";
 
 const POSTS_PER_PAGE = 5;
 
 export type Post = {
   slug: string;
   title: string;
+  description: string;
   created: string;
   updated: string;
   excerpt: string;
@@ -37,6 +38,7 @@ export const getPost = async (slug: string): Promise<Post> => {
   return {
     slug,
     title: mod.frontmatter.title,
+    description: mod.frontmatter.description,
     created: mod.frontmatter.created,
     updated: mod.frontmatter.updated,
     tags: mod.frontmatter.tags,

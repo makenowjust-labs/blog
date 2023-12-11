@@ -43,10 +43,8 @@ const nextConfig = {
   images: { unoptimized: true },
 };
 
-export default async (phase) => {
-  if (phase === PHASE_PRODUCTION_BUILD) {
-    await $`bun ./scripts/og-image.jsx`;
-  }
+if (process.env.RUN_OG_IMAGE === "1") {
+  await $`bun scripts/og-image.jsx`;
+}
 
-  return withMdx(nextConfig);
-};
+export default withMdx(nextConfig);

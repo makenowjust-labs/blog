@@ -18,11 +18,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params: { slug },
 }: Props): Promise<Metadata> {
-  const { title, excerpt } = await getPost(slug);
+  const { title, description } = await getPost(slug);
 
   return {
     title: `${title} | ${BLOG_TITLE}`,
-    description: excerpt,
+    description,
     openGraph: {
       images: [`${BLOG_BASE_URL}/post/${slug}.png`],
     },
