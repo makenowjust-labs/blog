@@ -5,7 +5,7 @@ import Pagination from "@/components/Pagination";
 
 function HomeAbstract() {
   return (
-    <div className="py-5 pr-4">
+    <div className="py-5 px-2">
       <MdxWrapper>
         <p>
           <a href="https://github.com/makenowjust">@makenowjust</a>{" "}
@@ -57,7 +57,7 @@ function HomePagination({ page }: { page: Page }) {
   const prevPage = prev !== null ? `/page/${prev + 1}` : null;
 
   return (
-    <div className="px-4 py-5">
+    <div className="px-2 py-5">
       <Pagination next={null} prev={prevPage} />
     </div>
   );

@@ -25,8 +25,8 @@ export default function PostPreview({
   const time = created === updated ? created : `${created} (更新: ${updated})`;
 
   return (
-    <div className="border-b-2 py-5 pr-4">
-      <h2 className="pb-2 pl-4 text-2xl font-bold text-stone-900">
+    <div className="border-b-2 py-5 px-2">
+      <h2 className="pb-2 text-2xl font-bold text-stone-900">
         <Link
           passHref={true}
           href={`/post/${slug}`}
@@ -35,10 +35,10 @@ export default function PostPreview({
           {title}
         </Link>
       </h2>
-      <div className="pl-4 text-right text-sm text-stone-800">{time}</div>
-      <div className="pb-4 pl-4">{tagNodes}</div>
+      <div className="text-right text-sm text-stone-800">{time}</div>
+      <div className="pb-4">{tagNodes}</div>
       <MdxWrapper>{children}</MdxWrapper>
-      <div className="pb-5 pl-4 text-center">
+      <div className="pb-5 text-center">
         <Link
           passHref={true}
           href={`/post/${slug}`}
