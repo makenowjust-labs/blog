@@ -1,6 +1,10 @@
 @import "katex/dist/katex.min.css";
 @import "pseudocode/build/pseudocode.min.css";
 
+@import "@fontsource/biz-udpgothic/index.css";
+@import "@fontsource/share-tech-mono/index.css";
+@import "@fontsource/sometype-mono/index.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

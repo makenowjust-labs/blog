@@ -16,8 +16,8 @@ const budoux = loadDefaultJapaneseParser();
 const shareTechMono = await fs.readFile(
   "./node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff",
 );
-const notoSansJp400 = await fs.readFile(
-  "./node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-400-normal.woff",
+const bizUdpGothic400 = await fs.readFile(
+  "./node_modules/@fontsource/biz-udpgothic/files/biz-udpgothic-japanese-400-normal.woff",
 );
 
 const fonts = [
@@ -28,8 +28,8 @@ const fonts = [
     style: "normal",
   },
   {
-    name: "Noto Sans JP",
-    data: notoSansJp400,
+    name: "Biz UDPGothic",
+    data: bizUdpGothic400,
     weight: 400,
     style: "normal",
   },
@@ -50,7 +50,7 @@ const render = async (filename, children) => {
           "base64",
         )})`,
         backgroundSize: "1200px 775px",
-        fontFamily: '"Share Tech Mono", "Noto Sans JP"',
+        fontFamily: '"Share Tech Mono", "Biz UDPGothic"',
         fontWeight: 400,
       }}
     >
@@ -128,7 +128,12 @@ for (const post of posts) {
     .map((text, index) => {
       return (
         <span
-          style={{ display: "block", padding: "0", margin: "0" }}
+          style={{
+            display: "block",
+            padding: "0",
+            margin: "0",
+            whiteSpace: "pre",
+          }}
           key={index}
         >
           {text}

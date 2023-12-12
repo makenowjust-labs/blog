@@ -23,7 +23,7 @@ export default async function Footer({
   ));
 
   return (
-    <footer className="mx-auto max-w-3xl px-2 py-5 lg:px-0">
+    <footer className="mx-auto max-w-3xl px-2 py-5 lg:px-0 font-impact">
       <div>
         <h2 className="text-lg font-bold">タグ一覧</h2>
         <div>{tagNodes}</div>

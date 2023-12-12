@@ -10,7 +10,7 @@ export default function Hero({ title, description }: Props) {
     <section className="hero">
       <div className="hero-content">
         <div className="max-w-md text-center">
-          <h1 className="pb-5 text-3xl font-bold text-stone-900">
+          <h1 className="pb-5 text-3xl font-bold text-stone-900 font-impact">
             <Link
               passHref={true}
               href="/"
@@ -19,7 +19,7 @@ export default function Hero({ title, description }: Props) {
               {title}
             </Link>
           </h1>
-          <p className="text-lg text-stone-800">{description}</p>
+          <p className="text-lg text-stone-800 font-impact">{description}</p>
         </div>
       </div>
     </section>
