@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { BIZ_UDPGothic } from "next/font/google";
 
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -17,6 +18,12 @@ import {
 import { getTagNames } from "@/src/post";
 
 import "./globals.css";
+
+const Biz_UDPGothicFont = BIZ_UDPGothic({
+  weight: ["400", "700"],
+  preload: false,
+  variable: "--font-biz-udpgothic",
+});
 
 export const metadata: Metadata = {
   title: BLOG_TITLE,
@@ -39,7 +46,7 @@ export default async function RootLayout({ children }: Props) {
   const tags = await getTagNames();
 
   return (
-    <html lang="ja">
+    <html lang="ja" className={`${Biz_UDPGothicFont.variable}`}>
       <body>
         <Navbar title={BLOG_TITLE} repo={BLOG_REPO} twitter={BLOG_TWITTER} />
         <Hero title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
