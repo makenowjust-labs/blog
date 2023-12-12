@@ -30,14 +30,14 @@ const GoogleAnalytics = () => {
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
       />
       <Script id="gtag-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}', {
-            page_path: window.location.pathname,
-          });
-        `}
+        {[
+          "window.dataLayer=window.dataLayer||[];",
+          "function gtag(){dataLayer.push(arguments);}",
+          "gtag('js',new Date());",
+          "gtag('config','${GA_ID}',{",
+          "page_path:window.location.pathname,",
+          "});",
+        ].join("")}
       </Script>
     </>
   );
