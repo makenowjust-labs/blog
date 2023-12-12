@@ -18,6 +18,7 @@ import { getTagNames } from "@/src/post";
 
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: BLOG_TITLE,
@@ -42,7 +43,9 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <body>
-        <GoogleAnalytics />
+        <Suspense>
+          <GoogleAnalytics />
+        </Suspense>
         <Navbar title={BLOG_TITLE} repo={BLOG_REPO} twitter={BLOG_TWITTER} />
         <Hero title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
         <main className="mx-auto min-h-screen max-w-3xl p-2 lg:px-0">

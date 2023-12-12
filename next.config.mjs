@@ -36,7 +36,8 @@ const withMdx = createMdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: isProduction ? "/blog/" : "",
+  basePath: isProduction ? "/blog" : "",
+  trailingSlash: true,
   output: "export",
   reactStrictMode: true,
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
