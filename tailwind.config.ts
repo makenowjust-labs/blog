@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-biz-udpgothic)', 'sans-serif'],
+        sans: ["var(--font-biz-udpgothic)", "sans-serif"],
       },
       typography: {
         DEFAULT: {
