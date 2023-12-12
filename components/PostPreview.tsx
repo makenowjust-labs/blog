@@ -35,7 +35,9 @@ export default function PostPreview({
           {title}
         </Link>
       </h2>
-      <div className="text-right text-sm text-stone-800">{time}</div>
+      <div className="text-right text-sm text-stone-800 font-impact">
+        {time}
+      </div>
       <div className="pb-4">{tagNodes}</div>
       <MdxWrapper>{children}</MdxWrapper>
       <div className="pb-5 text-center">

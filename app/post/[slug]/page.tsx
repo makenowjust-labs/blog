@@ -42,7 +42,9 @@ export default async function Post({ params: { slug } }: Props) {
   return (
     <div className="border-b-2 pb-5 px-2">
       <h1 className="pb-2 text-2xl font-bold text-stone-900">{title}</h1>
-      <div className="text-right text-sm text-stone-800">{time}</div>
+      <div className="text-right text-sm text-stone-800 font-impact">
+        {time}
+      </div>
       <div className="pb-4">{tagNodes}</div>
       <MdxWrapper>
         <Content />

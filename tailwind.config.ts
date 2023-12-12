@@ -14,7 +14,7 @@ const config: Config = {
       fontFamily: {
         sans: ['"BIZ UDPGothic"', "sans-serif"],
         mono: ['"Sometype Mono"', "monospace"],
-        impact: ['"Share Tech Mono"', "monospace"],
+        impact: ['"Share Tech Mono"', '"Biz UDPGothic"', "monospace"],
       },
       typography: {
         DEFAULT: {
