@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { FaGithubAlt, FaTwitter } from "react-icons/fa";
+
+import TagBadge from "@/components/TagBadge";
 
 export type Props = {
   year: string;
@@ -16,17 +17,13 @@ export default async function Footer({
   twitter,
   tags,
 }: Props) {
-  const tagNodes = tags.map((tag) => (
-    <Link className="badge badge-neutral mr-1" href={`/tag/${tag}/1`} key={tag}>
-      {tag}
-    </Link>
-  ));
+  const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
 
   return (
     <footer className="mx-auto max-w-3xl px-2 py-5 lg:px-0 font-impact">
       <div>
         <h2 className="text-lg font-bold">タグ一覧</h2>
-        <div>{tagNodes}</div>
+        <div className="flex flex-wrap gap-2">{tagNodes}</div>
       </div>
       <div className="flex justify-center pb-5">
         <a

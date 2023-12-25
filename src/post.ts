@@ -96,6 +96,12 @@ export const getTagTotalPage = async (tag: string): Promise<number> => {
   return Math.ceil(slugs.length / POSTS_PER_PAGE);
 };
 
+export const getTagTotalPost = async (tag: string): Promise<number> => {
+  const tags = await getTags();
+  const slugs = tags[tag];
+  return slugs.length;
+};
+
 export const getTagPage = async (tag: string, page: number): Promise<Page> => {
   const tags = await getTags();
   const slugs = tags[tag];

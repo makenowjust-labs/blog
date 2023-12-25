@@ -1,8 +1,8 @@
 import MdxWrapper from "@/components/MdxWrapper";
+import TagBadge from "@/components/TagBadge";
 import { BLOG_BASE_URL, BLOG_TITLE } from "@/src/meta";
 import { getAllSlugs, getPost } from "@/src/post";
 import { Metadata } from "next";
-import Link from "next/link";
 
 type Props = {
   params: {
@@ -32,11 +32,7 @@ export async function generateMetadata({
 export default async function Post({ params: { slug } }: Props) {
   const { Content, title, created, updated, tags } = await getPost(slug);
 
-  const tagNodes = tags.map((tag) => (
-    <Link className="badge badge-neutral mr-1" href={`/tag/${tag}/1`} key={tag}>
-      {tag}
-    </Link>
-  ));
+  const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
   const time = created === updated ? created : `${created} (更新: ${updated})`;
 
   return (
@@ -45,7 +41,7 @@ export default async function Post({ params: { slug } }: Props) {
       <div className="text-right text-sm text-stone-800 font-impact">
         {time}
       </div>
-      <div className="pb-4">{tagNodes}</div>
+      <div className="pb-4 flex flex-wrap gap-2">{tagNodes}</div>
       <MdxWrapper>
         <Content />
       </MdxWrapper>

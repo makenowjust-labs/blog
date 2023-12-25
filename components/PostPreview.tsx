@@ -1,5 +1,6 @@
 import Link from "next/link";
 import MdxWrapper from "./MdxWrapper";
+import TagBadge from "./TagBadge";
 
 export type Props = React.PropsWithChildren<{
   slug: string;
@@ -17,11 +18,7 @@ export default function PostPreview({
   tags,
   children,
 }: Props) {
-  const tagNodes = tags.map((tag) => (
-    <Link className="badge badge-neutral mr-1" href={`/tag/${tag}/1`} key={tag}>
-      {tag}
-    </Link>
-  ));
+  const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
   const time = created === updated ? created : `${created} (更新: ${updated})`;
 
   return (
@@ -38,7 +35,7 @@ export default function PostPreview({
       <div className="text-right text-sm text-stone-800 font-impact">
         {time}
       </div>
-      <div className="pb-4">{tagNodes}</div>
+      <div className="pb-4 flex flex-wrap gap-2">{tagNodes}</div>
       <MdxWrapper>{children}</MdxWrapper>
       <div className="pb-5 text-center">
         <Link

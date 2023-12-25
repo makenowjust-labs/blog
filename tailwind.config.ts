@@ -20,10 +20,10 @@ const config: Config = {
         DEFAULT: {
           css: {
             "code::before": {
-              content: '""',
+              content: "none",
             },
             "code::after": {
-              content: '""',
+              content: "none",
             },
           },
         },
