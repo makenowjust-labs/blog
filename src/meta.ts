@@ -4,6 +4,6 @@ export const BLOG_AUTHOR =
   'Hiroya Fujinami (a.k.a. TSUYUSATO "MakeNowJust" Kitsune)';
 export const BLOG_DESCRIPTION = "MakeNowJust Laboratory Tech Blog";
 export const BLOG_REPO = "makenowjust-labs/blog";
-export const BLOG_YEAR = "2021-2023";
+export const BLOG_YEAR = "2021-2024";
 export const BLOG_TWITTER = "make_now_just";
 export const BLOG_GITHUB = "makenowjust";
