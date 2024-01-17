@@ -1,8 +1,10 @@
+import { Metadata } from "next";
+
 import MdxWrapper from "@/components/MdxWrapper";
 import TagBadge from "@/components/TagBadge";
+
 import { BLOG_BASE_URL, BLOG_TITLE } from "@/src/meta";
 import { getAllSlugs, getPost } from "@/src/post";
-import { Metadata } from "next";
 
 type Props = {
   params: {

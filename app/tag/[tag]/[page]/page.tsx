@@ -1,8 +1,10 @@
+import { Metadata } from "next";
+
 import Pagination from "@/components/Pagination";
 import PostPreview from "@/components/PostPreview";
+
 import { BLOG_TITLE } from "@/src/meta";
 import { Page, getTagNames, getTagPage, getTagTotalPage } from "@/src/post";
-import { Metadata } from "next";
 
 type Props = {
   params: {

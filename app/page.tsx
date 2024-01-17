@@ -1,7 +1,8 @@
-import { Page, getPage } from "@/src/post";
-import PostPreview from "@/components/PostPreview";
 import MdxWrapper from "@/components/MdxWrapper";
 import Pagination from "@/components/Pagination";
+import PostPreview from "@/components/PostPreview";
+
+import { Page, getPage } from "@/src/post";
 
 function HomeAbstract() {
   return (

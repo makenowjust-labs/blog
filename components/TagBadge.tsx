@@ -1,5 +1,6 @@
-import { getTagTotalPost } from "@/src/post";
 import Link from "next/link";
+
+import { getTagTotalPost } from "@/src/post";
 
 export type Props = {
   tag: string;

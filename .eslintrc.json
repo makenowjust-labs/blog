@@ -1,3 +1,34 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "plugin:import/recommended"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "distinctGroup": true,
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "index",
+          "sibling",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always-and-inside-groups",
+        "pathGroups": [
+          {
+            "pattern": "@/components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/src/**",
+            "group": "internal",
+            "position": "before"
+          }
+        ]
+      }
+    ]
+  }
 }

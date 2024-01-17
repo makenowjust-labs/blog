@@ -1,6 +1,8 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import Footer from "@/components/Footer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 
@@ -17,8 +19,6 @@ import {
 import { getTagNames } from "@/src/post";
 
 import "./globals.css";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: BLOG_TITLE,

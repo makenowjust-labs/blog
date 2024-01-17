@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import MdxWrapper from "./MdxWrapper";
 import TagBadge from "./TagBadge";
 
