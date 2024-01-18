@@ -18,7 +18,10 @@ export default function Pagefind() {
   const searchRef = createRef<HTMLDivElement>();
 
   const setupSearchBox = useCallback(() => {
-    new window.PagefindUI({ element: searchRef.current });
+    new window.PagefindUI({
+      element: searchRef.current,
+      showImages: false,
+    });
   }, [searchRef]);
 
   const openSearchBox = useCallback(
