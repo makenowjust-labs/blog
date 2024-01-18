@@ -6,13 +6,13 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-import { $ } from "zx";
-import { PHASE_PRODUCTION_BUILD } from "next/constants.js";
+import { $, fs } from "zx";
 
 import rehypeMdxExcerpt from "./src/rehype-mdx-excerpt.mjs";
 import rehypePseudocode from "./src/rehype-pseudocode.mjs";
 
 const isProduction = process.env.NODE_ENV === "production";
+const basePath = isProduction ? "/blog" : "";
 
 const withMdx = createMdx({
   options: {
@@ -36,16 +36,22 @@ const withMdx = createMdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: isProduction ? "/blog" : "",
+  basePath,
   trailingSlash: true,
   output: "export",
   reactStrictMode: true,
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: { unoptimized: true },
+  env: {
+    BLOG_BASE_PATH: basePath,
+  },
 };
 
 if (process.env.RUN_OG_IMAGE === "1") {
   await $`bun scripts/og-image.jsx`;
+}
+if (process.env.RUN_PAGEFIND === "1" || !fs.existsSync("public/pagefind")) {
+  await $`bun scripts/pagefind.js`;
 }
 
 export default withMdx(nextConfig);

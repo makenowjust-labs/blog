@@ -2,11 +2,11 @@ import { fs, path, glob } from "zx";
 
 import { Resvg } from "@resvg/resvg-js";
 import { loadDefaultJapaneseParser } from "budoux";
-import matter from "gray-matter";
 import satori from "satori";
 import dayjs from "dayjs";
 
 import { BLOG_AUTHOR, BLOG_DESCRIPTION, BLOG_TITLE } from "../src/meta";
+import { parseMarkdown } from "../src/parse-markdown.mjs";
 
 const WIDTH = 1200;
 const HEIGHT = 630;
@@ -119,10 +119,10 @@ await render("public/cover.png", [
 
 const posts = await glob("posts/*/index.mdx");
 for (const post of posts) {
-  const content = await fs.readFile(post, "utf-8");
-  const { data: frontmatter } = matter(content);
-  const created = dayjs(frontmatter.created).format("YYYY/MM/DD");
-  const title = frontmatter.title
+  const value = await fs.readFile(post, "utf-8");
+  const { matter } = parseMarkdown(value);
+  const created = dayjs(matter.created).format("YYYY/MM/DD");
+  const title = matter.title
     .split(/(?<= )/)
     .flatMap((part) => budoux.parse(part))
     .map((text, index) => {

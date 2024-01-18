@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 
+import Pagefind from "./Pagefind";
+
 export type Props = {
   title: string;
   repo: string;
@@ -32,6 +34,7 @@ export default function Navbar({ title, repo, twitter }: Props) {
         >
           <FaTwitter />
         </a>
+        <Pagefind />
       </div>
     </header>
   );

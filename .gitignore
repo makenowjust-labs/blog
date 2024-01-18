@@ -37,3 +37,4 @@ next-env.d.ts
 
 /public/cover.png
 /public/post/*.png
+/public/pagefind/
