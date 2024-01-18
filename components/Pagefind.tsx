@@ -21,6 +21,7 @@ export default function Pagefind() {
     new window.PagefindUI({
       element: searchRef.current,
       showImages: false,
+      sort: { created: "desc" },
     });
   }, [searchRef]);
 

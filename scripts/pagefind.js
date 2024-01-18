@@ -10,7 +10,7 @@ for (const post of posts) {
   const value = await fs.readFile(post, "utf-8");
   const { matter, content } = parseMarkdown(value);
   const url = `/post/${post.replace(/^.*posts\/|\/index.mdx$/g, "")}/`;
-  await index.addCustomRecord({
+  const { errors } = await index.addCustomRecord({
     language: "ja",
     url,
     content,
@@ -19,6 +19,9 @@ for (const post of posts) {
     },
     filter: {
       tags: matter.tags,
+    },
+    sort: {
+      created: matter.created,
     },
   });
 }
