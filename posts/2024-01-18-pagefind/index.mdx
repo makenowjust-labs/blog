@@ -1,0 +1,164 @@
+---
+title: ブログにPagefindを導入しました
+created: 2024-01-18
+updated: 2024-01-18
+description: |
+  このブログに全文検索エンジンとしてPagefindを導入しました。
+  Next.jsにPagefindを導入する流れなどを説明します。
+tags:
+  - フロントエンド
+  - JavaScript
+---
+
+[Pagefind](https://pagefind.app)とは静的サイトで動作する (バックエンドのサーバーを必要としない) 全文検索エンジンです。
+
+このブログにPagefindによる全文検索機能を導入しました。
+右上の虫眼鏡ボタンをクリックすると、検索用のダイアログが開くはずです。
+
+この記事では、どのようにしてNext.js製のサイトにPagefindを導入したのかを説明します。
+
+{/* read more */}
+
+import Image from "next/legacy/image";
+
+import searchBoxImage from "./images/search-box.png";
+
+# はじめに
+
+[Pagefind](https://pagefind.app)は静的サイトで動作する全文検索エンジンです。
+「**静的サイトで動作する**」というのはバックエンドにサーバーなどを必要とせず、静的にビルドされたファイルのみで検索が実現できることを意味します。
+
+つまり、このブログのようにGitHub Pagesで公開されているサイトであっても、Pagefindを使うことで検索機能が実現できます。
+今回、Pagefindを使ってこのブログに検索機能を追加しました。
+ナビゲーションバーの右側に虫眼鏡ボタンがあるはずです。
+そちらをクリック (タップ) すると、検索用のダイアログが表示されるはずです。
+
+<figure>
+  <Image src={searchBoxImage} alt="検索用のダイアログが表示されている様子" />
+  <figcaption className="text-center">
+    検索用のダイアログが表示されている様子
+  </figcaption>
+</figure>
+
+ちなみに <kbd>⌘+K</kbd> とか <kbd>/</kbd> でも検索用のダイアログを表示できます。
+
+最近ではAstro製のドキュメントサイトビルダーである[Starlight](https://starlight.astro.build)の検索エンジンとして、Pagefindが採用されています。
+
+Pagefindは自身のサイトで次のように述べています。
+
+> Pagefind runs after Hugo, Eleventy, Jekyll, Next, Astro, SvelteKit, or **any other website framework**.
+
+しかし、実際に導入してみると、いくつか苦労するところがありました。
+これから、それらや解決策を説明していきたいと思います。
+
+# 通常のPagefindの導入の仕方
+
+Pagefindの[Quick Start](https://pagefind.app/docs/)では、次の2段階で導入すると説明しています。
+
+1. 対象のサイトにPagefindを読み込むコードを追加する。
+
+   ```html
+   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+   <script src="/pagefind/pagefind-ui.js"></script>
+   <div id="search"></div>
+   <script>
+     window.addEventListener("DOMContentLoaded", (event) => {
+       new PagefindUI({ element: "#search", showSubResults: true });
+     });
+   </script>
+   ```
+
+2. ビルドされたサイトに対して `pagefind` コマンドを実行して、インデックスや関連ファイル (上の `pagefind-ui.css` や `pagefind-ui.js`) を作成する。
+
+   <div className="not-prose mockup-code">
+     <pre data-prefix="$">
+       <code>npx -y pagefind --site public --serve</code>
+     </pre>
+   </div>
+
+この方法は通常の静的サイトであれば (恐らく) 上手く動作します。
+しかし、この方法では次のような問題が考えられます。
+
+- 開発中に検索が利用できず、さらにエラーが起こる
+- トップページなどを含めたすべてのページがインデックスされてしまう
+
+これらの問題は追加するコードを工夫したり、インデックスの作成のコマンドに設定を追加すればある程度は改善できるはずです。
+ですが、今回は別のアプローチで問題を解決することにしました。
+
+# Node.js APIを使ったPagefindインデックスの作成
+
+Pagefindはコマンドから作成する他に、Node.jsのAPIでインデックスを作成することもできます ([ドキュメント](https://pagefind.app/docs/node-api/))。
+このブログでは、こちらを使ってインデックスを作成することにしました。
+
+インデックスを作成するためには、まず`createIndex`関数を使って`index`オブジェクトを生成します。
+
+```javascript
+import { createIndex } from "pagefind";
+
+const { index } = createIndex();
+```
+
+そして、この`index`に対して`addCustomRecord`メソッドを呼び出すことで、検索対象を追加していきます。
+
+```javascript
+await index.addCustomRecord({
+  url: "/post/2023-08-06-pike-earley",
+  content:
+    "正規表現マッチングの実装手法の1つとしてPike VMと呼ばれるものがあります。これは...",
+});
+```
+
+そして、最後に`writeFiles`を呼び出すことで、インデックスをファイルに書き出します。
+
+```javascript
+await index.writeFiles({
+  outputPath: "public/pagefind",
+});
+```
+
+`public`ディレクトリ以下に出力していることに注目してください。
+Next.jsでは`public`ディレクトリには、ルートディレクトリから配信される静的ファイルを配置します。
+そのため、ビルド前にインデックスの生成を行い、開発時の参照が可能になります。
+
+実際の生成は[`scripts/pagefind.js`](https://github.com/makenowjust-labs/blog/blob/442384658ad87caaa4283f9ebe44ae1bf2bbdf3b/scripts/pagefind.js)で行っています。
+
+# `PagefindUI`のスクリプトのロード
+
+インデックスが生成できたので、次はNext.jsから`pagefind-ui.js`と`pagefind-ui.css`を読み込んで、適用する部分を追加します。
+
+これには、`next/script`の[`Script`コンポーネント](https://nextjs.org/docs/app/api-reference/components/script)を利用しました。
+
+```tsx
+const searchRef = createRef<HTMLDivElement>();
+
+const setupSearchBox = useCallback(() => {
+  new window.PagefindUI({
+    element: searchRef.current,
+  });
+}, [searchRef]);
+
+return (
+  <>
+    <Script
+      strategy="lazyOnload"
+      onReady={setupSearchBox}
+      src={`/pagefind/pagefind-ui.js`}
+      stylesheets={[`/pagefind/pagefind-ui.css`]}
+    />
+    <div ref={searchRef} />
+  </>
+);
+```
+
+実際のソースコードは[`components/Pagefind.tsx`](https://github.com/makenowjust-labs/blog/blob/442384658ad87caaa4283f9ebe44ae1bf2bbdf3b/components/Pagefind.tsx)にあります。
+これに加えて、ダイアログの開閉の制御なども行っています。
+
+また、このブログの場合は`basePath`が`/blob/`になっているため、そのままだとパスが異なってしまい、正しく読み込みができません。
+そこで、`next.config.js`の`env`経由で`basePath`を渡し、参照するようにしています。
+
+# あとがき
+
+そんなこんなでブログに検索機能を実装しました。
+記事がある程度増えていて欲しいと思っていた機能だったので、この機会に追加できて良かったと思います。
+
+本年もよろしくお願いします。
