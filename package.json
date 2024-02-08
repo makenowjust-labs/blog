@@ -29,7 +29,7 @@
     "@mdx-js/react": "3.0.0",
     "@next/mdx": "14.1.0",
     "@resvg/resvg-js": "2.6.0",
-    "@types/gtag.js": "0.0.18",
+    "@types/gtag.js": "0.0.19",
     "@types/mdx": "2.0.11",
     "@types/node": "20.11.16",
     "@types/react": "18.2.55",
