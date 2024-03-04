@@ -22,9 +22,9 @@
     "react-use": "17.5.0"
   },
   "devDependencies": {
-    "@fontsource/biz-udpgothic": "5.0.17",
+    "@fontsource/biz-udpgothic": "5.0.18",
     "@fontsource/share-tech-mono": "5.0.8",
-    "@fontsource/sometype-mono": "5.0.1",
+    "@fontsource/sometype-mono": "5.0.2",
     "@mdx-js/loader": "3.0.1",
     "@mdx-js/react": "3.0.1",
     "@next/mdx": "14.1.1",
