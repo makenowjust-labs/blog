@@ -16,6 +16,7 @@ function HomeAbstract() {
           オートマトン理論や形式言語などの情報科学的なことや、JavaScript
           (フロントエンド) や Scala などの技術について書きます。
         </p>
+        <p>記事の正確さについては保証しません。間違っていたらごめんなさい。</p>
         <p>
           リポジトリ:{" "}
           <a href="https://github.com/makenowjust-labs/blog">
