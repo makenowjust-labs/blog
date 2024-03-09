@@ -4,7 +4,7 @@ import Pagination from "@/components/Pagination";
 import PostPreview from "@/components/PostPreview";
 
 import { BLOG_TITLE } from "@/src/meta";
-import { Page, getPage, getTotalPage } from "@/src/post";
+import { type Page, getPage, getTotalPage } from "@/src/post";
 
 type Props = {
   params: {
