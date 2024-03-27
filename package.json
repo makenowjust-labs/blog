@@ -28,7 +28,7 @@
     "@mdx-js/loader": "3.0.1",
     "@mdx-js/react": "3.0.1",
     "@next/mdx": "14.1.4",
-    "@resvg/resvg-js": "2.6.0",
+    "@resvg/resvg-js": "2.6.2",
     "@types/gtag.js": "0.0.19",
     "@types/mdx": "2.0.12",
     "@types/node": "20.11.30",
