@@ -28,11 +28,8 @@ export const getAllSlugs = async (): Promise<string[]> => {
 
   const files = await glob("posts/*/index.mdx");
   _allPostSlugs = files
-    // @ts-expect-error
     .map((file) => file.replace(/^.*posts\/|\/index.mdx$/g, ""))
-    // @ts-expect-error
     .sort((a, b) => (a >= b ? -1 : 1));
-  // @ts-expect-error
   return _allPostSlugs;
 };
 
