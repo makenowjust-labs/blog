@@ -75,6 +75,6 @@
     "unist-util-remove": "4.0.0",
     "unist-util-visit": "5.0.0",
     "yaml": "2.4.1",
-    "zx": "7.2.3"
+    "zx": "8.0.2"
   }
 }
