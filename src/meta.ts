@@ -8,4 +8,4 @@ export const BLOG_YEAR = "2021-2024";
 export const BLOG_TWITTER = "make_now_just";
 export const BLOG_GITHUB = "makenowjust";
 
-export const BLOG_BASE_PATH = process.env.BLOG_BASE_PATH;
+export const BLOG_BASE_PATH = process.env.BLOG_BASE_PATH || "";
