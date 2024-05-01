@@ -1,4 +1,6 @@
-import { glob, fs } from "zx";
+import fs from "fs-extra";
+import { globby as glob } from "globby";
+
 import { createIndex } from "pagefind";
 
 import { parseMarkdown } from "../src/parse-markdown.mjs";

@@ -1,4 +1,7 @@
-import { fs, path, glob } from "zx";
+import * as path from "path";
+
+import fs from "fs-extra";
+import { globby as glob } from "globby";
 
 import { Resvg } from "@resvg/resvg-js";
 import { loadDefaultJapaneseParser } from "budoux";

@@ -1,4 +1,4 @@
-import { glob } from "zx";
+import { globby as glob } from "globby";
 
 const POSTS_PER_PAGE = 5;
 

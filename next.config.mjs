@@ -1,12 +1,14 @@
 import createMdx from "@next/mdx";
 
+import fs from "fs-extra";
+import { $ } from "zurk";
+
 import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-import { $, fs } from "zx";
 
 import rehypeMdxExcerpt from "./src/rehype-mdx-excerpt.mjs";
 import rehypePseudocode from "./src/rehype-pseudocode.mjs";
@@ -50,7 +52,7 @@ const nextConfig = {
 if (process.env.RUN_OG_IMAGE === "1") {
   await $`bun scripts/og-image.jsx`;
 }
-if (process.env.RUN_PAGEFIND === "1" || !fs.existsSync("public/pagefind")) {
+if (process.env.RUN_PAGEFIND === "1" || !fs.pathExistsSync("public/pagefind")) {
   await $`bun scripts/pagefind.js`;
 }
 
