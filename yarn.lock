@@ -4208,10 +4208,10 @@ rehype-parse@^9.0.0:
     hast-util-from-html "^2.0.0"
     unified "^11.0.0"
 
-rehype-pretty-code@0.13.1:
-  version "0.13.1"
-  resolved "https://registry.npmjs.org/rehype-pretty-code/-/rehype-pretty-code-0.13.1.tgz"
-  integrity sha512-Lw3cZohiw5J2NMMD0M11W9HlIKrZ7JjxfJmY0nxVa/HG5oMT+kkhcrUEFB5ajaEk/E9uR8+n9AmQbGJci9/TqA==
+rehype-pretty-code@0.13.2:
+  version "0.13.2"
+  resolved "https://registry.npmjs.org/rehype-pretty-code/-/rehype-pretty-code-0.13.2.tgz"
+  integrity sha512-F+PaFMscfJOcSHcR2b//+hk/0jT56hmGDqXcVD6VC9j0CUSGiqv8YxaWUyhR7qEIRRSbzAVxx+0uxzk+akXs+w==
   dependencies:
     "@types/hast" "^3.0.4"
     hast-util-to-string "^3.0.0"
