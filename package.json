@@ -49,7 +49,7 @@
     "hast-util-from-html": "2.0.1",
     "hast-util-to-estree": "3.1.0",
     "hast-util-to-text": "4.0.2",
-    "mdast-util-from-markdown": "2.0.0",
+    "mdast-util-from-markdown": "2.0.1",
     "mdast-util-frontmatter": "2.0.1",
     "mdast-util-gfm": "3.0.0",
     "mdast-util-math": "3.0.0",
