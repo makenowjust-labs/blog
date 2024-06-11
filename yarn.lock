@@ -495,10 +495,10 @@
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.10.2.tgz"
   integrity sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==
 
-"@shikijs/core@1.6.3":
-  version "1.6.3"
-  resolved "https://registry.npmjs.org/@shikijs/core/-/core-1.6.3.tgz"
-  integrity sha512-QnJKHFUW95GnlJLJGP6QLx4M69HM0KlXk+R2Y8lr/x4nAx1Yb/lsuxq4XwybuUjTxbJk+BT0g/kvn0bcsjGGHg==
+"@shikijs/core@1.6.4":
+  version "1.6.4"
+  resolved "https://registry.npmjs.org/@shikijs/core/-/core-1.6.4.tgz"
+  integrity sha512-WTU9rzZae1p2v6LOxMf6LhtmZOkIHYYW160IuahUyJy7YXPPjyWZLR1ag+SgD22ZMxZtz1gfU6Tccc8t0Il/XA==
 
 "@shuding/opentype.js@1.4.0-beta.0":
   version "1.4.0-beta.0"
@@ -4541,12 +4541,12 @@ shebang-regex@^3.0.0:
   resolved "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shiki@1.6.3:
-  version "1.6.3"
-  resolved "https://registry.npmjs.org/shiki/-/shiki-1.6.3.tgz"
-  integrity sha512-lE1/YGlzFY0hQSyEfsZj18xGrTWxyhFQkaiILALqTBZPbJeYFWpbUhlmTGPOupYB/qC+H6sV4UznJzcEh3WMHQ==
+shiki@1.6.4:
+  version "1.6.4"
+  resolved "https://registry.npmjs.org/shiki/-/shiki-1.6.4.tgz"
+  integrity sha512-X88chM7w8jnadoZtjPTi5ahCJx9pc9f8GfEkZAEYUTlcUZIEw2D/RY86HI/LkkE7Nj8TQWkiBfaFTJ3VJT6ESg==
   dependencies:
-    "@shikijs/core" "1.6.3"
+    "@shikijs/core" "1.6.4"
 
 side-channel@^1.0.4, side-channel@^1.0.6:
   version "1.0.6"
