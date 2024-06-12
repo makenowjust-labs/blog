@@ -77,6 +77,6 @@
     "unist-util-remove": "4.0.0",
     "unist-util-visit": "5.0.0",
     "yaml": "2.4.5",
-    "zurk": "0.2.0"
+    "zurk": "0.3.0"
   }
 }
