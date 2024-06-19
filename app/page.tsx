@@ -4,25 +4,13 @@ import PostPreview from "@/components/PostPreview";
 
 import { Page, getPage } from "@/src/post";
 
+import HomeAbstractContent from "@/app/abstract.mdx";
+
 function HomeAbstract() {
   return (
     <div className="py-5 px-2">
       <MdxWrapper>
-        <p>
-          <a href="https://github.com/makenowjust">@makenowjust</a>{" "}
-          の技術ブログです。
-        </p>
-        <p>
-          オートマトン理論や形式言語などの情報科学的なことや、JavaScript
-          (フロントエンド) や Scala などの技術について書きます。
-        </p>
-        <p>記事の正確さについては保証しません。間違っていたらごめんなさい。</p>
-        <p>
-          リポジトリ:{" "}
-          <a href="https://github.com/makenowjust-labs/blog">
-            https://github.com/makenowjust-labs/blog
-          </a>
-        </p>
+        <HomeAbstractContent />
       </MdxWrapper>
     </div>
   );
