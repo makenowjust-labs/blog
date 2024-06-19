@@ -308,6 +308,7 @@ Earley法はJay Earleyが1968年に提案したCFGの解析手法の1つ[^2]で�
 さらに、少し方法を修正することで、任意の$\mathrm{LR}(k)$文法について$O(|w|)$で解析できることも知られています[^3]。
 
 [^2]: Earley, Jay. "[An efficient context-free parsing algorithm.](https://dl.acm.org/doi/abs/10.1145/362007.362035)" Communications of the ACM 13.2 (1970): 94-102. (※ 最初に発表したのは1968年ですが、よりフォーマルな形で発表したのは1970年のようです)
+
 [^3]: Leo, Joop MIM. "[A general context-free parsing algorithm running in linear time on every LR (k) grammar without using lookahead.](https://www.sciencedirect.com/science/article/pii/030439759190180A)" Theoretical computer science 82.1 (1991): 165-176.
 
 実はEarley法は、<u>Pike VMによるマッチングをProcedural Automatonに拡張したもの</u>と考えることができます。
@@ -319,6 +320,7 @@ Procedural AutomatonやPike VMをこれに対応するために拡張する方�
 SPAはCFG全体を表現できる力があることが知られています。
 
 [^4]: Frohme, Markus, and Bernhard Steffen. "[Compositional learning of mutually recursive procedural systems.](https://link.springer.com/article/10.1007/s10009-021-00634-y)" International Journal on Software Tools for Technology Transfer 23 (2021): 521-543.
+
 [^5]: 他にも同等のものを**Context-Free Process System**や**Recursive State Machine** (**RSM**) と呼ぶこともあるらしいです。
 
 例えば次の図のSPAは、`"({()})({})"`のような`(...)`と`{...}`が交互に入れ子になって並んでいる場合にマッチするオートマトンとなっています。
