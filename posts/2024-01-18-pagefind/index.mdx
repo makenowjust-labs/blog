@@ -153,7 +153,7 @@ return (
 実際のソースコードは[`components/Pagefind.tsx`](https://github.com/makenowjust-labs/blog/blob/442384658ad87caaa4283f9ebe44ae1bf2bbdf3b/components/Pagefind.tsx)にあります。
 これに加えて、ダイアログの開閉の制御なども行っています。
 
-また、このブログの場合は`basePath`が`/blob/`になっているため、そのままだとパスが異なってしまい、正しく読み込みができません。
+また、このブログの場合は`basePath`が`/blog/`になっているため、そのままだとパスが異なってしまい、正しく読み込みができません。
 そこで、`next.config.js`の`env`経由で`basePath`を渡し、参照するようにしています。
 
 # あとがき
