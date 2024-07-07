@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import MdxWrapper from "./MdxWrapper";
-import TagBadge from "./TagBadge";
+import MdxWrapper from "../post/MdxWrapper";
+import TagBadge from "../post/TagBadge";
 
 export type Props = React.PropsWithChildren<{
   slug: string;

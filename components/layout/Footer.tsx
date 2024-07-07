@@ -1,6 +1,6 @@
 import { FaGithubAlt, FaTwitter } from "react-icons/fa";
 
-import TagBadge from "@/components/TagBadge";
+import TagBadge from "@/components/post/TagBadge";
 
 export type Props = {
   year: string;

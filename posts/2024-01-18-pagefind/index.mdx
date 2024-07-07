@@ -21,6 +21,8 @@ tags:
 
 import Image from "next/image";
 
+import MockupCode from "@/components/daisyui/MockupCode";
+
 import searchBoxImage from "./images/search-box.png";
 
 # はじめに
@@ -70,11 +72,7 @@ Pagefindの[Quick Start](https://pagefind.app/docs/)では、次の2段階で導
 
 2. ビルドされたサイトに対して `pagefind` コマンドを実行して、インデックスや関連ファイル (上の `pagefind-ui.css` や `pagefind-ui.js`) を作成する。
 
-   <div className="not-prose mockup-code">
-     <pre data-prefix="$">
-       <code>npx -y pagefind --site public --serve</code>
-     </pre>
-   </div>
+   <MockupCode prefix="$" code="npx -y pagefind --site public --serve" />
 
 この方法は通常の静的サイトであれば (恐らく) 上手く動作します。
 しかし、この方法では次のような問題が考えられます。

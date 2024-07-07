@@ -1,6 +1,6 @@
-import MdxWrapper from "@/components/MdxWrapper";
-import Pagination from "@/components/Pagination";
-import PostPreview from "@/components/PostPreview";
+import MdxWrapper from "@/components/post/MdxWrapper";
+import Pagination from "@/components/page/Pagination";
+import PostPreview from "@/components/page/PostPreview";
 
 import { Page, getPage } from "@/src/post";
 

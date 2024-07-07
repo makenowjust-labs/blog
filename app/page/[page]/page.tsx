@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
-import Pagination from "@/components/Pagination";
-import PostPreview from "@/components/PostPreview";
+import Pagination from "@/components/page/Pagination";
+import PostPreview from "@/components/page/PostPreview";
 
 import { BLOG_TITLE } from "@/src/meta";
 import { type Page, getPage, getTotalPage } from "@/src/post";

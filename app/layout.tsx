@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-import Footer from "@/components/Footer";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
-import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
+import Footer from "@/components/layout/Footer";
+import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
+import Hero from "@/components/layout/Hero";
+import Navbar from "@/components/layout/Navbar";
 
 import {
   BLOG_AUTHOR,
