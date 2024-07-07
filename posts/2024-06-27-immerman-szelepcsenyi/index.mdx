@@ -105,8 +105,8 @@ $\mathbf{NLOG}$ について、Immerman-Szelepcsényiの定理を示すにあた
 
 <Alert color="info">
   **命題1**: $M \in \mathbf{NLOG}(c, k)$ とする。 文字列 $w$ について、高々
-  $|\mathbf{Valid}(w)|$ までの数値を記憶するには、$O(c \cdot k) \lceil \log |w| \rceil$
-  の長さの追加の作業テープが必要である。
+  $|\mathbf{Valid}(w)|$ までの数値を記憶するには、$O(c \cdot k) \lceil \log |w|
+  \rceil$ の長さの追加の作業テープが必要である。
 </Alert>
 
 <Alert>
@@ -140,7 +140,8 @@ $\mathbf{NLOG}$ について、Immerman-Szelepcsényiの定理を示すにあた
   **定理 (Immerman-Szelepcsényi)**:
   $s(n) \ge \log n$ とし、$\mathbf{NSAPCE}(s(n))$ を入力文字列の長さ $n$ に対して $s(n)$-bounded NTM ($s(n)$ に比例する作業テープの長さのNTM) で受理できる言語全体からなる言語クラス、$\mathbf{co}\text{-}\mathbf{NSPACE}(s(n))$ を $s(n)$-bounded NTMで受理できる言語の補言語全体からなる言語クラスとする。
 
-  このとき、$\mathbf{NSPACE} = \mathbf{co}\text{-}\mathbf{NSPACE}$。
+このとき、$\mathbf{NSPACE} = \mathbf{co}\text{-}\mathbf{NSPACE}$。
+
 </Alert>
 
 ここで重要な考察として、$s(n)$-bounded NTMの有効な様相の総数は $\mathbf{NLOG}(c, k)$ の場合と同様に $s(n) \lceil \log |w| \rceil$ の適当な定数倍の長さのテープで数えられるということです。
@@ -198,6 +199,7 @@ Immerman-Szelepcsényiの定理は、この疑問に対して、この程度の�
 
       <p className="text-right">https://arxiv.org/abs/2404.17492</p>
     </blockquote>
+
   </dd>
 
   <dt>
@@ -209,5 +211,6 @@ Immerman-Szelepcsényiの定理は、この疑問に対して、この程度の�
 
       <p className="text-right">https://ieeexplore.ieee.org/document/5270</p>
     </blockquote>
+
   </dd>
 </dl>
