@@ -1,0 +1,213 @@
+---
+title: Immerman-Szelepcsényiの定理について
+created: 2024-06-27
+updated: 2024-06-27
+description: |
+  Immerman-Szelepcsényiの定理はNSPACEが否定について閉じていることを示す、計算機科学上とても重要な定理です。
+  この記事では、Immerman-Szelepcsényiの定理やその証明について解説します。
+tags:
+  - オートマトン理論
+  - 計算量複雑性
+---
+
+**Immerman-Szelepcsényiの定理**は $s(n) \ge \log n$ の場合に $\mathbf{NSPACE}(s(n))$ (テープ長に上限のある非決定性チューリングマシンが受理できる言語のクラス) が、否定について閉じていることを示す定理です。
+[Neil Immerman](https://en.wikipedia.org/wiki/Neil_Immerman)と[Róbert Szelepcsényi](https://en.wikipedia.org/wiki/R%C3%B3bert_Szelepcs%C3%A9nyi)[^szelepcsenyi-pronounce]が1987年にそれぞれ独立して示し、この成果により両者は1995年にGödel賞を受賞しました。
+このように、Immerman-Szelepcsényiの定理は、計算量複雑性の理論上とても重要な定理となっています。
+
+[^szelepcsenyi-pronounce]: セレプチェーニと発音するみたい？ (参考: [これ](https://www.kurims.kyoto-u.ac.jp/~kawamura/t/0510021/H261216_slides_9up.pdf)の最後のスライド)
+
+Immerman-Szelepcsényiの定理の証明は、テープ長に上限のある**非決定性有限チューリングマシン** (_NTM_) の**様相** (_configuration_) の総数が入力の長さとそのNTMの大きさで抑えられることを活かして、次のようなNTMを構成することで実現されます。
+
+- ある様相から到達可能な様相の総数を数え上げた上で、
+- その総数のステップ中に、受理状態に到達可能かを判定する。
+
+この記事ではImmerman-Szelepcsényiの定理を[\[Uezato, 2024\]](#ref-uezato-2024)を参考に証明したいと思います。
+方針は論文に書いてある通りで特に目新しい部分はありません。自分の備忘録として残しておきます。
+
+**想定読者**: 情報科学の基本的な部分を理解しており、計算量複雑性の理論などに関心があることを想定しています。
+
+{/* read more */}
+
+import Alert from "@/components/daisyui/Alert";
+
+# 準備
+
+## 非決定性チューリングマシン (NTM)
+
+**非決定性チューリングマシン** (_Nondeterministic Turing Machine_, _NTM_) として、_$c$-bounded $k$-working-tapes log-space NTM_ $M = (k, c, Q, q_{\mathrm{init}}, Q_F, \Sigma, \Gamma, \Box, \Delta)$ を定義します[^k-working-tapes]。
+$M$の各要素は次のような意味になります。
+
+[^k-working-tapes]: $k$ 本の作業テープを持っていますが、区切り用の文字を追加して1本のテープに並べることができるので、言語クラスは作業テープが1本のNTMと変わらないはずです。
+
+- $k$は**作業テープ** (_working tape_) $T_1, T_2, \dots, T_k$の数です。
+- $c$はテープ長の上限のための定数で、各テープの長さは $C = \lceil c \log |w| \rceil$ ($w$は入力文字列、 $\lceil x \rceil$ は天井関数) によって抑えられます。
+- $Q$は状態の有限集合で、$q_{\mathrm{init}} \in Q$は初期状態、$Q_F \subseteq Q$は受理状態の集合になります。
+- $\Sigma$は入力のアルファベットで、$\Gamma$はテープのアルファベット、$\Box \in \Gamma$は作業テープの空の部分を埋めるための記号です。
+- $\Delta$は遷移規則で、各規則は $p \xrightarrow{\tau | \theta} q$ もしくは $p \xrightarrow{\kappa \mapsto \kappa' | \theta} q$ という形を取ります (ここで $p, q \in Q$, $\tau \in \Sigma \cup \{ \vdash, \dashv \}$, $\kappa, \kappa' \in \Gamma \cup \{ \vdash, \dashv \}$, $\theta \in \{ -1, +1, 0 \}$)。
+
+$w \in \Sigma^\ast$ を入力文字列とします。
+$M$上の文字列 $\vdash w \dashv$ で有効な**様相** (valid _configuration_) とはタプル $\langle q, i, (T_1, i_1), (T_2, i_2), \dots, (T_k, i_k) \rangle$ のことで、それぞれの値は次のような意味です。
+
+- $q \in Q$ は現在の状態、$i \in \mathbb{N}$ ($0 \le i \le |w| + 2$) は文字列 $\vdash w \dashv$ 上の位置を表します。
+- 各 $x \in \{ 1, 2, \dots, k \}$ について $(T_x, i_x)$ は、
+  - $T_x \in (\vdash \Gamma^C \dashv)$ は $x$ 番目の作業テープを表します ($C$ は上で定義しました)。
+  - $i_x \in \mathbb{N}$ ($0 \le i_x \le C + 2$) は $x$ 番目の作業テープのヘッドの位置を表します。
+
+<Alert color="warning">
+  **注意**: $\vdash, \dashv$は文字列、テープの先端と終端を表す記号で $\Sigma,
+  \Gamma$に含まれないものとします。
+</Alert>
+
+$M$上の文字列$\vdash w \dashv$で有効な様相全体からなる集合を $\mathbf{Valid}_M(w)$ と書くことにします (また、$M$ を省略して $\mathbf{Valid}(w)$ とします)。
+有効な様相の定義から、$\mathbf{Valid}(w)$ の大きさは $c$ ($C = c \lceil \log |w| \rceil$) と $k$ と入力文字列の長さ $|w|$ で次のように計算できます。
+
+$$
+|\mathbf{Valid}(w)| = |Q| \times (|w| + 2) \times (|\Gamma|^C \times (C + 2))^k
+$$
+
+入力文字列 $w$ について、$\mathcal{I}(w)$ を文字列 $\vdash w \dashv$ での初期様相として、次のように定義します。
+
+$$
+\mathcal{I}(w) = \langle q_{\mathrm{init}}, 0, (\vdash \Box^C \dashv, 0), (\vdash \Box^C \dashv, 0), \dots, (\vdash \Box^C \dashv, 0) \rangle
+$$
+
+$\xi = \langle q, i, (T_1, i_1), \dots, (T_k, i_k) \rangle$ を文字列 $\vdash w \dashv$ で有効な様相とします。
+遷移規則 $\delta \in \Delta$ について、有効な様相での遷移関係 $\xRightarrow{\delta}$ を次のように定義します。
+
+$$
+\frac
+  {\delta = p \xrightarrow{\tau | \theta} q \in \Delta \qquad (\vdash w \dashv)[i] = \tau}
+  {\xi \xRightarrow{\delta} \langle q, i + \theta, (T_1, i_1), \dots, (T_k, i_k) \rangle}
+$$
+
+$$
+\frac
+  {\delta = p \xrightarrow{\kappa \mapsto \kappa' | \theta} q \in \Delta \qquad \kappa = T_x[i_x]}
+  {\xi \xRightarrow{\delta} \langle q, i, (T_1, i_1), \dots, (T_x[i_x] \coloneqq \kappa', i_x  + \theta), \dots, (T_k, i_k) \rangle}
+$$
+
+ここで $T_x[i_x] \coloneqq \kappa'$ は $T_x$ の $i_x$ 番目の位置に $\kappa'$ を書き込んだ新しいテープを表します。
+また、遷移規則 $\delta \in \Delta$ は省略されて単に $\Rightarrow$ と書かれる場合があり、さらにこの推移的閉包を $\Rightarrow^\ast$ と書きます。
+
+$c$-bounded $k$-working-tapes log-space NTM 全体からなる集合を $\mathbf{NLOG}(c, k)$ と書くことにします。
+$c$ と $k$ が重要ではない場合、単に $\mathbf{NLOG}$ と書くことがあります。
+
+$M \in \mathbf{NLOG}$ と文字列 $w$ について、$M(w, \xi)$ を $\vdash w \dashv$ 上での $\xi$ から到達可能な、有効かつ受理される様相全体からなる集合とします。
+つまり、$M(w, \xi)$ は次のような集合になります。
+
+$$
+M(w, \xi) = \{ \xi' \mid \xi \Rightarrow^\ast \xi',\, \xi' = \langle q_\mathrm{acc}, i, T \rangle,\, q_\mathrm{acc} \in Q_F \}
+$$
+
+さらに、$M$ の受理する言語 $L(M)$ を $M(w, \xi)$ を用いて、 $L(M) = \{ w \mid M(w, \mathcal{I}(M)) \ne \emptyset \}$ と定義します。
+
+$\mathbf{NLOG}$ について、Immerman-Szelepcsényiの定理を示すにあたって用いる命題をいくつか述べておきます。
+
+<Alert color="info">
+  **命題1**: $M \in \mathbf{NLOG}(c, k)$ とする。 文字列 $w$ について、高々
+  $|\mathbf{Valid}(w)|$ までの数値を記憶するには、$O(c \cdot k) \lceil \log |w| \rceil$
+  の長さの追加の作業テープが必要である。
+</Alert>
+
+<Alert>
+  **証明**:
+  $|\mathbf{Valid}(w)| = |Q| \times (|w| + 2) \times (|\Gamma|^C \times (C + 2))^k$ で $C = c \lceil \log |w| \rceil$ なので、$\log |\mathbf{Valid}(w)| = (k \cdot c \cdot \log |w|) \log |\Gamma| + \cdots = O(c \cdot k) \log |w|$ となり、$O(c \cdot k) \lceil \log |w| \rceil$ の長さの作業テープに $|\mathbf{Valid}(w)|$ までの数値が記録できることが確認できる。
+
+  <div className="text-right">$\Box$</div>
+</Alert>
+
+<Alert color="info">
+  **命題2**: $M \in \mathbf{NLOG}(c, k)$ とする。 $N \in \mathbf{NLOG}(O(c \cdot
+  k), k + 1)$ で、$L(N) = L(M)$ かつ任意の入力文字列に対して $N$
+  の計算が停止するようなものが存在する。
+</Alert>
+
+<Alert>
+  **証明**:
+  $M$ の到達可能な様相の数は高々 $\Beta = |\mathbf{Valid}_M(w)|$ である。
+  そのため、$\Beta$ 以上の長さの実行パスは同じ様相に複数回到達しており、受理されるかどうかの判定に関わらないことが分かる。
+  そこで、実行パスの長さを数える追加のテープを用意して、$\Beta$ 以上になったものを非受理として停止させることで、計算が必ず停止するようにできる。
+  そして、この追加のテープの長さは「命題1」より $O(c \cdot k) \lceil \log |w| \rceil$ の長さとなるため、そのようなNTMは $N \in \mathbf{NLOG}(O(c \cdot k), k + 1)$ となる。
+
+  <div className="text-right">$\Box$</div>
+</Alert>
+
+# Immerman-Szelepcsényiの定理
+
+まず始めに、Immerman-Szelepcsényiの定理のステートメントを確認します。
+
+<Alert color="info">
+  **定理 (Immerman-Szelepcsényi)**:
+  $s(n) \ge \log n$ とし、$\mathbf{NSAPCE}(s(n))$ を入力文字列の長さ $n$ に対して $s(n)$-bounded NTM ($s(n)$ に比例する作業テープの長さのNTM) で受理できる言語全体からなる言語クラス、$\mathbf{co}\text{-}\mathbf{NSPACE}(s(n))$ を $s(n)$-bounded NTMで受理できる言語の補言語全体からなる言語クラスとする。
+
+  このとき、$\mathbf{NSPACE} = \mathbf{co}\text{-}\mathbf{NSPACE}$。
+</Alert>
+
+ここで重要な考察として、$s(n)$-bounded NTMの有効な様相の総数は $\mathbf{NLOG}(c, k)$ の場合と同様に $s(n) \lceil \log |w| \rceil$ の適当な定数倍の長さのテープで数えられるということです。
+よって $\mathbf{NSPACE}(\log n) = \mathbf{co}\text{-}\mathbf{NSPACE}(\log n)$、つまり $\mathbf{NLOG} = \mathbf{co}\text{-}\mathbf{NLOG}$ により、 Immerman-Szelepcsényiの定理を示すことができます。
+
+## 証明
+
+というわけで、証明の方針を説明します。
+
+$M \in \mathbf{NLOG}(c, k)$ について、$L(\overline{M}) = \Sigma^\ast \setminus L(M)$ であるような $\overline{M} \in \mathbf{NLOG}(O(c \cdot k), k + \partial)$ を構成することで、定理を示すことができます。
+ここで $\partial$ は $M$ に依存しない定数です。
+
+では $\overline{M}$ はどのように構成するのかというと、次の二段階に分けて行います。
+
+1. ある様相 $\mathrm{START}$ から到達可能な様相の総数 $C$ を計算する。
+2. その $C$ ステップ以内に到達できる様相の中に受理状態のものがあるかを調べる。
+
+そして、これらは $|\mathbf{Valid}(w)|$ までの数値を記録できる $\partial$ 個の変数を使って NTM で計算できます。
+具体的な方法は[\[Uezato, 2024\]](#ref-uezato-2024)のLemma 11で疑似コードを使って説明しています。
+また、1については[\[Immerman, 1988\]](#ref-immerman-1988)のLemma 2で、2についてはLemma 1で詳細に説明されています。
+
+# あとがき
+
+今回はImmerman-Szelepcsényiの定理について説明しました。
+すごく有名な定理ではありませんが、計算量複雑性の理論では重要な定理だと思います。
+
+例えば、文脈自由言語は否定について閉じていません。
+一方、正規言語や文脈依存言語は否定について閉じています。
+このように否定について閉じているかはチョムスキー階層の上下に依存するものではありません。
+Immerman-Szelepcsényiの定理は、この疑問に対して、この程度の計算力があれば否定について閉じている、と言える根拠を与えるものだと考えられます。
+
+また、この定理の証明はとても構成的なことも興味深いところだと思います。
+具体的に、あるNTMの言語の補言語を受理するNTMの構成の方法が説明されているので、実際にそのようなNTMを構成してみたら面白いのではないかと考えています。
+しかし、説明している方法をそのまま行っても、およそ現実的な時間では計算できないと思うので、効率的に計算するにはどうしたらいいのか、というのも気になっています[^compute-ntm]。
+
+[^compute-ntm]: とはいえ、$\mathbf{NLOG}$ や $\mathbf{NSPACE}$ 自体があまり現実的な時間で計算できると考えられる計算クラスではないです。
+
+自分がImmerman-Szelepcsényiの定理に興味を持ったのは[\[Uezato, 2024\]](#ref-uezato-2024)を読んだためでした。
+この論文では、肯定・否定先読みと後方参照を持つ正規表現の言語クラスが $\mathbf{NLOG}$ と一致することを示しています。
+その中で、オラクルによって多重にネストしたNTMを1重に潰すのに、このImmerman-Szelepcsényiの定理を用いています。
+これも面白い話だったので、いつか説明できたらと思います。
+
+それでは、最後まで目を通していただきありがとうございました。
+
+## 参考文献
+
+<dl>
+  <dt>
+    <a id="ref-uezato-2024">[Uezato, 2024]</a>:
+  </dt>
+  <dd>
+    <blockquote>
+      Uezato, Yuya. "Regular Expressions with Backreferences and Lookaheads
+      Capture NLOG." arXiv preprint arXiv:2404.17492 (2024).
+
+      <p className="text-right">https://arxiv.org/abs/2404.17492</p>
+    </blockquote>
+  </dd>
+
+  <dt>
+    <a id="ref-immerman-1988">[Immerman, 1988]</a>:
+  </dt>
+  <dd>
+    <blockquote>
+      Immerman, Neil. "Nondeterministic space is closed under complementation." SIAM Journal on computing 17.5 (1988): 935-938.
+
+      <p className="text-right">https://ieeexplore.ieee.org/document/5270</p>
+    </blockquote>
+  </dd>
+</dl>
