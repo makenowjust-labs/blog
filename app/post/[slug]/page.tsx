@@ -38,12 +38,12 @@ export default async function Post({ params: { slug } }: Props) {
   const time = created === updated ? created : `${created} (更新: ${updated})`;
 
   return (
-    <div className="border-b-2 pb-5 px-2">
+    <div className="border-b-2 px-2 pb-5">
       <h1 className="pb-2 text-2xl font-bold text-stone-900">{title}</h1>
-      <div className="text-right text-sm text-stone-800 font-impact">
+      <div className="text-right font-impact text-sm text-stone-800">
         {time}
       </div>
-      <div className="pb-4 flex flex-wrap gap-2">{tagNodes}</div>
+      <div className="flex flex-wrap gap-2 pb-4">{tagNodes}</div>
       <MdxWrapper>
         <Content />
       </MdxWrapper>

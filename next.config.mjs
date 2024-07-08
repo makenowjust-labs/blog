@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import { $ } from "zurk";
 
 import rehypeKatex from "rehype-katex";
-import rehypePrettyCode from "rehype-pretty-code";
+import { rehypePrettyCode } from "rehype-pretty-code";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";

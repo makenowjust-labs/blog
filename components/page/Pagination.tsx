@@ -7,7 +7,7 @@ export type Props = {
 
 const NextIcon = () => (
   <svg
-    className="h-6 w-6 fill-current md:h-8 md:w-8"
+    className="size-6 fill-current md:size-8"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
@@ -19,7 +19,7 @@ const NextIcon = () => (
 
 const PrevIcon = () => (
   <svg
-    className="h-6 w-6 fill-current md:h-8 md:w-8"
+    className="size-6 fill-current md:size-8"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
