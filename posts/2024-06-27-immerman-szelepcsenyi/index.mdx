@@ -1,7 +1,7 @@
 ---
 title: Immerman-Szelepcsényiの定理について
 created: 2024-06-27
-updated: 2024-07-07
+updated: 2024-07-08
 description: |
   Immerman-Szelepcsényiの定理はNSPACEが否定について閉じていることを示す、計算機科学上とても重要な定理です。
   この記事では、Immerman-Szelepcsényiの定理やその証明について解説します。
@@ -168,10 +168,12 @@ $M \in \mathbf{NLOG}(c, k)$ について、$L(\overline{M}) = \Sigma^\ast \setmi
 今回はImmerman-Szelepcsényiの定理について説明しました。
 すごく有名な定理ではありませんが、計算量複雑性の理論では重要な定理だと思います。
 
-例えば、文脈自由言語は否定について閉じていません。
-一方、正規言語や文脈依存言語は否定について閉じています。
+例えば、プッシュダウンオートマトン (文脈自由言語) は否定について閉じていません。
+一方、有限状態オートマトン (正規言語) や線形拘束オートマトン (文脈依存言語) は否定について閉じています[^lba-class]。
 このように否定について閉じているかはチョムスキー階層の上下に依存するものではありません。
 Immerman-Szelepcsényiの定理は、この疑問に対して、この程度の計算力があれば否定について閉じている、と言える根拠を与えるものだと考えられます。
+
+[^lba-class]: 文脈依存言語の計算クラスは $\mathbf{NSPACE}(n)$ に等しいことが知られています (参考: [\[Kuroda, 1964\]](#ref-kuroda-1964))。
 
 また、この定理の証明はとても構成的なことも興味深いところだと思います。
 具体的に、あるNTMの言語の補言語を受理するNTMの構成の方法が説明されているので、実際にそのようなNTMを構成してみたら面白いのではないかと考えています。
@@ -182,7 +184,7 @@ Immerman-Szelepcsényiの定理は、この疑問に対して、この程度の�
 自分がImmerman-Szelepcsényiの定理に興味を持ったのは[\[Uezato, 2024\]](#ref-uezato-2024)を読んだためでした。
 この論文では、肯定・否定先読みと後方参照を持つ正規表現の言語クラスが $\mathbf{NLOG}$ と一致することを示しています。
 その中で、オラクルによって多重にネストしたNTMを1重に潰すのに、このImmerman-Szelepcsényiの定理を用いています。
-これも面白い話だったので、いつか説明できたらと思います。
+これも面白い話だったので、この話もいつかできたらと思います。
 
 それでは、最後まで目を通していただきありがとうございました。
 
@@ -212,5 +214,16 @@ Immerman-Szelepcsényiの定理は、この疑問に対して、この程度の�
       <p className="text-right">https://ieeexplore.ieee.org/document/5270</p>
     </blockquote>
 
+  </dd>
+
+  <dt>
+    <a id="ref-kuroda-1964">[Kuroda, 1964]</a>
+  </dt>
+  <dd>
+    <blockquote>
+      Kuroda, S-Y. "Classes of languages and linear-bounded automata." Information and control 7.2 (1964): 207-223.
+
+      <p className="text-right">https://www.sciencedirect.com/science/article/pii/S0019995864901202</p>
+    </blockquote>
   </dd>
 </dl>
