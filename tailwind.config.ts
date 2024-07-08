@@ -1,7 +1,7 @@
-import type { Config } from "tailwindcss";
-
 import daisyui from "daisyui";
 import typography from "@tailwindcss/typography";
+
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [

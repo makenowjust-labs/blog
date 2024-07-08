@@ -20,7 +20,7 @@ export default async function Footer({
   const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
 
   return (
-    <footer className="mx-auto max-w-3xl px-2 py-5 lg:px-0 font-impact">
+    <footer className="mx-auto max-w-3xl px-2 py-5 font-impact lg:px-0">
       <div>
         <h2 className="text-lg font-bold">タグ一覧</h2>
         <div className="flex flex-wrap gap-2">{tagNodes}</div>

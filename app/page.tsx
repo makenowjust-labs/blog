@@ -8,7 +8,7 @@ import HomeAbstractContent from "@/app/abstract.mdx";
 
 function HomeAbstract() {
   return (
-    <div className="py-5 px-2">
+    <div className="px-2 py-5">
       <MdxWrapper>
         <HomeAbstractContent />
       </MdxWrapper>

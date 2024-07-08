@@ -16,7 +16,7 @@ export default function Navbar({ title, repo, twitter }: Props) {
         <Link
           passHref={true}
           href="/"
-          className="btn btn-ghost normal-case text-stone-900 font-impact"
+          className="btn btn-ghost font-impact normal-case text-stone-900"
         >
           {title}
         </Link>

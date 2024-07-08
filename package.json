@@ -5,8 +5,8 @@
   "scripts": {
     "build": "RUN_OG_IMAGE=1 RUN_PAGEFIND=1 next build",
     "dev": "next dev",
-    "format": "prettier --write '**/*.{css,js,json,jsx,md,mdx,mjs,ts,tsx,yaml}' && next lint --fix",
-    "lint": "prettier --check '**/*.{css,js,json,jsx,md,mdx,mjs,ts,tsx,yaml}' && next lint",
+    "format": "prettier --write '**/*.{css,js,json,jsx,md,mdx,mjs,ts,tsx,yaml}' && eslint --fix",
+    "lint": "prettier --check '**/*.{css,js,json,jsx,md,mdx,mjs,ts,tsx,yaml}' && eslint",
     "typecheck": "tsc -p ."
   },
   "dependencies": {
@@ -22,6 +22,9 @@
     "react-use": "17.5.0"
   },
   "devDependencies": {
+    "@eslint/compat": "1.1.0",
+    "@eslint/eslintrc": "3.1.0",
+    "@eslint/js": "9.6.0",
     "@fontsource/biz-udpgothic": "5.0.19",
     "@fontsource/share-tech-mono": "5.0.12",
     "@fontsource/sometype-mono": "5.0.3",
@@ -36,7 +39,7 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.19",
     "budoux": "0.6.2",
-    "eslint": "8.57.0",
+    "eslint": "9.6.0",
     "eslint-config-next": "14.2.4",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
