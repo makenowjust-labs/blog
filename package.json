@@ -12,7 +12,7 @@
   "dependencies": {
     "@tailwindcss/typography": "0.5.13",
     "daisyui": "4.12.10",
-    "dayjs": "1.11.11",
+    "dayjs": "1.11.12",
     "katex": "0.16.11",
     "next": "14.2.5",
     "pseudocode": "2.4.1",
