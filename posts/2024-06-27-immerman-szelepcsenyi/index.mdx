@@ -113,7 +113,7 @@ $\mathbf{NLOG}$ について、Immerman-Szelepcsényiの定理を示すにあた
   **証明**:
   $|\mathbf{Valid}(w)| = |Q| \times (|w| + 2) \times (|\Gamma|^C \times (C + 2))^k$ で $C = c \lceil \log |w| \rceil$ なので、$\log |\mathbf{Valid}(w)| = (k \cdot c \cdot \log |w|) \log |\Gamma| + \cdots = O(c \cdot k) \log |w|$ となり、$O(c \cdot k) \lceil \log |w| \rceil$ の長さの作業テープに $|\mathbf{Valid}(w)|$ までの数値が記録できることが確認できる。
 
-  <div className="text-right">$\Box$</div>
+  <p className="text-right">$\Box$</p>
 </Alert>
 
 <Alert color="info">
@@ -129,7 +129,7 @@ $\mathbf{NLOG}$ について、Immerman-Szelepcsényiの定理を示すにあた
   そこで、実行パスの長さを数える追加のテープを用意して、$\Beta$ 以上になったものを非受理として停止させることで、計算が必ず停止するようにできる。
   そして、この追加のテープの長さは「命題1」より $O(c \cdot k) \lceil \log |w| \rceil$ の長さとなるため、そのようなNTMは $N \in \mathbf{NLOG}(O(c \cdot k), k + 1)$ となる。
 
-  <div className="text-right">$\Box$</div>
+  <p className="text-right">$\Box$</p>
 </Alert>
 
 # Immerman-Szelepcsényiの定理

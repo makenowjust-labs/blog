@@ -4,7 +4,7 @@ import { visit, SKIP } from "unist-util-visit";
 
 export default function rehypePseudocode() {
   return (tree) => {
-    let captionCount = 1;
+    let captionCount = 0;
 
     visit(tree, "element", (node, index, parent) => {
       if (
