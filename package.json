@@ -5,8 +5,8 @@
   "scripts": {
     "build": "RUN_OG_IMAGE=1 RUN_PAGEFIND=1 next build",
     "dev": "next dev",
-    "format": "prettier --write '**/*.{css,js,json,jsx,md,mdx,mjs,ts,tsx,yaml}' && eslint --fix",
-    "lint": "prettier --check '**/*.{css,js,json,jsx,md,mdx,mjs,ts,tsx,yaml}' && eslint",
+    "format": "prettier --write '**/*.{css,js,json,jsx,mjs,ts,tsx,yaml}' && eslint --fix",
+    "lint": "prettier --check '**/*.{css,js,json,jsx,mjs,ts,tsx,yaml}' && eslint",
     "typecheck": "tsc -p ."
   },
   "dependencies": {
