@@ -10,7 +10,7 @@
     "typecheck": "tsc -p ."
   },
   "dependencies": {
-    "@tailwindcss/typography": "0.5.13",
+    "@tailwindcss/typography": "0.5.14",
     "daisyui": "4.12.10",
     "dayjs": "1.11.12",
     "katex": "0.16.11",
