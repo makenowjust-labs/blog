@@ -11,6 +11,7 @@ import remarkMath from "remark-math";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 import rehypeMdxExcerpt from "./src/rehype-mdx-excerpt.mjs";
+import rehypeMermaid from "./src/rehype-mermaid.mjs";
 import rehypePseudocode from "./src/rehype-pseudocode.mjs";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -25,8 +26,9 @@ const withMdx = createMdx({
       remarkMdxFrontmatter,
     ],
     rehypePlugins: [
-      rehypeKatex,
+      [rehypeKatex, { trust: true, strict: false }],
       rehypePseudocode,
+      rehypeMermaid,
       rehypePrettyCode,
       rehypeMdxExcerpt,
     ],
