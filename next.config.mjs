@@ -26,7 +26,7 @@ const withMdx = createMdx({
       remarkMdxFrontmatter,
     ],
     rehypePlugins: [
-      rehypeKatex,
+      [rehypeKatex, { trust: true, strict: false }],
       rehypePseudocode,
       rehypeMermaid,
       rehypePrettyCode,

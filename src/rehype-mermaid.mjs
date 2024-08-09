@@ -48,7 +48,7 @@ export default function rehypeMermaid() {
 
       const newTree = {
         type: "mdxJsxFlowElement",
-        name: "MermaidRenderer",
+        name: "__MermaidRenderer",
         attributes: [
           {
             type: "mdxJsxAttribute",
@@ -84,7 +84,7 @@ export default function rehypeMermaid() {
       tree.children.push({
         type: "mdxjsEsm",
         value:
-          'import MermaidRenderer from "@/components/mermaid/MermaidRenderer"',
+          'import __MermaidRenderer from "@/components/mermaid/MermaidRenderer"',
         data: {
           estree: {
             type: "Program",
@@ -96,7 +96,7 @@ export default function rehypeMermaid() {
                     type: "ImportDefaultSpecifier",
                     local: {
                       type: "Identifier",
-                      name: "MermaidRenderer",
+                      name: "__MermaidRenderer",
                     },
                   },
                 ],
