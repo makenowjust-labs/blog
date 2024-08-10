@@ -1,7 +1,7 @@
 ---
 title: "L*やその派生アルゴリズムたち (Rivest-Schapire、Kearns-Vazirani)"
 created: 2024-07-22
-updated: 2024-08-09
+updated: 2024-08-10
 description: |
   AngluinのL*アルゴリズムはオートマトン学習の方法として最も有名なものですが、L*には他にも様々な派生アルゴリズムが存在します。
   この記事ではL*の派生アルゴリズムとしてRivest-SchapireとKearns-Vaziraniについて紹介します。
@@ -674,7 +674,8 @@ $$
 
 <Alert color="info">
   **補題**:
-  discrimination tree $$\mathcal{T}$$ と $$d \in D$$、任意の文字列 $$w \in \Sigma^\ast$$ について、次の式が成り立つ。
+  discrimination tree $$\mathcal{T}$$ と文字列 $$w \in \Sigma^\ast$$ とし、$$d \in D$$ を $$\text{\htmlClass{katex-ps-funcname}{Sift}}(w, \mathcal{T})$$ 中で到達する節ノードのラベルの文字列とします。
+  このとき、次の式が成り立ちます。
 
   $$
   \mathrm{MEMBER}(\text{\htmlClass{katex-ps-funcname}{Sift}}(w, \mathcal{T}) \cdot d) = \mathrm{MEMBER}(w \cdot d)
@@ -708,9 +709,7 @@ $$
 \end{align*}
 $$
 
-となり、目的の式が得られます[^new-d]。
-
-[^new-d]: ここで、もし $$w_i \cdot d \in D$$ であれば目的の不等式が等式になってしまうので、$$w_i \cdot d$$ が $$D$$ に含まれていない、新しい節のラベルの文字列になるということも分かります。
+となり、目的の式が得られます。
 
 最後に、これらの手続き・関数を使って、実際の学習のアルゴリズムを定義します。
 
@@ -753,6 +752,9 @@ $$
 最初の方が妙にややこしいですが、空文字列で自明なオートマトンを作って、それに対して $$\mathrm{EQUIV}(\mathcal{H})$$ を呼び、反例の文字列と合わせてdiscrimination treeを構築しています。
 また、本体の繰り返しの部分は $$\mathrm{EQUIV}(\mathcal{H})$$ を呼んで、反例の文字列 $$w$$ と $$\text{\htmlClass{katex-ps-funcname}{Update-Tree}}(w, \mathcal{T})$$ を呼び出して、discrimination treeを更新していきます。
 
+このアルゴリズム中での $$\mathrm{MEMBER}(w)$$ の呼び出し回数は $$O(kn^2 + n^2 m)$$ となります。
+理由はRivest-Schapireのときと同じで二分探索でなく線形探索をしている分、$$\log m$$ が $$m$$ になっています。
+
 このようにdiscrimination treeを用いてオートマトン学習を行うのがKearns-Vaziraniになります。
 
 # あとがき
@@ -772,6 +774,11 @@ Angluinの $$L^\ast$$ アルゴリズムは有名なものなのでご存知の�
 こちらについてもどこかで説明できればと思います。
 
 それでは、最後まで目を通していただきありがとうございました。
+
+## 更新履歴
+
+- 2024/08/09: 初版公開。
+- 2024/08/09: $$\mathrm{MEMBER}$$ と <span className="katex-ps-funcname">Sift</span> についての補題についてのあやしい記述を修正。Kearns-Vaziraniの計算量についての記述を追加。
 
 ## 参考文献
 
