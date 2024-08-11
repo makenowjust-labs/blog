@@ -86,10 +86,10 @@
   resolved "https://registry.npmjs.org/@eslint/object-schema/-/object-schema-2.1.4.tgz"
   integrity sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ==
 
-"@fontsource/biz-udpgothic@5.0.19":
-  version "5.0.19"
-  resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.0.19.tgz"
-  integrity sha512-DaiLfJ+CZb99lR9eT1QwP5/aIsQRTlR7R/yEzXbIELKEF7YUGSWLKXbONVl5e02gWh3kL7Bin02uu1PJZJr7SQ==
+"@fontsource/biz-udpgothic@5.0.20":
+  version "5.0.20"
+  resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.0.20.tgz"
+  integrity sha512-3lWtzy+DhyIhxTgepT97RHeoNdXOxOg1ZYSwxK9/MJPjHFxdMVv24WDIlC8kdCph7w1orsebmTl477OJrFrlzA==
 
 "@fontsource/share-tech-mono@5.0.12":
   version "5.0.12"
