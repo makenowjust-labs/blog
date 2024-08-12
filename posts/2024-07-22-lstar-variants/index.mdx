@@ -1,7 +1,7 @@
 ---
 title: "L*やその派生アルゴリズムたち (Rivest-Schapire、Kearns-Vazirani)"
 created: 2024-07-22
-updated: 2024-08-10
+updated: 2024-08-11
 description: |
   AngluinのL*アルゴリズムはオートマトン学習の方法として最も有名なものですが、L*には他にも様々な派生アルゴリズムが存在します。
   この記事ではL*の派生アルゴリズムとしてRivest-SchapireとKearns-Vaziraniについて紹介します。
@@ -34,7 +34,7 @@ import Alert from "@/components/daisyui/Alert";
 $$\Sigma$$ をアルファベットとして固定し、その元を文字と呼びます。
 文字を1列に並べたものを文字列と呼び、空文字列を $$\varepsilon$$ で表します。
 文字列全体からなる集合を $$\Sigma^\ast$$ で表します。
-2つの文字列 $$w_1, w_2 \in \Sigma^\ast$$ の結合を $$s_1 \cdot s_2$$ で表しますが、単に $$s_1 s_2$$ と表すこともあります。
+2つの文字列 $$w_1, w_2 \in \Sigma^\ast$$ の結合を $$w_1 \cdot w_2$$ で表しますが、単に $$w_1 w_2$$ と表すこともあります。
 
 <Alert color="success">
   **定義 (DFA)**:
@@ -45,7 +45,7 @@ $$\Sigma$$ をアルファベットとして固定し、その元を文字と呼
   - $$\delta\colon Q \times \Sigma  \to Q$$ は遷移関数を意味します。
 </Alert>
 
-遷移関数 $$\delta$$ は $$\delta(q, \varepsilon) = q,\,\delta(q, \sigma w) = \delta(\delta(q, \sigma), w)$$ として文字列に拡張されます。
+遷移関数 $$\delta$$ は $$\delta(q, \varepsilon) = q,\,\delta(q, \sigma w) = \delta(\delta(q, \sigma), w)$$ ($$\sigma \in \Sigma, w \in \Sigma^\ast$$)として文字列に拡張されます。
 DFA $$\mathcal{A}$$ の出力関数 $$\gamma\colon Q \times \Sigma^\ast \to \mathbb{B}$$ は $$\delta(q_0, w) \in F$$ のとき $$\mathbf{true}$$、$$\delta(q_0, w) \notin F$$ のとき $$\mathbf{false}$$ を返す関数とします。
 
 # Angluinの $$L^\ast$$
@@ -779,6 +779,7 @@ Angluinの $$L^\ast$$ アルゴリズムは有名なものなのでご存知の�
 
 - 2024/08/09: 初版公開。
 - 2024/08/10: $$\mathrm{MEMBER}$$ と <span className="katex-ps-funcname">Sift</span> についての補題についてのあやしい記述を修正。Kearns-Vaziraniの計算量についての記述を追加。
+- 2024/08/11: 細かなtypoを修正。
 
 ## 参考文献
 
