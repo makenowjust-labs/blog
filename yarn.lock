@@ -114,15 +114,15 @@
   resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.0.20.tgz"
   integrity sha512-3lWtzy+DhyIhxTgepT97RHeoNdXOxOg1ZYSwxK9/MJPjHFxdMVv24WDIlC8kdCph7w1orsebmTl477OJrFrlzA==
 
-"@fontsource/share-tech-mono@5.0.12":
-  version "5.0.12"
-  resolved "https://registry.npmjs.org/@fontsource/share-tech-mono/-/share-tech-mono-5.0.12.tgz"
-  integrity sha512-9QsV9Kyuj+VM3PSCxxyhuQEztddBRiPLaoJYj6XmjtwEHIvELS/Sx7EQcoUWlhdIeACIScindGEuCg0lVmdjDw==
+"@fontsource/share-tech-mono@5.0.13":
+  version "5.0.13"
+  resolved "https://registry.npmjs.org/@fontsource/share-tech-mono/-/share-tech-mono-5.0.13.tgz"
+  integrity sha512-1Polbv+IGLsjBB+FyWG7TueNJehcJiW8AIhFq9j+DXJh1lOmRk3lyoudLeRTvFsNSUGJ1ooTXl0efsWL/r2Ppw==
 
-"@fontsource/sometype-mono@5.0.3":
-  version "5.0.3"
-  resolved "https://registry.npmjs.org/@fontsource/sometype-mono/-/sometype-mono-5.0.3.tgz"
-  integrity sha512-LsecbkpD+N9FivX9xHMIO/Jca56OYSoQwP13UE27BBcNyeLy7GQH8ycbaySmZj/tZnphCty2EeZkaxQ2X8lqNw==
+"@fontsource/sometype-mono@5.0.4":
+  version "5.0.4"
+  resolved "https://registry.npmjs.org/@fontsource/sometype-mono/-/sometype-mono-5.0.4.tgz"
+  integrity sha512-J7babOuKFkPo5CdCbsNq3QkOfxTPLdJQ2tLUAN9NxottsBgissCEoVtBXFKpmejoApYhuGCSiyIAIJ5HtM8S5Q==
 
 "@humanwhocodes/module-importer@^1.0.1":
   version "1.0.1"
