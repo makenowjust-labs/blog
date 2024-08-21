@@ -36,7 +36,7 @@ export default function rehypeMdxExcerpt() {
         ),
     );
     const text = toText(filtered);
-  
+
     const totalText = toText(tree);
     const readingTime = totalText.length / 500;
 

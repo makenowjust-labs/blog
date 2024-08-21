@@ -32,7 +32,8 @@ export async function generateMetadata({
 }
 
 export default async function Post({ params: { slug } }: Props) {
-  const { Content, title, created, updated, readingTime, tags } = await getPost(slug);
+  const { Content, title, created, updated, readingTime, tags } =
+    await getPost(slug);
 
   const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
   const time = created === updated ? created : `${created} (更新: ${updated})`;
