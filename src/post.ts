@@ -9,6 +9,7 @@ export type Post = {
   created: string;
   updated: string;
   excerpt: string;
+  readingTime: number;
   tags: string[];
   Content: () => JSX.Element;
   Excerpt: () => JSX.Element;
@@ -43,6 +44,7 @@ export const getPost = async (slug: string): Promise<Post> => {
     updated: mod.frontmatter.updated,
     tags: mod.frontmatter.tags,
     excerpt: mod.excerpt ?? "",
+    readingTime: mod.readingTime ?? 0.0,
     Content: mod.default,
     Excerpt: mod.Excerpt ?? (() => null),
   };

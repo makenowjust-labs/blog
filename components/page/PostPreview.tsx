@@ -8,6 +8,7 @@ export type Props = React.PropsWithChildren<{
   title: string;
   created: string;
   updated: string;
+  readingTime: number;
   tags: string[];
 }>;
 
@@ -16,6 +17,7 @@ export default function PostPreview({
   slug,
   created,
   updated,
+  readingTime,
   tags,
   children,
 }: Props) {
@@ -34,7 +36,7 @@ export default function PostPreview({
         </Link>
       </h2>
       <div className="text-right font-impact text-sm text-stone-800">
-        {time}
+        {time} / 読むのにかかる時間: 約{readingTime.toFixed(1)}分
       </div>
       <div className="flex flex-wrap gap-2 pb-4">{tagNodes}</div>
       <MdxWrapper>{children}</MdxWrapper>
