@@ -35,6 +35,7 @@ function PagePostList({ page }: { page: Page }) {
         title={post.title}
         created={post.created}
         updated={post.updated}
+        readingTime={post.readingTime}
         tags={post.tags}
         key={post.slug}
       >
