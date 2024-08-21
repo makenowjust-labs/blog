@@ -106,8 +106,10 @@ export default function rehypeMermaid() {
       if (!existsSync(output)) {
         await fs.writeFile(input, source);
         await run(input, output, {
-          mermaidConfig: {
-            fontFamily: "arial, sans-serif",
+          parseMMDOptions: {
+            mermaidConfig: {
+              fontFamily: "arial, sans-serif",
+            },
           },
           puppeteerConfig: { headless: "new" },
         });
