@@ -105,7 +105,12 @@ export default function rehypeMermaid() {
     for (const { source, hash, input, output, parent, index } of processData) {
       if (!existsSync(output)) {
         await fs.writeFile(input, source);
-        await run(input, output, { puppeteerConfig: { headless: "new" } });
+        await run(input, output, {
+          mermaidConfig: {
+            fontFamily: "arial, sans-serif",
+          },
+          puppeteerConfig: { headless: "new" },
+        });
       }
 
       parent.children[index] = {
