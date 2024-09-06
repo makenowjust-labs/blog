@@ -25,7 +25,7 @@
   "devDependencies": {
     "@eslint/compat": "1.1.1",
     "@eslint/eslintrc": "3.1.0",
-    "@eslint/js": "9.9.1",
+    "@eslint/js": "9.10.0",
     "@fontsource/biz-udpgothic": "5.0.20",
     "@fontsource/share-tech-mono": "5.0.13",
     "@fontsource/sometype-mono": "5.0.4",
@@ -41,7 +41,7 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.20",
     "budoux": "0.6.2",
-    "eslint": "9.9.1",
+    "eslint": "9.10.0",
     "eslint-config-next": "14.2.8",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.30.0",
