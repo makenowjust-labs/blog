@@ -138,20 +138,20 @@
   dependencies:
     levn "^0.4.1"
 
-"@fontsource/biz-udpgothic@5.0.21":
-  version "5.0.21"
-  resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.0.21.tgz"
-  integrity sha512-xPoyuySB9g6X+tP1s1mG2pTegRosfnrCkikltLJ/8z9bAGH4AIviMuxlKtGnRxs1Zp8NeocXPZn1nQBlnbco4w==
+"@fontsource/biz-udpgothic@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.1.0.tgz"
+  integrity sha512-b67J5KPS0rhvkEPY7+qQvFFUaD1vt2vD6PsWXRzAfwFaC37NTufDzdrvEaoEVTYBiszirTOUbcytfKbUZxiQuw==
 
-"@fontsource/share-tech-mono@5.0.14":
-  version "5.0.14"
-  resolved "https://registry.npmjs.org/@fontsource/share-tech-mono/-/share-tech-mono-5.0.14.tgz"
-  integrity sha512-J0LUXy6l1HVxED8l56zdE4XjcKh8rhkDLGrMvByBuq3oOAfFgqJLWZCsk2I6zKP9iS1b9jqOCyhuyonxtVEySQ==
+"@fontsource/share-tech-mono@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/@fontsource/share-tech-mono/-/share-tech-mono-5.1.0.tgz"
+  integrity sha512-u160pF0vGTvg02bhwgiMw7lVhGLWC3aJryP/WGhiKhCVSEFb68sdQZlntiJh8vPGUsdMxFTfzm1+SzW4mR8AxQ==
 
-"@fontsource/sometype-mono@5.0.5":
-  version "5.0.5"
-  resolved "https://registry.npmjs.org/@fontsource/sometype-mono/-/sometype-mono-5.0.5.tgz"
-  integrity sha512-JLd7lHMnNZxkDIWehEgEKwDCAr7N7sF33iv4wOqMIxjyJP0pqv5i+AL5vPyfZDQOHLhDJMQTjQDZBeXWjV6gMw==
+"@fontsource/sometype-mono@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/@fontsource/sometype-mono/-/sometype-mono-5.1.0.tgz"
+  integrity sha512-usOFTgb2jAzqBNJCazBXnFMWFcoe+mEjzp3DsBCsnev6P356X0FEtASnq28OmlFrpmN0qORKGCXqcgs+1f4GGw==
 
 "@humanwhocodes/module-importer@^1.0.1":
   version "1.0.1"
