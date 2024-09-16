@@ -601,38 +601,39 @@
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.10.4.tgz"
   integrity sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==
 
-"@shikijs/core@1.17.6":
-  version "1.17.6"
-  resolved "https://registry.npmjs.org/@shikijs/core/-/core-1.17.6.tgz"
-  integrity sha512-9ztslig6/YmCg/XwESAXbKjAjOhaq6HVced9NY6qcbDz1X5g/S90Wco2vMjBNX/6V71ASkzri76JewSGPa7kiQ==
+"@shikijs/core@1.17.7":
+  version "1.17.7"
+  resolved "https://registry.npmjs.org/@shikijs/core/-/core-1.17.7.tgz"
+  integrity sha512-ZnIDxFu/yvje3Q8owSHaEHd+bu/jdWhHAaJ17ggjXofHx5rc4bhpCSW+OjC6smUBi5s5dd023jWtZ1gzMu/yrw==
   dependencies:
-    "@shikijs/engine-javascript" "1.17.6"
-    "@shikijs/engine-oniguruma" "1.17.6"
-    "@shikijs/types" "1.17.6"
+    "@shikijs/engine-javascript" "1.17.7"
+    "@shikijs/engine-oniguruma" "1.17.7"
+    "@shikijs/types" "1.17.7"
     "@shikijs/vscode-textmate" "^9.2.2"
     "@types/hast" "^3.0.4"
     hast-util-to-html "^9.0.2"
 
-"@shikijs/engine-javascript@1.17.6":
-  version "1.17.6"
-  resolved "https://registry.npmjs.org/@shikijs/engine-javascript/-/engine-javascript-1.17.6.tgz"
-  integrity sha512-5EEZj8tVcierNxm4V0UMS2PVoflb0UJPalWWV8l9rRg+oOfnr5VivqBJbkyq5grltVPvByIXvVbY8GSM/356jQ==
+"@shikijs/engine-javascript@1.17.7":
+  version "1.17.7"
+  resolved "https://registry.npmjs.org/@shikijs/engine-javascript/-/engine-javascript-1.17.7.tgz"
+  integrity sha512-wwSf7lKPsm+hiYQdX+1WfOXujtnUG6fnN4rCmExxa4vo+OTmvZ9B1eKauilvol/LHUPrQgW12G3gzem7pY5ckw==
   dependencies:
-    "@shikijs/types" "1.17.6"
+    "@shikijs/types" "1.17.7"
+    "@shikijs/vscode-textmate" "^9.2.2"
     oniguruma-to-js "0.4.3"
 
-"@shikijs/engine-oniguruma@1.17.6":
-  version "1.17.6"
-  resolved "https://registry.npmjs.org/@shikijs/engine-oniguruma/-/engine-oniguruma-1.17.6.tgz"
-  integrity sha512-NLfWDMXFYe0nDHFbEoyZdz89aIIey3bTfF3zLYSUNTXks5s4uinZVmuPOFf1HfTeGqIn8uErJSBc3VnpJO7Alw==
+"@shikijs/engine-oniguruma@1.17.7":
+  version "1.17.7"
+  resolved "https://registry.npmjs.org/@shikijs/engine-oniguruma/-/engine-oniguruma-1.17.7.tgz"
+  integrity sha512-pvSYGnVeEIconU28NEzBXqSQC/GILbuNbAHwMoSfdTBrobKAsV1vq2K4cAgiaW1TJceLV9QMGGh18hi7cCzbVQ==
   dependencies:
-    "@shikijs/types" "1.17.6"
+    "@shikijs/types" "1.17.7"
     "@shikijs/vscode-textmate" "^9.2.2"
 
-"@shikijs/types@1.17.6":
-  version "1.17.6"
-  resolved "https://registry.npmjs.org/@shikijs/types/-/types-1.17.6.tgz"
-  integrity sha512-ndTFa2TJi2w51ddKQDn3Jy8f6K4E5Q2x3dA3Hmsd3+YmxDQ10UWHjcw7VbVbKzv3VcUvYPLy+z9neqytSzUMUg==
+"@shikijs/types@1.17.7":
+  version "1.17.7"
+  resolved "https://registry.npmjs.org/@shikijs/types/-/types-1.17.7.tgz"
+  integrity sha512-+qA4UyhWLH2q4EFd+0z4K7GpERDU+c+CN2XYD3sC+zjvAr5iuwD1nToXZMt1YODshjkEGEDV86G7j66bKjqDdg==
   dependencies:
     "@shikijs/vscode-textmate" "^9.2.2"
     "@types/hast" "^3.0.4"
@@ -5271,15 +5272,15 @@ shebang-regex@^3.0.0:
   resolved "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shiki@1.17.6:
-  version "1.17.6"
-  resolved "https://registry.npmjs.org/shiki/-/shiki-1.17.6.tgz"
-  integrity sha512-RejGugKpDM75vh6YtF9R771acxHRDikC/01kxsUGW+Pnaz3pTY+c8aZB5CnD7p0vuFPs1HaoAIU/4E+NCfS+mQ==
+shiki@1.17.7:
+  version "1.17.7"
+  resolved "https://registry.npmjs.org/shiki/-/shiki-1.17.7.tgz"
+  integrity sha512-Zf6hNtWhFyF4XP5OOsXkBTEx9JFPiN0TQx4wSe+Vqeuczewgk2vT4IZhF4gka55uelm052BD5BaHavNqUNZd+A==
   dependencies:
-    "@shikijs/core" "1.17.6"
-    "@shikijs/engine-javascript" "1.17.6"
-    "@shikijs/engine-oniguruma" "1.17.6"
-    "@shikijs/types" "1.17.6"
+    "@shikijs/core" "1.17.7"
+    "@shikijs/engine-javascript" "1.17.7"
+    "@shikijs/engine-oniguruma" "1.17.7"
+    "@shikijs/types" "1.17.7"
     "@shikijs/vscode-textmate" "^9.2.2"
     "@types/hast" "^3.0.4"
 
