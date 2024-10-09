@@ -45,7 +45,7 @@
     "eslint-config-next": "14.2.15",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-tailwindcss": "3.17.4",
+    "eslint-plugin-tailwindcss": "3.17.5",
     "estree-util-value-to-estree": "3.1.2",
     "fs-extra": "11.2.0",
     "globby": "14.0.2",
