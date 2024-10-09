@@ -1821,10 +1821,10 @@ dagre-d3-es@7.0.10:
     d3 "^7.8.2"
     lodash-es "^4.17.21"
 
-daisyui@4.12.12:
-  version "4.12.12"
-  resolved "https://registry.npmjs.org/daisyui/-/daisyui-4.12.12.tgz"
-  integrity sha512-xmCZ4piuWOjhNyB0VDKczB5vKFCipTA7UxaZNOzCz6cT8kvWgv5BDtUo+Hk9gOFufByOlfuBdzLpfhY5GsebTQ==
+daisyui@4.12.13:
+  version "4.12.13"
+  resolved "https://registry.npmjs.org/daisyui/-/daisyui-4.12.13.tgz"
+  integrity sha512-BnXyQoOByUF/7wSdIKubyhXxbtL8gxwY3u2cNMkxGP39TSVJqMmlItqtpY903fQnLI/NokC+bc+ZV+PEPsppPw==
   dependencies:
     css-selector-tokenizer "^0.8"
     culori "^3"
