@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "0.5.15",
-    "daisyui": "4.12.13",
+    "daisyui": "4.12.14",
     "dayjs": "1.11.13",
     "katex": "0.16.11",
     "mermaid": "11.3.0",
