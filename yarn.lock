@@ -6371,10 +6371,10 @@ yoga-wasm-web@^0.3.3:
   resolved "https://registry.npmjs.org/yoga-wasm-web/-/yoga-wasm-web-0.3.3.tgz"
   integrity sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==
 
-zurk@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.npmjs.org/zurk/-/zurk-0.6.2.tgz"
-  integrity sha512-YRcg47pQv+2NaJoc85wCwk07i6H0YYUbKv0cbqWkYg1BxVlWhL9YOOoXVQLWSO5m1MKpFKGp/hfsmTo8/diPug==
+zurk@0.6.3:
+  version "0.6.3"
+  resolved "https://registry.npmjs.org/zurk/-/zurk-0.6.3.tgz"
+  integrity sha512-1EyIiD9td75xMmmZv9kD1YXOtG2vPxXZFqXWdgFd2Fu55OLWLgfmvFqaQKOKotpbXeQ6JpsAsaPmU4By9GEnoA==
 
 zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"
