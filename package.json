@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "1.2.3",
-    "@eslint/eslintrc": "3.1.0",
+    "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.14.0",
     "@fontsource/biz-udpgothic": "5.1.0",
     "@fontsource/share-tech-mono": "5.1.0",
