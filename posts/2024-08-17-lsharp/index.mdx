@@ -62,7 +62,7 @@ $$L^\#$$ は論文ではMealy機械を学習するアルゴリズムとして提
 
   - $$I$$ は入力のアルファベット、$$O$$は出力のアルファベット、
   - $$Q$$ は状態の有限集合、$$q_0 \in Q$$ は初期状態、
-  - $$\delta$$ と $$\lambda$$ はそれぞれ部分関数で、$$\delta\colon Q \times I \rightharpoonup Q$$ は遷移関数を、$$\delta\colon Q \times I \to O$$ は出力関数を表し、$$\delta(q, i)\!\!\downarrow \iff \lambda(q, i)\!\!\downarrow$$ とします。
+  - $$\delta$$ と $$\lambda$$ はそれぞれ部分関数で、$$\delta\colon Q \times I \rightharpoonup Q$$ は遷移関数を、$$\delta\colon Q \times I \rightharpoonup O$$ は出力関数を表し、$$\delta(q, i)\!\!\downarrow \iff \lambda(q, i)\!\!\downarrow$$ とします。
 </Alert>
 
 参照しているMealy機械を明示するために上付き文字を付けて $$Q^\mathcal{M}, q_0^\mathcal{M}, \delta^\mathcal{M}, \lambda^\mathcal{M}$$ のように書くことがあります。
@@ -494,7 +494,7 @@ $$\lnot (q_1 \mathrel{\#_\mathcal{M}} q_2)$$ であれば、そこからの遷�
 よって、分岐条件 $$\lnot (q_1 \mathrel{\#_\mathcal{T}} t_1)$$ と上の補題より $$\lnot (t \mathrel{\#_\mathcal{T}} t_2)$$ が分かり、$$q \mathrel{\#_\mathcal{T}} t_2$$ が示せます。
 
 最後に、このアルゴリズムが正しく停止するのか考えます。
-基本的には $$|x| - |v|$$ は減少していくのですが $$|x| - |v| = 1$$ の場合 $$\lfloor (|x| - |v|) / 2 \rfloor == 0$$ のため、$$\lnot (q_1 \mathrel{\#_\mathcal{T}} t_1)$$ で分岐した場合 $$|x| - |v|$$ が減少せず、一見すると問題になりそうです。
+基本的には $$|x| - |v|$$ は減少していくのですが $$|x| - |v| = 1$$ の場合 $$\lfloor (|x| - |v|) / 2 \rfloor = 0$$ のため、$$\lnot (q_1 \mathrel{\#_\mathcal{T}} t_1)$$ で分岐した場合 $$|x| - |v|$$ が減少せず、一見すると問題になりそうです。
 ですが $$|x| - |v| = 1$$ ということは $$v = x_1$$ となっていて $$t_1 \rightsquigarrow q_1$$ のため $$|\mathrm{access}(q_1)| < |x_1|$$ になるため $$x$$ の文字数が減少します。
 
 さらに、この分岐で $$x$$ を $$\mathrm{access}(q_1)\;x_2$$ としたときに $$x_2$$ が短すぎると、そのあと $$x$$ の接頭辞で $$\delta^\mathcal{T}(q_0^\mathcal{T}, v) \in F$$ となる $$v$$ が見つからないという事態が起こりそうにも思えます。
