@@ -4006,7 +4006,14 @@ jsonfile@^6.0.1:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-katex@0.16.11, katex@^0.16.0, katex@^0.16.7, katex@^0.16.9:
+katex@0.16.14:
+  version "0.16.14"
+  resolved "https://registry.npmjs.org/katex/-/katex-0.16.14.tgz"
+  integrity sha512-tnUUAL/S+f/w8KrRpCFcCW/msuIlBkOmVnTmvdEK6WCkx6uDPRj3d9SBAP+qB5x0MCeOyUbdbIMtT5cUJD8aRw==
+  dependencies:
+    commander "^8.3.0"
+
+katex@^0.16.0, katex@^0.16.7, katex@^0.16.9:
   version "0.16.11"
   resolved "https://registry.npmjs.org/katex/-/katex-0.16.11.tgz"
   integrity sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==
