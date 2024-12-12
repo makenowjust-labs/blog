@@ -2276,10 +2276,10 @@ dagre-d3-es@7.0.11:
     d3 "^7.9.0"
     lodash-es "^4.17.21"
 
-daisyui@4.12.20:
-  version "4.12.20"
-  resolved "https://registry.npmjs.org/daisyui/-/daisyui-4.12.20.tgz"
-  integrity sha512-uHr3SQsd2yTjRdVuswTiqGFvZTxX0sGSBRa8JJdbKgmZCk/kRFh4B7Z2jg9vLIdwsHTHPyPgCkZadQo1ce0tAw==
+daisyui@4.12.21:
+  version "4.12.21"
+  resolved "https://registry.npmjs.org/daisyui/-/daisyui-4.12.21.tgz"
+  integrity sha512-dKfJoGTf5b7D75pVYdNcbhBQd73IOUh9wuXeWHm0qXus4FYvFJJpS9/EX41hAyhojE6s09/ow6wGgPGERzD5wg==
   dependencies:
     css-selector-tokenizer "^0.8"
     culori "^3"
