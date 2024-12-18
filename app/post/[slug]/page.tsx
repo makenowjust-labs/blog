@@ -7,9 +7,9 @@ import { BLOG_BASE_URL, BLOG_TITLE } from "@/src/meta";
 import { getAllSlugs, getPost } from "@/src/post";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -17,9 +17,8 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({
-  params: { slug },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const { title, description } = await getPost(slug);
 
   return {
@@ -31,7 +30,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Post({ params: { slug } }: Props) {
+export default async function Post({ params }: Props) {
+  const { slug } = await params;
   const { Content, title, created, updated, readingTime, tags } =
     await getPost(slug);
 

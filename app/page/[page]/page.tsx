@@ -7,9 +7,9 @@ import { BLOG_TITLE } from "@/src/meta";
 import { type Page, getPage, getTotalPage } from "@/src/post";
 
 type Props = {
-  params: {
+  params: Promise<{
     page: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -20,8 +20,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { page } = await params;
   return {
-    title: `ページ${params.page} | ${BLOG_TITLE}`,
+    title: `ページ${page} | ${BLOG_TITLE}`,
   };
 }
 
@@ -64,7 +65,8 @@ function PagePagination({ page }: { page: Page }) {
 }
 
 export default async function Page({ params }: Props) {
-  const page = await getPage(Number.parseInt(params.page) - 1);
+  const { page: pageNum } = await params;
+  const page = await getPage(Number.parseInt(pageNum) - 1);
   return (
     <div>
       <PagePostList page={page} />

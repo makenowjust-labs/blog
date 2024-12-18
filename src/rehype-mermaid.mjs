@@ -135,6 +135,11 @@ export default function rehypeMermaid() {
             attributes: [
               {
                 type: "mdxJsxAttribute",
+                name: "alt",
+                value: "mermaid diagram"
+              },
+              {
+                type: "mdxJsxAttribute",
                 name: "src",
                 value: {
                   type: "mdxJsxAttributeValueExpression",

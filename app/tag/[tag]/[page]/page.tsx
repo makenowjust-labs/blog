@@ -12,10 +12,10 @@ import {
 } from "@/src/post";
 
 type Props = {
-  params: {
+  params: Promise<{
     tag: string;
     page: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -36,9 +36,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = decodeURIComponent(params.tag);
+  const { tag: encodedTag, page } = await params;
+  const tag = decodeURIComponent(encodedTag);
   return {
-    title: `${tag} (ページ${params.page}) | ${BLOG_TITLE}`,
+    title: `${tag} (ページ${page}) | ${BLOG_TITLE}`,
   };
 }
 
@@ -81,9 +82,10 @@ function PagePagination({ page }: { page: Page }) {
 }
 
 export default async function Page({ params }: Props) {
+  const { tag, page: pageNum } = await params;
   const page = await getTagPage(
-    decodeURIComponent(params.tag),
-    Number.parseInt(params.page) - 1,
+    decodeURIComponent(tag),
+    Number.parseInt(pageNum) - 1,
   );
   return (
     <div>
