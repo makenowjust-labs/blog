@@ -193,20 +193,20 @@
     "@floating-ui/utils" "^0.2.8"
     vue-demi ">=0.13.0"
 
-"@fontsource/biz-udpgothic@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.1.0.tgz"
-  integrity sha512-b67J5KPS0rhvkEPY7+qQvFFUaD1vt2vD6PsWXRzAfwFaC37NTufDzdrvEaoEVTYBiszirTOUbcytfKbUZxiQuw==
+"@fontsource/biz-udpgothic@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/@fontsource/biz-udpgothic/-/biz-udpgothic-5.1.1.tgz"
+  integrity sha512-O8a0PwDBSHaMvSrZVlEmzFKsNZNuhNm/sEQcau9Ow1+d8VueXduvpsVpNdKiE81ZOydKuDm2bIujpW6bQxCTtA==
 
-"@fontsource/share-tech-mono@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/@fontsource/share-tech-mono/-/share-tech-mono-5.1.0.tgz"
-  integrity sha512-u160pF0vGTvg02bhwgiMw7lVhGLWC3aJryP/WGhiKhCVSEFb68sdQZlntiJh8vPGUsdMxFTfzm1+SzW4mR8AxQ==
+"@fontsource/share-tech-mono@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/@fontsource/share-tech-mono/-/share-tech-mono-5.1.1.tgz"
+  integrity sha512-GJZXkkRsfQTfjCNnPO/nviAULPxH3lYZoB5J32GOKo6hBePtiRjdhDC32YsR4YxRkdClBo8i0gkIFNCd3nz/pg==
 
-"@fontsource/sometype-mono@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/@fontsource/sometype-mono/-/sometype-mono-5.1.0.tgz"
-  integrity sha512-usOFTgb2jAzqBNJCazBXnFMWFcoe+mEjzp3DsBCsnev6P356X0FEtASnq28OmlFrpmN0qORKGCXqcgs+1f4GGw==
+"@fontsource/sometype-mono@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/@fontsource/sometype-mono/-/sometype-mono-5.1.1.tgz"
+  integrity sha512-DC+lnkOT7xcbXAJNmbi+ml9QtOaYIFYpbI2oc9A21eBivucK95kFMtWXx/lu6rvoD+27ccrbC7aFaxaA5Ge4SA==
 
 "@headlessui-float/vue@^0.14.0":
   version "0.14.4"
