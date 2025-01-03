@@ -136,7 +136,7 @@ export default function rehypeMermaid() {
               {
                 type: "mdxJsxAttribute",
                 name: "alt",
-                value: "mermaid diagram"
+                value: "mermaid diagram",
               },
               {
                 type: "mdxJsxAttribute",
