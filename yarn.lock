@@ -3965,10 +3965,10 @@ jsonfile@^6.0.1:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-katex@0.16.17:
-  version "0.16.17"
-  resolved "https://registry.npmjs.org/katex/-/katex-0.16.17.tgz"
-  integrity sha512-OyzSrXBllz+Jdc9Auiw0kt21gbZ4hkz8Q5srVAb2U9INcYIfGKbxe+bvNvEz1bQ/NrDeRRho5eLCyk/L03maAw==
+katex@0.16.19:
+  version "0.16.19"
+  resolved "https://registry.npmjs.org/katex/-/katex-0.16.19.tgz"
+  integrity sha512-3IA6DYVhxhBabjSLTNO9S4+OliA3Qvb8pBQXMfC4WxXJgLwZgnfDl0BmB4z6nBMdznBsZ+CGM8DrGZ5hcguDZg==
   dependencies:
     commander "^8.3.0"
 
