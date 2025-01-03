@@ -1,0 +1,150 @@
+---
+title: 'lstar-vizでL*の動作を可視化してみる'
+created: 2025-01-03
+updated: 2025-01-03
+description: |
+  AngluinのL*アルゴリズムの動作を可視化するツールのlstar-vizを実装しました。
+  この記事ではlstar-vizの使い方や、lstar-vizを作るにあたって用いた技術について紹介します。
+tags:
+  - オートマトン学習
+  - フロントエンド
+---
+
+Angluinの$$L^\ast$$は、オートマトン学習の代表的なアルゴリズムです。
+本ブログでも度々紹介してきました。
+
+- https://makenowjust-labs.github.io/blog/post/2023-07-19-lstar/
+- https://makenowjust-labs.github.io/blog/post/2024-07-22-lstar-variants/
+
+今回、この$$L^\ast$$の動作を可視化するツール[`lstar-viz`](https://makenowjust-labs.github.io/lstar-viz/)を実装しました。
+この記事では、ツールの使い方や、ツールを作るにあたって用いた技術について紹介します。
+
+**想定読者**: $$L^\ast$$アルゴリズムやフロントエンドの技術に興味がある方
+
+{/* read more */}
+
+import Image from "next/image";
+
+import lstarVizImage from "./images/lstar-viz.gif";
+
+# `lstar-viz`について
+
+`lstar-viz`は、Angluinの$$L^\ast$$アルゴリズムの動作を可視化するツールです。
+Webサイトとして公開されていて、ブラウザから$$L^\ast$$アルゴリズムの動作を可視化できます。
+
+- **URL**: https://makenowjust-labs.github.io/lstar-viz/
+- **GitHub**: https://github.com/makenowjust-labs/lstar-viz
+
+<figure className="text-center">
+  <Image className="border inline-block" src={lstarVizImage} alt="ツールが動作している様子の画像" />
+  <figcaption className="text-center">
+    lstar-vizが動作している様子
+  </figcaption>
+</figure>
+
+## 使い方
+
+[`lstar-viz`](https://makenowjust-labs.github.io/lstar-viz/)にアクセスして、左上のスタートボタンをクリックすると、学習がはじます。
+左側には学習中のオートマトンがGraphVizで図示されて、右側にはobservation tableが表示されます。
+また、下には学習のログが表示されます。
+
+さらに、左上のボタンを再度クリックすると学習を途中で止めたり、その隣のボタンをクリックすると学習を1ステップだけ進めることができます。
+
+左上にある歯車のアイコンは設定ボタンで、学習対象のオートマトンを変えたり、学習速度や、反例の処理の仕方を変えられます。
+今のところ、次のオートマトンが予め学習対象として用意してあります。
+
+- デフォルトのもの\
+  (何かと言われると説明に困る[^default-target]。正規表現で言うなら`/(00|1|01(01)*(00|1))*/`)
+- [Automata Wiki](https://automata.cs.ru.nl/HomePage)の[Toy DFA](https://automata.cs.ru.nl/BenchmarkToyDFA/Description) (正規表現で言うなら`/(1|01*0)*/`)
+- $$\{ w \in \{ 0, 1 \}^\ast \mid w \text{に含まれる}1\text{の個数が}5\text{の倍数} \}$$
+- FizzBuzz言語 (3の倍数でも5の倍数でもない数値か`Fizz`か`Buzz`か`FizzBuzz`)
+
+[^default-target]: Toy DFAが単純すぎて反例の解析をせずに学習が終わってしまうので、適当に状態と遷移を追加したものです。
+
+また、[Automata WikiのDOT形式](https://automata.cs.ru.nl/Syntax/Acceptor?from=Syntax.DFA)のオートマトンをテキストエリアに入力することで、独自の言語を学習することもできます。
+
+FizzBuzz言語の学習は時間がかかる上に、辺が多すぎて結果を見てもよく分からないので注意してください。
+
+equivalence queryは、オートマトンの比較により実装されています[^equiv-impl]。
+そのためこの実装はブラックボックスの学習にはなっていません。
+
+[^equiv-impl]: ランダムテストにして毎回実行結果が変わってもあまり嬉しくないので……。
+
+## 技術的な話
+
+ここからは、`lstar-viz`を作るにあたって用いた技術について紹介します。
+フロントエンド的な話になります。
+
+次のようなツール・ライブラリを用いました。
+
+- パッケージマネージャー: [pnpm](https://pnpm.io)
+- ビルド: [Vite](https://vite.dev), [Vitest](https://vitest.dev)
+- フォーマッタ・リンタ: [Biome](https://biomejs.dev)
+- UI: React, tailwindcss, [shadcn/ui](https://ui.shadcn.com)
+- 可視化: [d3](https://d3js.org), [d3-graphviz](https://github.com/magjac/d3-graphviz)
+
+各ツール・ライブラリについてちょっとした感想を書いていきます。
+
+### pnpm
+
+パッケージマネージャーとして[pnpm](https://pnpm.io)を使いました。
+一昔前は色々問題があったような気がするのですが、最近は快適に使えています。[^pnpm-gatsby]
+
+[^pnpm-gatsby]: Gatsbyで使おうとしたのが悪かったのではないかという気もします。
+
+速度面でも機能面でも申し分ないので、今後も使っていこうかと思います。
+と言いつつ、次があったら別のツール (Deno辺り？) を試してみている気がします。
+
+### Vite, Vitest
+
+ビルドツールとしてVite、テストランナーとしてVitestを使いました。
+どちらも少ない設定でいい感じに動作するので楽でした。
+動作も軽快で良かったです。
+
+Vitestをそのまま起動するとウォッチモードで動き出すのは少しびっくりしました。
+個人的にはテスト中に無限ループなどに陥ったときに困るので、ウォッチモードでテストを走らせたくないです。
+
+## Biome
+
+フォーマッタ・リンタとして[Biome](https://biomejs.dev)を使いました。
+`create-vite` でプロジェクトを作ったので、元々はESLintを使っていて、そのあとにPrettierを導入したのですが、最終的にBiomeを使うように変更しています。
+
+最初は`biome migrate`でESLintとPrettierから移行したのですが、設定が色々追加されてよく分からなかったので、一旦すべて消してBiomeの`recommended`ベースの設定にしました。
+少々厳しめですが、悪くないような気がします。
+
+フォーマッタとリンタが一体化しているというのは想像以上に便利で、設定のコンフリクトを考えなくていいのはすごく楽です。
+今後も使っていきたいです。
+
+### React, tailwindcss, shadcn/ui
+
+画面の組み立てにはReactを、スタイルにtailwindcssを使いました。
+正直何でも良かったので、慣れているものを使っています。
+
+画面のレイアウトは適当に`flex`で組み立ててますが、これでいいのかよく分かりません。
+CSSとはなかなか分かりあえない……。
+
+少し挑戦したのはshadcn/uiを使ってみたところです。
+以前も何か使ってみようとした気がするのですが、ちゃんと使ったのは今回がはじめてな気がします。
+いざとなったらコードを直せるというのは気が楽です。
+
+### d3, d3-graphviz
+
+オートマトンの描画には[d3](https://d3js.org)の[d3-graphviz](https://github.com/magjac/d3-graphviz)を使いました。
+すごく久しぶりにd3に触った気がします。
+
+[d3-graphviz](https://github.com/magjac/d3-graphviz)は、GraphVizをwasmにビルドしたものを使って、ブラウザ上でGraphVizのDOT言語を描画できるライブラリです。
+癖のつよいライブラリで (d3自体の癖もつよいのですが)、TypeScriptの型定義もあまりちゃんとしていなくてしんどかったです。
+ただ、上手く設定すると更新のたびにちょっとアニメーションするようになるので面白いのではないかと思います。
+
+# あとがき
+
+2025年の書き初めとして`lstar-viz`を作りました。
+去年の1年間で100回くらい$$L^\ast$$を実装したので[^lstar-impl]、アルゴリズムの実装自体は苦労しなかったのですが、CSSによる画面のレイアウトや、d3-graphvizまわりで苦労した気がします。
+
+[^lstar-impl]: 比喩表現ではなく本当に100回は実装したと思います。
+
+今後メンテナンスを続けるつもりはあまり無いのですが、気が向いたときに弄っていきたいと思います。
+次はアルゴリズムの部分を`ruby.wasm`で実装できたりしたら面白いと考えてます。
+あとは、他のオートマトン学習のアルゴリズム (Kearns-Vaziraniとか) も実装したいですね。
+
+それでは、最後まで目を通していただきありがとうございました。
