@@ -1,5 +1,7 @@
 import { globby as glob } from "globby";
 
+import type { JSX } from "react";
+
 const POSTS_PER_PAGE = 5;
 
 export type Post = {
