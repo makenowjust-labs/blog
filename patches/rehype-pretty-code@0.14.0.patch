@@ -1,0 +1,11 @@
+diff --git a/dist/index.js b/dist/index.js
+index 914285807221289f4a9b822fbcf18bec8e6da588..734dd3729845d16a282c37f2e312f21a11eacfed 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1,4 +1,5 @@
+-import { getHighlighter } from 'shiki';
++// `getHighlighter` is deprecated in shiki v2+.
++import { getSingletonHighlighter as getHighlighter } from 'shiki';
+ import { visit } from 'unist-util-visit';
+ import { toString } from 'hast-util-to-string';
+ import rangeParser2 from 'parse-numeric-range';
