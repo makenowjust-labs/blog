@@ -18,6 +18,12 @@ mkdirSync(CACHE_DIR, { recursive: true });
 
 export default function rehypeMermaid() {
   return async (tree) => {
+    if (process.env.GITHUB_ACTIONS) {
+		  // This is needed to run puppeteer in Ubuntu 23+
+		  // See https://github.com/puppeteer/puppeteer/pull/13196.
+      await exec("echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns");
+    }
+     
     const processData = [];
 
     visit(tree, "element", (node, index, parent) => {
