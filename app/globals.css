@@ -1,14 +1,25 @@
-@import "katex/dist/katex.min.css";
-@import "pseudocode/build/pseudocode.min.css";
+@import "tailwindcss";
 
-@import "@fontsource/biz-udpgothic/index.css";
-@import "@fontsource/biz-udpgothic/700.css";
-@import "@fontsource/share-tech-mono/index.css";
-@import "@fontsource/sometype-mono/index.css";
+@plugin "daisyui";
+@plugin "@tailwindcss/typography";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --font-sans: "BIZ UDPGothic", sans-serif;
+  --font-mono: "Sometype Mono", monospace;
+  --font-impact: "Share Tech Mono", "Biz UDPGothic", monospace;
+}
+
+@layer utilities {
+  .prose {
+    :where(blockquote p:first-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *))::before {
+      content: none;
+    }
+
+    :where(blockquote p:first-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+      content: none;
+    }
+  }
+}
 
 .katex-display {
   @apply overflow-x-auto;
@@ -39,17 +50,13 @@ figure[data-rehype-pretty-code-figure] code[data-line-numbers] {
   @apply [counter-reset:line];
 }
 
-figure[data-rehype-pretty-code-figure]
-  code[data-line-numbers]
-  span[data-line]::before {
+figure[data-rehype-pretty-code-figure] code[data-line-numbers] span[data-line]::before {
   @apply mr-3 inline-block w-4 text-right text-gray-400
     content-[counter(line)]
     [counter-increment:line];
 }
 
-figure[data-rehype-pretty-code-figure]
-  code[data-line-numbers-max-digits="3"]
-  span[data-line]::before {
+figure[data-rehype-pretty-code-figure] code[data-line-numbers-max-digits="3"] span[data-line]::before {
   @apply w-6;
 }
 
@@ -57,8 +64,6 @@ figure[data-rehype-pretty-code-figure] span[data-highlighted-line] {
   @apply bg-gray-600;
 }
 
-figure[data-rehype-pretty-code-figure]
-  code[data-line-numbers]
-  span[data-highlighted-line]::before {
+figure[data-rehype-pretty-code-figure] code[data-line-numbers] span[data-highlighted-line]::before {
   @apply text-gray-100;
 }

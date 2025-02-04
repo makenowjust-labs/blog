@@ -1,15 +1,24 @@
 "use client";
 
 import Script from "next/script";
-import { EventHandler, SyntheticEvent, createRef, useCallback } from "react";
+import { type SyntheticEvent, createRef, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useKey } from "react-use";
 
 import { BLOG_BASE_PATH } from "@/src/meta";
-
 declare global {
+  interface PagefindUIParams {
+    element: HTMLElement;
+    showImages?: boolean;
+    sort?: { [key: string]: "asc" | "desc" };
+  }
+
+  class PagefindUI {
+    constructor(params: PagefindUIParams);
+  }
+
   interface Window {
-    PagefindUI: any;
+    PagefindUI: typeof PagefindUI;
   }
 }
 
@@ -18,6 +27,8 @@ export default function Pagefind() {
   const searchRef = createRef<HTMLDivElement>();
 
   const setupSearchBox = useCallback(() => {
+    if (searchRef.current == null) return;
+
     new window.PagefindUI({
       element: searchRef.current,
       showImages: false,
@@ -35,10 +46,7 @@ export default function Pagefind() {
     [dialogRef],
   );
 
-  useKey(
-    (key) => (key.metaKey && key.key === "k") || key.key === "/",
-    openSearchBox,
-  );
+  useKey((key) => (key.metaKey && key.key === "k") || key.key === "/", openSearchBox);
 
   return (
     <>
@@ -48,7 +56,7 @@ export default function Pagefind() {
         src={`${BLOG_BASE_PATH}/pagefind/pagefind-ui.js`}
         stylesheets={[`${BLOG_BASE_PATH}/pagefind/pagefind-ui.css`]}
       />
-      <button className="btn btn-square" onClick={openSearchBox}>
+      <button type="button" className="btn btn-square" onClick={openSearchBox}>
         <FaSearch />
       </button>
       <dialog className="modal" ref={dialogRef}>
@@ -56,7 +64,7 @@ export default function Pagefind() {
           <div ref={searchRef} />
         </div>
         <form method="dialog" className="modal-backdrop">
-          <button>close</button>
+          <button type="button">close</button>
         </form>
       </dialog>
     </>

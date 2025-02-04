@@ -29,11 +29,7 @@ export default function rehypeMdxExcerpt() {
     const filtered = filter(
       fragment,
       (node) =>
-        !(
-          node.type === "element" &&
-          node.tagName === "span" &&
-          node.properties?.className?.[0] === "katex-mathml"
-        ),
+        !(node.type === "element" && node.tagName === "span" && node.properties?.className?.[0] === "katex-mathml"),
     );
     const text = toText(filtered);
 

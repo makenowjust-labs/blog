@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 import MdxWrapper from "@/components/post/MdxWrapper";
 import TagBadge from "@/components/post/TagBadge";
@@ -32,15 +32,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Post({ params }: Props) {
   const { slug } = await params;
-  const { Content, title, created, updated, readingTime, tags } =
-    await getPost(slug);
+  const { Content, title, created, updated, readingTime, tags } = await getPost(slug);
 
   const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
   const time = created === updated ? created : `${created} (更新: ${updated})`;
 
   return (
     <div className="border-b-2 px-2 pb-5">
-      <h1 className="pb-2 text-2xl font-bold text-stone-900">{title}</h1>
+      <h1 className="pb-2 font-bold text-2xl text-stone-900">{title}</h1>
       <div className="text-right font-impact text-sm text-stone-800">
         {time} / 読むのにかかる時間: 約{readingTime.toFixed(1)}分
       </div>

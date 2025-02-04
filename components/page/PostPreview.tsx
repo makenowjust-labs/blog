@@ -12,26 +12,14 @@ export type Props = React.PropsWithChildren<{
   tags: string[];
 }>;
 
-export default function PostPreview({
-  title,
-  slug,
-  created,
-  updated,
-  readingTime,
-  tags,
-  children,
-}: Props) {
+export default function PostPreview({ title, slug, created, updated, readingTime, tags, children }: Props) {
   const tagNodes = tags.map((tag) => <TagBadge tag={tag} key={tag} />);
   const time = created === updated ? created : `${created} (更新: ${updated})`;
 
   return (
     <div className="border-b-2 px-2 py-5">
-      <h2 className="pb-2 text-2xl font-bold text-stone-900">
-        <Link
-          passHref={true}
-          href={`/post/${slug}`}
-          className="hover:cursor-pointer hover:underline"
-        >
+      <h2 className="pb-2 font-bold text-2xl text-stone-900">
+        <Link passHref={true} href={`/post/${slug}`} className="hover:cursor-pointer hover:underline">
           {title}
         </Link>
       </h2>
@@ -41,11 +29,7 @@ export default function PostPreview({
       <div className="flex flex-wrap gap-2 pb-4">{tagNodes}</div>
       <MdxWrapper>{children}</MdxWrapper>
       <div className="pb-5 text-center">
-        <Link
-          passHref={true}
-          href={`/post/${slug}`}
-          className="btn btn-ghost btn-block normal-case"
-        >
+        <Link passHref={true} href={`/post/${slug}`} className="btn btn-ghost btn-block normal-case">
           この記事を読む
         </Link>
       </div>

@@ -26,6 +26,16 @@ for (const post of posts) {
       created: matter.created,
     },
   });
+
+  if (errors.length) {
+    const andErrors =
+      errors.length === 1
+        ? ""
+        : errors.length === 2
+          ? " (and another error)"
+          : ` (and ${errors.length - 1} other errors)`;
+    throw new Error(`Error is occured: ${errors[0]}${andErrors}`);
+  }
 }
 
 await index.writeFiles({

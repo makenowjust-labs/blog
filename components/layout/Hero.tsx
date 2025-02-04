@@ -10,12 +10,8 @@ export default function Hero({ title, description }: Props) {
     <section className="hero">
       <div className="hero-content">
         <div className="max-w-md text-center">
-          <h1 className="pb-5 font-impact text-3xl font-bold text-stone-900">
-            <Link
-              passHref={true}
-              href="/"
-              className="hover:cursor-pointer hover:underline"
-            >
+          <h1 className="pb-5 font-bold font-impact text-3xl text-stone-900">
+            <Link passHref={true} href="/" className="hover:cursor-pointer hover:underline">
               {title}
             </Link>
           </h1>

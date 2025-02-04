@@ -1,12 +1,12 @@
-import * as path from "path";
+import * as path from "node:path";
 
 import fs from "fs-extra";
 import { globby as glob } from "globby";
 
 import { Resvg } from "@resvg/resvg-js";
 import { loadDefaultJapaneseParser } from "budoux";
-import satori from "satori";
 import dayjs from "dayjs";
+import satori from "satori";
 
 import { BLOG_AUTHOR, BLOG_DESCRIPTION, BLOG_TITLE } from "../src/meta";
 import { parseMarkdown } from "../src/parse-markdown.mjs";
@@ -49,9 +49,7 @@ const render = async (filename, children) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        backgroundImage: `url(data:image/jpeg;base64,${background.toString(
-          "base64",
-        )})`,
+        backgroundImage: `url(data:image/jpeg;base64,${background.toString("base64")})`,
         backgroundSize: "1200px 775px",
         fontFamily: '"Share Tech Mono", "Biz UDPGothic"',
         fontWeight: 400,
@@ -59,8 +57,8 @@ const render = async (filename, children) => {
     >
       <div
         style={{
-          marginTop: `5vh`,
-          height: `90vh`,
+          marginTop: "5vh",
+          height: "90vh",
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -73,7 +71,7 @@ const render = async (filename, children) => {
       </div>
       <div
         style={{
-          height: `5vh`,
+          height: "5vh",
           width: "100%",
           position: "absolute",
           left: "0px",
@@ -86,9 +84,7 @@ const render = async (filename, children) => {
           color: "#DFDFDF",
         }}
       >
-        <div style={{ fontSize: "24px", marginRight: "2.5vw" }}>
-          {BLOG_AUTHOR}
-        </div>
+        <div style={{ fontSize: "24px", marginRight: "2.5vw" }}>{BLOG_AUTHOR}</div>
       </div>
     </div>,
     {
@@ -137,35 +133,33 @@ for (const post of posts) {
             margin: "0",
             whiteSpace: "pre",
           }}
+          // biome-ignore lint/suspicious/noArrayIndexKey: This element is static.
           key={index}
         >
           {text}
         </span>
       );
     });
-  await render(
-    `public/post/${post.replace(/^.*posts\/|\/index.mdx$/g, "")}.png`,
-    [
-      <div style={{ fontSize: "32px", width: "720px" }} key="created">
-        {created}
-      </div>,
-      <div
-        style={{
-          fontSize: "56px",
-          width: "720px",
-          display: "flex",
-          flexWrap: "wrap",
-          textOverflow: "ellipsis",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-        key="title"
-      >
-        {title}
-      </div>,
-      <div style={{ fontSize: "24px", width: "720px" }} key="blogTitle">
-        {BLOG_TITLE}
-      </div>,
-    ],
-  );
+  await render(`public/post/${post.replace(/^.*posts\/|\/index.mdx$/g, "")}.png`, [
+    <div style={{ fontSize: "32px", width: "720px" }} key="created">
+      {created}
+    </div>,
+    <div
+      style={{
+        fontSize: "56px",
+        width: "720px",
+        display: "flex",
+        flexWrap: "wrap",
+        textOverflow: "ellipsis",
+        alignContent: "center",
+        alignItems: "center",
+      }}
+      key="title"
+    >
+      {title}
+    </div>,
+    <div style={{ fontSize: "24px", width: "720px" }} key="blogTitle">
+      {BLOG_TITLE}
+    </div>,
+  ]);
 }

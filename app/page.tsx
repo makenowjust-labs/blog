@@ -1,8 +1,8 @@
-import MdxWrapper from "@/components/post/MdxWrapper";
 import Pagination from "@/components/page/Pagination";
 import PostPreview from "@/components/page/PostPreview";
+import MdxWrapper from "@/components/post/MdxWrapper";
 
-import { Page, getPage } from "@/src/post";
+import { type Page, getPage } from "@/src/post";
 
 import HomeAbstractContent from "@/app/abstract.mdx";
 
@@ -37,7 +37,7 @@ function HomePostList({ page }: { page: Page }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-stone-900">記事</h2>
+      <h2 className="font-bold text-2xl text-stone-900">記事</h2>
       {nodes}
     </div>
   );
