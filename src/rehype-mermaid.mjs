@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { mkdirSync, existsSync } from "fs";
+import { execSync } from "child_process";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -21,7 +22,7 @@ export default function rehypeMermaid() {
     if (process.env.GITHUB_ACTIONS) {
       // This is needed to run puppeteer in Ubuntu 23+
       // See https://github.com/puppeteer/puppeteer/pull/13196.
-      await exec(
+      execSync(
         "echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns",
       );
     }
