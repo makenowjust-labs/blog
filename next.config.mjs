@@ -19,12 +19,7 @@ const basePath = isProduction ? "/blog" : "";
 
 const withMdx = createMdx({
   options: {
-    remarkPlugins: [
-      remarkGfm,
-      remarkFrontmatter,
-      remarkMath,
-      remarkMdxFrontmatter,
-    ],
+    remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMath, remarkMdxFrontmatter],
     rehypePlugins: [
       [rehypeKatex, { trust: true, strict: false }],
       rehypePseudocode,
@@ -48,6 +43,9 @@ const nextConfig = {
   images: { unoptimized: true },
   env: {
     BLOG_BASE_PATH: basePath,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

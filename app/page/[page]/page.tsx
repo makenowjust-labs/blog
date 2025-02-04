@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 import Pagination from "@/components/page/Pagination";
 import PostPreview from "@/components/page/PostPreview";
@@ -46,7 +46,7 @@ function PagePostList({ page }: { page: Page }) {
   });
   return (
     <div>
-      <h2 className="text-2xl font-bold text-stone-900">記事</h2>
+      <h2 className="font-bold text-2xl text-stone-900">記事</h2>
       {nodes}
     </div>
   );
@@ -54,8 +54,7 @@ function PagePostList({ page }: { page: Page }) {
 
 function PagePagination({ page }: { page: Page }) {
   const { prev, next } = page;
-  const nextPage =
-    next !== null ? (next === 0 ? "/" : `/page/${next + 1}`) : null;
+  const nextPage = next !== null ? (next === 0 ? "/" : `/page/${next + 1}`) : null;
   const prevPage = prev !== null ? `/page/${prev + 1}` : null;
   return (
     <div className="px-4 py-5">
@@ -64,7 +63,7 @@ function PagePagination({ page }: { page: Page }) {
   );
 }
 
-export default async function Page({ params }: Props) {
+export default async function List({ params }: Props) {
   const { page: pageNum } = await params;
   const page = await getPage(Number.parseInt(pageNum) - 1);
   return (

@@ -1,12 +1,12 @@
-import crypto from "crypto";
-import { mkdirSync, existsSync } from "fs";
-import { execSync } from "child_process";
-import fs from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
+import { execSync } from "node:child_process";
+import crypto from "node:crypto";
+import { existsSync, mkdirSync } from "node:fs";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { visit, SKIP } from "unist-util-visit";
 import { run } from "@mermaid-js/mermaid-cli";
+import { SKIP, visit } from "unist-util-visit";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,21 +22,13 @@ export default function rehypeMermaid() {
     if (process.env.GITHUB_ACTIONS) {
       // This is needed to run puppeteer in Ubuntu 23+
       // See https://github.com/puppeteer/puppeteer/pull/13196.
-      execSync(
-        "echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns",
-      );
+      execSync("echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns");
     }
 
     const processData = [];
 
     visit(tree, "element", (node, index, parent) => {
-      if (
-        !(
-          node.tagName === "pre" &&
-          Array.isArray(node.children) &&
-          node.children.length === 1
-        )
-      ) {
+      if (!(node.tagName === "pre" && Array.isArray(node.children) && node.children.length === 1)) {
         return;
       }
 

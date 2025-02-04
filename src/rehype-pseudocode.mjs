@@ -1,19 +1,13 @@
 import { fromHtml } from "hast-util-from-html";
 import pseudocode from "pseudocode";
-import { visit, SKIP } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 
 export default function rehypePseudocode() {
   return (tree) => {
     let captionCount = 0;
 
     visit(tree, "element", (node, index, parent) => {
-      if (
-        !(
-          node.tagName === "pre" &&
-          Array.isArray(node.children) &&
-          node.children.length === 1
-        )
-      ) {
+      if (!(node.tagName === "pre" && Array.isArray(node.children) && node.children.length === 1)) {
         return;
       }
 

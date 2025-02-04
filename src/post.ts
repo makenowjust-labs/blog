@@ -30,9 +30,7 @@ export const getAllSlugs = async (): Promise<string[]> => {
   }
 
   const files = await glob("posts/*/index.mdx");
-  _allPostSlugs = files
-    .map((file) => file.replace(/^.*posts\/|\/index.mdx$/g, ""))
-    .sort((a, b) => (a >= b ? -1 : 1));
+  _allPostSlugs = files.map((file) => file.replace(/^.*posts\/|\/index.mdx$/g, "")).sort((a, b) => (a >= b ? -1 : 1));
   return _allPostSlugs;
 };
 

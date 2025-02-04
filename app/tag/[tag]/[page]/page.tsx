@@ -1,15 +1,10 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 import Pagination from "@/components/page/Pagination";
 import PostPreview from "@/components/page/PostPreview";
 
 import { BLOG_TITLE } from "@/src/meta";
-import {
-  type Page,
-  getTagNames,
-  getTagPage,
-  getTagTotalPage,
-} from "@/src/post";
+import { type Page, getTagNames, getTagPage, getTagTotalPage } from "@/src/post";
 
 type Props = {
   params: Promise<{
@@ -28,8 +23,7 @@ export async function generateStaticParams() {
       // NOTE: Next.js encodes/decodes values in params incoinsistency.
       //       In `next dev`, encoding is needed, but in `next build`, it does not.
       //       It seems very ugly...
-      tag:
-        process.env.NODE_ENV === "production" ? tag : encodeURIComponent(tag),
+      tag: process.env.NODE_ENV === "production" ? tag : encodeURIComponent(tag),
       page: String(index + 1),
     }));
   });
@@ -63,7 +57,7 @@ function PagePostList({ page }: { page: Page }) {
   });
   return (
     <div>
-      <h2 className="text-2xl font-bold text-stone-900">記事</h2>
+      <h2 className="font-bold text-2xl text-stone-900">記事</h2>
       {nodes}
     </div>
   );
@@ -71,8 +65,7 @@ function PagePostList({ page }: { page: Page }) {
 
 function PagePagination({ page }: { page: Page }) {
   const { prev, next } = page;
-  const nextPage =
-    next !== null ? (next === 0 ? "/" : `/page/${next + 1}`) : null;
+  const nextPage = next !== null ? (next === 0 ? "/" : `/page/${next + 1}`) : null;
   const prevPage = prev !== null ? `/page/${prev + 1}` : null;
   return (
     <div className="px-4 py-5">
@@ -81,12 +74,9 @@ function PagePagination({ page }: { page: Page }) {
   );
 }
 
-export default async function Page({ params }: Props) {
+export default async function TagList({ params }: Props) {
   const { tag, page: pageNum } = await params;
-  const page = await getTagPage(
-    decodeURIComponent(tag),
-    Number.parseInt(pageNum) - 1,
-  );
+  const page = await getTagPage(decodeURIComponent(tag), Number.parseInt(pageNum) - 1);
   return (
     <div>
       <PagePostList page={page} />
