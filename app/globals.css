@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-@plugin "daisyui";
+@plugin "daisyui" {
+  /* biome-ignore lint/correctness/noUnknownProperty: This is known. See https://v5.daisyui.com/docs/themes/. */
+  themes: light --default;
+}
 @plugin "@tailwindcss/typography";
 
 @theme {
