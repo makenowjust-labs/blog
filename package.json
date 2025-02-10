@@ -71,7 +71,7 @@
     "rehype-katex": "7.0.1",
     "rehype-pretty-code": "0.14.0",
     "remark-frontmatter": "5.0.0",
-    "remark-gfm": "4.0.0",
+    "remark-gfm": "4.0.1",
     "remark-math": "6.0.0",
     "remark-mdx-frontmatter": "5.0.0",
     "satori": "0.12.1",
