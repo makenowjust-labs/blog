@@ -1,0 +1,1687 @@
+---
+title: 'Λ*とMAT*によるSymbolic Finite Automataの学習'
+created: 2025-02-20
+updated: 2025-02-20
+description: |
+  Symbolic Finite Automata (SFA)は遷移が文字ではなく条件式でラベル付けされる有限状態オートマトンです。
+  この記事では、SFAの学習アルゴリズムであるΛ*とMAT*について説明します。
+tags:
+  - オートマトン理論
+  - オートマトン学習
+---
+
+有限状態オートマトンの一種に**Symbolic Finite Automata** (**SFA**)と呼ばれるものがあります。
+これは遷移が文字ではなく条件式でラベル付けされるオートマトンで、現実世界でSFAを使うことで効率的に表現できる例があることから、研究が進められています。
+
+SFAに対するオートマトン学習アルゴリズムとして、$$\Lambda*$$と$$\mathrm{MAT}*$$が知られています。
+どちらも既存のオートマトン学習のアルゴリズムをベースとしてSFAに拡張したものですが、学習に用いるデータ構造の特徴を上手く利用した興味深いものになっています。
+
+この記事ではまずSFAの定義を確認し、そのあとに$$\Lambda*$$と$$\mathrm{MAT}*$$について解説します。
+
+**想定読者**: オートマトン学習について知識・関心がある方。
+
+{/* read more */}
+
+import Alert from "@/components/daisyui/Alert"
+
+# SFA
+
+**Symbolic Finite Automata** (**SFA**)とは有限状態オートマトンの一種で、遷移が文字ではなく文字についての条件式でラベル付けされるものです。
+
+例えば次のような有限状態オートマトン (DFA)を考えます。
+このDFAでは、状態$$q_1$$から$$q_2$$へ文字$$0, 1, 2, 3$$で遷移できます。
+しかし、遷移が各文字について、合計で4本の遷移が必要となります。
+
+<figure>
+  ```mermaid
+  graph LR
+    q1(($$q_1$$))
+    q2(($$q_2$$))
+  
+    q1 -- $$0$$ --> q2
+    q1 -- $$1$$ --> q2
+    q1 -- $$2$$ --> q2
+    q1 -- $$3$$ --> q2
+  ```
+
+  <figcaption className="text-center">図1: DFAの例。同じ状態の組 ($$q_1$$と$$q_2$$) の遷移が4本存在する</figcaption>
+</figure>
+
+SFAでは同じ状態の組の遷移を1つの遷移で表せます。
+今回の例では、$$0 \le x \le 3$$という1つの式をラベルに持つ遷移になっています。
+
+<figure>
+  ```mermaid
+  graph LR
+    q1(($$q_1$$))
+    q2(($$q_2$$))
+  
+    q1 -- $$0 \le x \le 3$$ --> q2
+  ```
+
+  <figcaption className="text-center">図2: SFAの例。図1では4本だった同じ状態の組 ($$q_1$$と$$q_2$$) の遷移が1つの条件式にまとめられている</figcaption>
+</figure>
+
+このようにSFAを使うことで、複数の同じ状態の組の遷移を効率的に表現できます。
+現実の有限状態オートマトンでも同じ状態の組の遷移はよくあることで[^regex-class]、有限状態オートマトンを応用する上で重要だと考えられるため、研究が進められています。
+
+[^regex-class]: 例えば正規表現で`\w`や`[0-9]`のような文字クラスを利用すると、その文字クラスに含まれる文字の分だけ同じ状態の組の遷移が現れることになります。
+
+## 実効的Bool代数
+
+SFAの定義に入る前に、遷移のラベルに用いられる条件式として利用する**実効的Bool代数** (*Effective Boolean Algebra*)について確認します。
+
+<Alert color="success">
+  **定義** (**実効的Bool代数**):
+  **実効的Bool代数** (**Effective Boolean Algebra**) $$\mathcal{A}$$は$$(\mathcal{D}, \Psi, \llbracket \_ \rrbracket, \bot, \top, \lor, \land, \lnot)$$のことで、それぞれ次のような値です。
+
+  - $$\mathcal{D}$$は値の定義域です。
+  - $$\Psi$$は$$\mathcal{D}$$上のBool結合に閉じた述語からなる集合で、$$\bot, \top \in \Psi$$です。
+  - $$\llbracket \_ \rrbracket\colon \Psi \to 2^\mathcal{D}$$は$$\Psi$$の表示関数 (denotation function) で、次のようなものです。
+    1. $$\llbracket \bot \rrbracket = \emptyset$$、
+    2. $$\llbracket \top \rrbracket = \mathcal{D}$$、
+    3. すべての$$\phi, \psi \in \Psi$$について、$$\llbracket \phi \lor \psi \rrbracket = \llbracket \phi \rrbracket \cup \llbracket \psi \rrbracket$$、$$\llbracket \phi \land \psi \rrbracket = \llbracket \phi \rrbracket \cap \llbracket \psi \rrbracket$$、$$\llbracket \lnot \phi \rrbracket = \mathcal{D} \setminus \llbracket \phi \rrbracket$$となる。
+</Alert>
+
+**実効的** (*effective*) というのは表示関数$$\llbracket \_ \rrbracket$$が効率的に計算できるということを意味しているのかと思います。
+
+実効的Bool代数の例を2つ挙げます。
+
+<Alert color="info">
+  **例** (**等価性代数**):
+  任意の集合$$\mathcal{D}$$に対して**等価性代数** (*equality algebra*) とは、$$\lambda c. c = a$$ ($$a \in \mathcal{D}$$) 形式のBool結合からなる集合を述語とする実効的Bool代数です。
+  等価性代数では$$\lambda c. c = 5 \lor c = 10$$や$$\lambda c. \lnot (c = 0)$$のような述語が表現できます。
+</Alert>
+
+<Alert color="info">
+  **例** (**区間代数**):
+  整数の閉区間の有限の和集合全体からなる集合も、集合演算をBool代数の演算として実効的Bool代数を構成し、これを**区間代数** (*interval algebra*) と呼びます。
+  否定$$\lnot$$について閉じているために$$(-\infty, x]$$や$$[x, \infty)$$のような端が$$\infty$$や$$-\infty$$になっている区間も含みます。
+  区間代数では$$[0, 5] \cup [10, 20]$$や$$[1, \infty)$$ (正の整数) のような述語が表現できます。
+</Alert>
+
+## SFAの定義
+
+ここからはSFAを定義していきます。
+
+<Alert color="success">
+  **定義** (**SFA**): 
+  **Symbolic Finite Automaton** (**SFA**) は$$(\mathcal{A}, Q, q_\mathsf{init}, F, \Delta)$$で、それぞれ次のような値です。
+
+  - $$\mathcal{A}$$は実効的Bool代数です。
+  - $$Q$$は状態の有限集合で、$$q_\mathsf{init} \in Q$$は初期状態、$$F \subseteq Q$$は受理状態の集合です。
+  - $$\Delta \subseteq Q \times \Psi \times Q$$は遷移関数です。
+</Alert>
+
+**文字**とは$$\mathcal{D}_\mathcal{A}$$の要素で、その有限列のことを**文字列**と呼び、文字列全体の集合を$$\mathcal{D}_\mathcal{A}^\ast$$で、空文字列は$$\varepsilon$$で表します。
+遷移$$(q, \psi, p) \in \Delta$$について、$$q$$を**遷移元**、$$p$$を**遷移先**、$$\psi$$を**遷移条件**と呼びます。
+遷移$$(q, \psi, p) \in \Delta$$と文字$$a \in \mathcal{D}_\mathcal{A}$$について、$$a \in \llbracket \psi \rrbracket$$のとき$$q$$から$$p$$で$$a$$により遷移可能と言い、$$q \xrightarrow{a} p$$と表します。
+この関係は文字列$$w \in \mathcal{D}_\mathcal{A}^\ast$$に対して推移的に拡張され、$$q \xrightarrow{w} p$$と表します。
+文字列$$w \in \mathcal{D}_\mathcal{A}^\ast$$について、$$w$$が**受理される**とは$$q_\mathsf{init} \xrightarrow{w} q$$という初期状態からの遷移が存在し$$q \in F$$であることを意味します。
+SFA $$M$$の**言語**とは$$M$$の受理する文字列全体からなる集合で、$$\mathcal{L}(M)$$と表します。
+
+SFA $$M$$が**決定的** (*deterministic*) であるとは、遷移元の同じ2つの遷移$$(q, \psi_1, q_1), (q, \psi_2, q_2) \in \Delta$$で$$q_1 \ne q_2$$のとき$$\llbracket \psi_1 \land \psi_2 \rrbracket = \emptyset$$であることを意味します。
+SFA $$M$$が**完全** (*complete*) であるとは、すべての状態$$q \in Q$$で$$\llbracket \bigvee_{(q, \psi, p) \in \Delta} \psi \rrbracket = \mathcal{D}_\mathcal{A}$$であることを意味します。
+この記事ではこれ以降、とくに言及がなければSFAは決定的かつ完全なものとします。
+(実際、任意のSFAは決定的かつ完全なものに変換可能なことが知られています [\[D'Antoni & Veanes, 2017\]](#ref-dantoni-veanes-2017)。)
+
+次の区間代数上のSFAは決定的かつ完全で、偶数個の負の数を含む文字列を受理します。
+
+<figure>
+  ```mermaid
+  graph LR
+    x@{ shape: sm-circ }
+    q0((($$q_0$$)))
+    q1(($$q_1$$))
+  
+    x --> q0
+    q0 -- $$[0, \infty)$$ --> q0
+    q1 -- $$[0, \infty)$$ --> q1
+    q0 -- $$(-\infty, -1]$$ --> q1
+    q1 -- $$(-\infty, -1]$$ --> q0
+  ```
+
+  <figcaption className="text-center">図3: 区間代数上の決定的かつ完全なSFAの例。偶数個の負の数を含む文字列を受理する</figcaption>
+</figure>
+
+# $$\Lambda*$$ [\[Drews & D'Antoni, 2017\]](#ref-drews-dantoni-2017)
+
+$$\Lambda*$$は2017年にDrewsと[D'Antoni](https://cseweb.ucsd.edu/~ldantoni/)によって提案されたSFAに対するオートマトン学習のアルゴリズムです。
+
+$$\Lambda*$$はAngluinの$$L*$$をシンボリックに拡張したアルゴリズムで、observation tableは完全でなくても仮説のDFAを構築できることに注目して、まず、部分的 (partial) な仮説のDFAを構築します。
+さらに、その遷移関数に現れる文字から完全なSFAになるような述語を生成するpartitioning関数を利用して、部分的なDFAを完全なSFAにすることでSFAを学習します。
+
+## observation table
+
+はじめに$$\Lambda*$$で用いるobservation tableを導入します。
+
+<Alert color="success">
+  **定義** (*observation table*):
+  SFA $$M$$に対する**observation table**とは$$(S, R, E, f)$$のことで、それぞれ次のような値です。
+
+  - $$S \subseteq \mathcal{D}_\mathcal{A}^\ast$$は接頭辞 (prefix) の集合で、$$R \subseteq \mathcal{D}_\mathcal{A}^\ast$$は境界 (boundary) の集合です。
+  - $$E \subseteq \mathcal{D}_\mathcal{A}^\ast$$は接尾辞 (suffix) の集合です。
+  - $$f\colon (S \cup R) \cdot E \to \{ 0, 1 \}$$は観測結果の記録で、文字列$$w \cdot e \in (S \cup R) \cdot E$$について$$w \cdot e \in \mathcal{L}(M)$$なら$$f(w \cdot e) = 1$$、$$w \cdot e \notin \mathcal{L}(M)$$なら$$f(w \cdot e) = 0$$となるように更新されます。
+
+  さらに、observation tableは次の規則を満たします。
+
+  1. $$S$$と$$R$$は互いに素。
+  2. $$S \cup R$$はprefix-closedで、$$\varepsilon \in S$$である。
+  3. すべての$$s \in S$$で$$s \cdot a \in S \cup R$$となる$$a \in \mathcal{D}_\mathcal{A}$$が存在する[^ext-exist]。
+  4. $$\varepsilon \in E$$である。
+</Alert>
+
+[^ext-exist]: 論文では$$s \cdot a \in R$$ですが、アルファベットが有限で遷移先がすべて異なる状態となるときに成り立たないので$$s \cdot a \in S \cup R$$が正しいはずです。
+
+observation table $$(S, R, E, f)$$と$$w \in S \cup R$$について、観測表の行$$\mathsf{row}(w)$$を$$\mathsf{row}(w)\colon e \in E \mapsto f(w \cdot e)$$として定義します。
+
+observation table $$(S, R, E, f)$$は、
+
+- すべての$$r \in R$$について$$\mathsf{row}(r) = \mathsf{row}(s)$$となる$$s \in S$$が存在するとき、**closed**といいます。
+- すべての$$s_1, s_2 \in S$$について$$s_1 \ne s_2$$なら$$\mathsf{row}(s_1) \ne \mathsf{row}(s_2)$$のとき、**reduced**といいます。
+- すべての$$w_1, w_2 \in S \cup R$$について、もし$$a \in \mathcal{D}_\mathcal{A}$$が$$w_1 a, w_2 a \in S \cup R$$で$$\mathsf{row}(w_1) = \mathsf{row}(w_2)$$なら、$$\mathsf{row}(w_1 a) = \mathsf{row}(w_2 a)$$であるとき、**consistent**といいます。
+- すべての$$e \in E$$と$$s \in S$$について$$s \cdot e \in S \cup R$$のとき、**evidence-closed**という。
+- closed、reduced、consistent、evidence-closedであるとき、**cohensive**といいます。
+
+observtation tableがconhebsiveなとき、次の**evidence automaton** $$M_\mathsf{evid} = (\mathcal{D}_\mathcal{A}, Q, q_\mathsf{init}, F, \Delta)$$を構築できます。
+
+- 状態の集合は$$Q = \{ q_s \mid s \in S \}$$です。
+- 初期状態は$$q_\mathsf{init} = q_\varepsilon$$で、受理状態の集合は$$F = \{ q_s \mid s \in S \land f(s) = 1 \}$$です。
+- $$w \in S \cup R$$と$$a \in \mathcal{D}_\mathcal{A}$$について$$w \cdot a \in S \cup R$$であれば、遷移$$(q_{g(w)}, a, q_{g(w \cdot a)}) \in \Delta$$が存在します。
+  ここで$$g(w)$$は$$\mathsf{row}(w) = \mathsf{row}(s)$$となる$$s \in S$$とします。
+  (closedかつreducedなのでそのような接頭辞がただ1つ存在します。)
+
+このようにして構築された$$M_\mathsf{evid}$$は決定性有限状態オートマトンなのですが、完全 (complete) とは限らないことに注意してください。
+ただし、observation tableの$$f$$に対して、次のような性質を満たします。
+
+<Alert color="info">
+  **補題** (**evidence compatibiltiy**):
+  cohensiveなobservation table $$(S, R, E, T)$$とそれから構築されたevidence automaton $$M_\mathsf{evid}$$および$$w \cdot e \in (S \cup R) \cdot E$$について、$$f(w \cdot e) = 1$$なら$$M_\mathsf{evid}$$は$$w \cdot e$$を受理し、$$f(w \cdot e) = 0$$なら$$M_\mathsf{evid}$$は$$w \cdot e$$を受理しません。
+</Alert>
+
+## partitioning関数
+
+次にevidence automatonを完全なSFAへと変換する鍵となる**partitioning関数**を定義します。
+
+<Alert color="success">
+  **定義** (**partitioning関数**):
+  実効的Bool代数$$(\mathcal{D}, \Psi, \llbracket \_ \rrbracket, \bot, \top, \lor, \land, \lnot)$$に対する**partitioning関数** (*partitioning function*) とは関数$$P\colon (2^\mathcal{D})^\ast \to \Psi^\ast$$で、入力のリスト$$L_\mathcal{D} = \langle \ell_1, \ell_2, \cdots, \ell_k \rangle$$は互いに素な$$\mathcal{D}$$の部分集合の列であり、出力のリスト$$L_\Psi = \langle \psi_1, \psi_2, \cdots, \psi_k \rangle$$は述語の列で、次のような規則を満たします。
+
+  1. $$\bigvee_{\psi_i \in L_\Psi} \psi_i = \top$$、
+  2. すべての$$\psi_i, \psi_j \in L_\Psi$$で$$i \ne j$$のとき$$\psi_i \land \psi_j = \bot$$、
+  3. 各$$\ell_i \in L_\mathcal{D}$$と対応する$$\psi_i \in L_\Psi$$で$$\ell_i \subseteq \llbracket \psi_i \rrbracket$$。
+</Alert>
+
+各実効的Bool代数に対して、次のようなpartitioning関数が考えられます。
+
+<Alert color="info">
+  **例** (**等価代数のpartitioning関数**):
+  等価代数のpartitioning関数は次のようなものが考えられます。
+
+  1. $$L_\mathcal{D}$$で$$|\ell_i|$$が最大となる$$i$$を求めます。
+  2. $$\psi_i = \lnot \bigvee_{j \ne i} p(\ell_j)$$と、各$$j \ne i$$について$$\psi_j = p(\ell_j)$$とします。
+     ここで$$\ell \subseteq \mathcal{D}$$について$$p(\ell) = \lambda c. \bigvee_{a \in \ell} c = a$$です。
+
+  例えば$$L_\mathcal{D} = \langle \{2\},\{3\},\emptyset,\{0,5\} \rangle$$であれば$$P(L_\mathcal{D}) = \langle \lambda c. c = 2, \lambda c. c = 3, \bot, \lambda c. c \ne 2 \land c \ne 3 \rangle$$のようになります。
+</Alert>
+
+<Alert color="info">
+  **例** (**区間代数のpartitioning関数**):
+  区間代数のpartitioning関数は次のようなものが考えられます。
+
+  1. $$N = \langle (a, i) \mid \ell_i \in L_\mathcal{D} \land a \in \ell_i \rangle$$として、$$N$$を第1要素で昇順でソートする。
+  2. 各$$i \in \{ 1, \dots, |L_\mathcal{D}| \}$$について$$\psi_i = \bot$$で初期化し、次の処理を行う。
+     - 各$$j \in \{ 1, \cdots, |N| - 1 \}$$について$$\psi_i \gets \psi_i \lor [ a, b - 1 ]$$と更新する。ここで$$(a, i) = n_j$$と$$(b, i') = n_{j+1}$$とする ($$n_j$$は$$N$$の$$j$$番目の要素で、$$n_{j+1}$$は$$j+1$$番目の要素)。
+     - $$(a, i) = n_1$$について$$\psi_i \gets \psi_i \lor (-\infty, a-1]$$と更新する ($$n_1$$は$$N$$の1番目の要素)。
+     - $$(a, i) = n_{|N|}$$について$$\psi_i \gets \psi_i \lor [a, \infty)$$と更新する ($$n_{|N|}$$は$$N$$の最後の要素)。
+</Alert>
+
+partitioning関数があれば、evidence automatonから完全なSFAを得るのはそれほど難しくありません。
+evidence automaton $$M_\mathsf{evid} = (\mathcal{D}_\mathcal{A}, Q, q_\mathsf{init}, F, \Delta)$$と状態$$q \in Q$$について、状態の集合に順序を付けて$$q_i \in Q$$としたとき、$$\ell^q_i = \{ a \mid (q, a, q_i) \in \Delta \}$$として$$L^q_\mathcal{D} = \ell^q_1 \ell^q_2 \cdots \ell^q_{|Q|}$$と$$L^q_\Psi = P(L^q_\mathcal{D}) = \psi^q_1 \psi^q_2 \cdots \psi^q_{|Q|}$$が考えられます。
+そこで、SFAでの遷移を$$\Delta' = \{ (q, \psi^q_i, q_i) \mid q \in Q \land i \in \{ 1, \dots, |Q| \} \}$$とすると、仮説のSFA $$H = (\mathcal{D}_\mathcal{A}, Q, q_\mathsf{init}, F, \Delta')$$が得られます。
+
+この仮説のSFA $$H$$に対しても、$$M_\mathsf{evid}$$と同様に次のような性質が成り立ちます。
+
+<Alert color="info">
+  **補題** (**SFAのevidence compatibiltiy**):
+  cohensiveなobservation table $$(S, R, E, T)$$とそれから構築された仮説のSFA$$H$$および$$w \cdot e \in (S \cup R) \cdot E$$について、$$f(w \cdot e) = 1$$なら$$w \cdot e \in \mathcal{L}(H)$$で、$$f(w \cdot e) = 0$$なら$$w \cdot e \notin \mathcal{L}(H)$$となります。
+</Alert>
+
+## $$\Lambda*$$アルゴリズム
+
+ここからは$$\Lambda*$$アルゴリズムの詳細を説明します。
+
+まず学習の設定ですがAngluinの$$L*$$と同じように、目的の言語$$\mathcal{L}_\mathsf{tgt}$$に対して次の<span className="katex-ps-funcname">MQ</span>と<span className="katex-ps-funcname">EQ</span>が与えられるものとします。
+
+- $$\text{\htmlClass{katex-ps-funcname}{MQ}}(w)$$: **membership query**。$$w \in \mathcal{L}_\mathsf{tgt}$$なら$$1$$、そうでないなら$$0$$を返す。
+- $$\text{\htmlClass{katex-ps-funcname}{EQ}}(H)$$: **equivalence query**。$$\mathcal{L}(H) = \mathcal{L}_\mathsf{tgt}$$なら$$1$$を、そうでないなら反例となる文字列$$w \in \mathcal{L}(H) \bigtriangleup \mathcal{L}_\mathsf{tgt}$$を返す。
+
+アルゴリズムではまず、Angluinの$$L*$$でobservation tableがconsistentかつclosedとなることを目指したように、$$\Lambda*$$でもobservation tableがcohensiveとなることを目指します。
+そのために、次の手続きを繰り返し適用します。
+
+- <span className="katex-ps-funcname">Close</span>: $$\mathsf{row}(s) = \mathsf{row}(r)$$となる$$s \in S$$が存在しない$$r \in R$$を探索し、見つかったらその$$r$$を$$R$$から$$S$$に移動し、適当な$$a_\mathsf{arb} \in \mathcal{D}_\mathcal{A}$$で$$r \cdot a_\mathsf{arb}$$を$$R$$に追加します。
+- <span className="katex-ps-funcname">EvidenceClose</span>: $$s \cdot e \notin S \cup R$$である$$s \in S$$と$$e \in E$$の組を探索し、見つかったら$$s \cdot e$$やその接頭辞を$$R$$に追加します。
+- <span className="katex-ps-funcname">MakeConsistent</span>: $$\mathsf{row}(w_1) = \mathsf{row}(w_2)$$で$$w_1 a, w_2 a \in S \cup R$$だが$$\mathsf{row}(w_1 a) \ne \mathsf{row}(w_2 a)$$である$$w_1, w_2 \in S \cup R$$と$$a \in \mathcal{D}_\mathcal{A}$$を探索し、見つかったら、$$f(w_1 \cdot a e) \ne f(w_2 \cdot a e)$$である$$e \in E$$で$$a e$$を$$E$$に追加します。
+- <span className="katex-ps-funcname">Distribute</span>: <span className="katex-ps-funcname">MakeConsistent</span>で$$a e$$を$$E$$に追加する前に、$$\mathsf{row}(u_1) = \mathsf{row}(u_2)$$だが$$f(u_1 e) \ne f(u_2 e)$$である各$$u_1, u_2 \in S \cup R$$で、$$(\{ u_2 b \mid u_1 b \in S \cup R \} \cup \{ u_1 b \mid u_2 b \in S \cup R \}) \setminus S$$を$$R$$に追加します。
+
+このうち<span className="katex-ps-funcname">Distribute</span>はobservation tableに既にある情報を上手く利用することで実際の計算を効率的に行うための工夫で、学習の正しさには直接関係ないのではないかと思います[^distribute-correct]。
+
+[^distribute-correct]: 論文では"This operation *distributes* the old evidence leading out of the amalgamated state between the newly diﬀerentiated states, simplifying the constructions in Sect.4." (pp. 179) とあります。
+  しかし、4章は学習の学習可能性や学習可能な実効的Bool代数の直積・直和もまた学習可能であることの説明で、constructionらしいのは直積・直和の実効的Bool代数を構成している部分くらいしかなく、最後の部分が要領の得ない一文に感じます。
+  (個人的には3.4章 "Worked Example"の間違いなのではないかと思っています。)
+
+そして、cohensiveなobservation tableから仮説のSFA $$H$$を構築して<span className="katex-ps-funcname">EQ</span>に渡します。
+反例の文字列が返ってきた場合は、$$S$$に含まれない反例の接頭辞をすべて$$R$$に追加します。
+<span className="katex-ps-funcname">EQ</span>が反例の文字列を返す理由は2つありますが、次のようにどちらの場合もこの方法で正しく処理されることが分かります。
+
+1. 正しい状態が存在しなかった場合: <span className="katex-ps-funcname">MakeConsistent</span>により新しい接尾辞が$$E$$に追加され<span className="katex-ps-funcname">Close</span>で新しい状態が見つかる。
+2. 遷移の述語が間違っていた場合: $$S \cup R$$に反例の接頭辞が含まれているはずなので、次の$$P(L^q_\mathcal{D})$$の計算の際に新しい文字が$$L^q_\mathcal{D}$$のいずれかの要素に追加される。
+
+アルゴリズムの全体は次のようになります。
+各手続きの疑似コードは (面倒なので) 省略します。
+書いてある通りにするだけです。
+
+```pseudocode
+\begin{algorithm}
+  \caption{$\Lambda*$ algorithm}
+  \begin{algorithmic}
+    \FUNCTION{Λ*}{MQ, EQ, $a_\mathsf{arb}, P$}
+      \STATE $S \gets \{ \varepsilon \}, R \gets \{ a_\mathsf{arb} \}, E \gets \{ \varepsilon \}$, and $f \gets \emptyset$
+      \STATE $f(\varepsilon) \gets$ \Call{MQ}{$\varepsilon$} and $f(a_\mathsf{arb}) \gets$ \Call{MQ}{$a_\mathsf{arb}$}
+      \REPEAT
+        \IF{$(S, R, E, f)$ is not closed}
+          \STATE \Call{Close}{}
+          \STATE $\mathbf{continue}$
+        \ENDIF
+        \IF{$(S, R, E, f)$ is not evidence-closed}
+          \STATE \Call{EvidenceClose}{}
+          \STATE $\mathbf{continue}$
+        \ENDIF
+        \IF{$(S, R, E, f)$ is not consistent}
+          \STATE \Call{MakeConsistent}{} and \Call{Distribute}{}
+          \STATE $\mathbf{continue}$
+        \ENDIF
+        \STATE Let $M_\mathsf{evid}$ be the evidence automaton constructed from $(S, R, E, f)$
+        \STATE Let $H$ be the hypothesis SFA constructed from $M_\mathsf{evid}$ and $P$
+        \IF{$w =$ \Call{EQ}{$H$} is a counterexample}
+          \STATE $R \gets R \cup (\{ w' \mid w'\text{ is a prefix of }w \} \setminus S)$
+        \ENDIF
+      \UNTIL{\Call{EQ}{$H$} = 1}
+      \STATE \RETURN $H$
+    \ENDFUNCTION
+  \end{algorithmic}
+\end{algorithm}
+```
+
+Scalaによる実装も示します。
+基本的には説明した通りです。
+
+<details>
+  <summary>Scalaによる実装</summary>
+
+  Gist: https://gist.github.com/makenowjust/bfca1fc504e4780a06f4fb3ab2d710ca
+
+  ```scala showLineNumbers
+  // This is an implementation of the Λ* algorithm in Scala 3.
+  //
+  // The Λ* algorithm is a learning algorithm for symbolic automata, proposed by
+  // Samuel Drews and Loris D'Antoni (2017), "Learning Symbolic Automata"
+  // https://doi.org/10.1007/978-3-662-54577-5_10.
+  
+  import scala.collection.mutable
+  
+  /** `BoolAlg` represents an effective Boolean algebra on the domain `D`.
+    *
+    * `P` is a type of predicates on the domain `D`.
+    */
+  trait BoolAlg[D, P]:
+  
+    /** Returns the predicate that is always true. */
+    def `true`: P
+  
+    /** Returns the predicate that is always false. */
+    def `false`: P
+  
+    /** Returns the predicate: p ∧ q. */
+    def and(p: P, q: P): P
+  
+    /** Returns the predicate: p ∨ q. */
+    def or(p: P, q: P): P
+  
+    /** Returns the predicate: ¬p. */
+    def not(p: P): P
+  
+    /** Checks if the denotation of `p` contains `d`. */
+    def contains(p: P, d: D): Boolean
+  
+    /** Computes the partitioning function to `ds`.
+      *
+      * This returns the sequence of separating predicates of `ds`.
+      */
+    def partition(ds: Seq[Set[D]]): Seq[P]
+  
+  /** `Pred` is a concrete representation of predicates on atomic proposition `A`.
+    */
+  enum Pred[+A]:
+    case True, False
+    case Atom(a: A)
+    case And(p: Pred[A], q: Pred[A])
+    case Or(p: Pred[A], q: Pred[A])
+    case Not(p: Pred[A])
+  
+    infix def and[AA >: A](that: Pred[AA]): Pred[AA] = (this, that) match
+      case (True, q)               => q
+      case (p, True)               => p
+      case (False, _) | (_, False) => False
+      case (p, q)                  => And(p, q)
+  
+    infix def or[AA >: A](that: Pred[AA]): Pred[AA] = (this, that) match
+      case (True, _) | (_, True) => True
+      case (p, False)            => p
+      case (False, q)            => q
+      case (p, q)                => Or(p, q)
+  
+    def not: Pred[A] = this match
+      case True   => False
+      case False  => True
+      case Not(p) => p
+      case p      => Not(p)
+  
+    /** Checks if the denotation of `p` contains `d`.
+      *
+      * `atom` is a function that checks if the atomic proposition contains a data value.
+      */
+    def contains[D](d: D)(atom: (A, D) => Boolean): Boolean = this match
+      case True      => true
+      case False     => false
+      case Atom(a)   => atom(a, d)
+      case And(p, q) => p.contains(d)(atom) && q.contains(d)(atom)
+      case Or(p, q)  => p.contains(d)(atom) || q.contains(d)(atom)
+      case Not(p)    => !p.contains(d)(atom)
+  
+  object Pred:
+  
+    /** `EqualityAlgebra` is an instance of `BoolAlg` for the equality. */
+    given EqualityAlgebra[A]: BoolAlg[A, Pred[A]] with
+      def `true`: Pred[A] = Pred.True
+      def `false`: Pred[A] = Pred.False
+      def and(p: Pred[A], q: Pred[A]): Pred[A] = Pred.And(p, q)
+      def or(p: Pred[A], q: Pred[A]): Pred[A] = Pred.Or(p, q)
+      def not(p: Pred[A]): Pred[A] = Pred.Not(p)
+      def contains(p: Pred[A], d: A): Boolean = p.contains(d)(_ == _)
+      def partition(dss: Seq[Set[A]]): Seq[Pred[A]] =
+        val maxIndex = dss.zipWithIndex.maxBy(_._1.size)._2
+        val largePred = dss.iterator.zipWithIndex
+          .filter(_._2 != maxIndex)
+          .map(_._1)
+          .flatten
+          .map(Pred.Atom(_))
+          .foldLeft(Pred.False)(_ or _)
+        dss.zipWithIndex.map:
+          case (ds, i) if i == maxIndex => largePred.not
+          case (ds, i) =>
+            ds.iterator.map(Pred.Atom(_)).foldLeft(Pred.False)(_ or _)
+  
+  /** `Dfa` represents a deterministic finite automaton.
+    *
+    * This is used for representing evidence automata (Def. 3).
+    */
+  final case class Dfa[S, A](
+      initialState: S,
+      acceptStateSet: Set[S],
+      transitionFunction: Map[S, Map[A, S]]
+  ):
+  
+    /** Converts this evidence automaton to an SFA using the partitioning function.
+      */
+    def toSfa[P](using P: BoolAlg[A, P]): Sfa[S, P] =
+      val transitionFunction = this.transitionFunction.map:
+        case (state, edgeMap) =>
+          val nextStateToChars =
+            edgeMap.toSeq.groupBy(_._2).view.mapValues(_.map(_._1)).toSeq
+          val preds = P.partition(nextStateToChars.map(_._2.toSet))
+          val newEdgeMap = nextStateToChars
+            .zip(preds)
+            .map:
+              case ((nextState, _), pred) => (pred, nextState)
+            .toMap
+          state -> newEdgeMap
+  
+      Sfa(initialState, acceptStateSet, transitionFunction.toMap)
+  
+  /** `Sfa` represents a symbolic finite automaton (Def. 1).
+    *
+    * In this implementation, SFAs are assumed to be deterministic and finite.
+    */
+  final case class Sfa[S, P](
+      initialState: S,
+      acceptStateSet: Set[S],
+      transitionFunction: Map[S, Map[P, S]]
+  ):
+    def transition[A](state: S, char: A)(using P: BoolAlg[A, P]): Option[S] =
+      val edgeMap = transitionFunction(state)
+      edgeMap.find((p, _) => P.contains(p, char)).map(_._2)
+  
+  /** `Alphabet` represents an alphabet of characters. */
+  trait Alphabet[A]:
+  
+    /** Returns the arbitrary character. */
+    def arbChar: A
+  
+  object Alphabet:
+  
+    /** Creates an instance of `Alphabet` with the given character. */
+    def apply[A](char: A): Alphabet[A] = new Alphabet[A]:
+      def arbChar = char
+  
+  /** `Oracle` represents an oracle that provides membership and equivalence queries. */
+  trait Oracle[A]:
+  
+    /** Checks if the given word is in the target language. */
+    def membershipQuery(word: Seq[A]): Boolean
+  
+    /** Checks if the given SFA is equivalent to the target language.
+      *
+      * This returns a counterexample if the given SFA is not equivalent to the target language.
+      */
+    def equivalenceQuery[P](sfa: Sfa[?, P])(using BoolAlg[A, P]): Option[Seq[A]]
+  
+  object Oracle:
+  
+    /** Creates an instance of `Oracle` with the given function. */
+    def fromFunction[A](
+      finiteAlphabet: Set[A],
+      minWordLength: Int = 10,
+      maxWordLength: Int = 100,
+      numWords: Int = 100,
+      randomSeed: Long = 0L
+    )(f: Seq[A] => Boolean): Oracle[A] =
+      val alphabetIndexedSeq = finiteAlphabet.toIndexedSeq
+  
+      new Oracle[A]:
+        def membershipQuery(word: Seq[A]): Boolean = f(word)
+        def equivalenceQuery[P](sfa: Sfa[?, P])(using BoolAlg[A, P]): Option[Seq[A]] =
+          val rand = util.Random(randomSeed)
+          util.boundary:
+            for i <- 0 until numWords do
+              val size = rand.between(minWordLength, maxWordLength + 1)
+              var word = Seq.empty[A]
+              var state = sfa.initialState
+              for j <- 0 until size do
+                val char = alphabetIndexedSeq(rand.nextInt(alphabetIndexedSeq.size))
+                word :+= char
+                state = sfa.transition(state, char).get
+                if sfa.acceptStateSet.contains(state) != f(word) then
+                  util.boundary.break(Some(word))
+            None
+  
+  /** `Prefix` is a prefix of a word. */
+  type Prefix[A] = Seq[A]
+  
+  /** `Suffix` is a suffix of a word. */
+  type Suffix[A] = Seq[A]
+  
+  /** `Sig` is a signature of a prefix.
+    *
+    * A signature is a sequence of booleans; for a prefix `s`, `sig(i)` is true
+    * if `s ++ suffices(i)` is in the target language, otherwise false.
+    */
+  type Sig = Seq[Boolean]
+  
+  /** `ObservationTable` represents an observation table (Def. 2).
+    *
+    * In this implementation, an observation table `(S, R, E, f)` is represented as
+    * four values `prefixSet, boundarySet, suffices` and `rowMap`, where:
+    *
+    * - `prefixSet` is corresponding to `S`,
+    * - `boundarySet` is corresponding to `R`,
+    * - `suffices` is corresponding to `E`, and
+    * - `rowMap` is corresponding to `f`.
+    */
+  final case class ObservationTable[A](
+      prefixSet: Set[Prefix[A]],
+      boundarySet: Set[Prefix[A]],
+      suffices: Seq[Suffix[A]],
+      rowMap: Map[Prefix[A], Sig]
+  ):
+  
+    /** Returns a row of the given prefix.
+      *
+      * A row value is the signature of the prefix, and it returns the pre-computed value.
+      */
+    private def row(prefix: Prefix[A]): Sig = rowMap(prefix)
+  
+    /** Computes the signature of the given prefix. */
+    private def sig(prefix: Prefix[A])(using O: Oracle[A]): Sig =
+      suffices.map(suffix => O.membershipQuery(prefix ++ suffix))
+  
+    /** Returns the set of prefixes and boundaries. */
+    private def prefixAndBoundarySet: Set[Prefix[A]] =
+      prefixSet ++ boundarySet
+  
+    /** Returns the set of extensions of the given prefix.
+      *
+      * An extension is a word that is obtained by appending a character to the prefix.
+      */
+    private def extensionSet(prefix: Prefix[A]): Set[Prefix[A]] =
+      prefixSet.filter(b => prefix.size + 1 == b.size && b.startsWith(prefix)) ++
+        boundarySet.filter(b => prefix.size + 1 == b.size && b.startsWith(prefix))
+  
+    /** Finds and returns an unclosed boundary if it exists. */
+    def findUnclosedBoundary(): Option[Prefix[A]] =
+      val candidates = boundarySet.filter: boundary =>
+        !prefixSet.exists(row(_) == row(boundary))
+      if candidates.nonEmpty then Some(candidates.minBy(_.size))
+      else None
+  
+    /** Does the "close" operation (§3.3) with the given prefix. */
+    def close(prefix: Prefix[A])(using A: Alphabet[A], O: Oracle[A]): ObservationTable[A] =
+      val newPrefixSet = prefixSet + prefix
+      val newBoundary = prefix :+ A.arbChar
+      val newBoundarySet = boundarySet - prefix + newBoundary
+      val newRowMap =
+        if rowMap.contains(newBoundary) then rowMap
+        else rowMap + (newBoundary -> sig(newBoundary))
+      ObservationTable(newPrefixSet, newBoundarySet, suffices, newRowMap)
+  
+    /** Finds and return a sequence of evidence-unclosed words if it exists. */
+    def findEvidenceUnclosedWord(): Seq[Seq[A]] =
+      val prefixAndBoundarySet = this.prefixAndBoundarySet
+      prefixSet.iterator
+        .flatMap: prefix =>
+          suffices.iterator
+            .map(prefix ++ _)
+            .filterNot(prefixAndBoundarySet)
+        .toSeq
+  
+    /** Does the "evidence-close" operation (§3.3) with the given word. */
+    def evidenceClose(word: Seq[A])(using O: Oracle[A]): ObservationTable[A] =
+      if prefixSet.contains(word) then this
+      else
+        var newBoundarySet = boundarySet
+        var newRowMap = rowMap
+        for newBoundary <- word.inits; if !boundarySet.contains(newBoundary) do
+          newBoundarySet += newBoundary
+          newRowMap += newBoundary -> sig(newBoundary)
+        ObservationTable(prefixSet, newBoundarySet, suffices, newRowMap)
+  
+    /** Finds and returns an inconsistent suffix if it exists. */
+    def findInconsistentSuffix(): Option[Suffix[A]] =
+      val prefixAndBoundarySet = this.prefixAndBoundarySet
+      val triple = (
+        for
+          prefix1 <- prefixAndBoundarySet.iterator
+          ext1 <- extensionSet(prefix1).iterator
+          char = ext1.last
+          prefix2 <- prefixAndBoundarySet.iterator
+          ext2 = prefix2 :+ char
+          if prefixAndBoundarySet.contains(ext2)
+          if row(prefix1) == row(prefix2)
+          if row(ext1) != row(ext2)
+        yield (prefix1, prefix2, char)
+      ).nextOption()
+      triple.map: (prefix1, prefix2, char) =>
+        val ext1 = prefix1 :+ char
+        val ext2 = prefix2 :+ char
+        val index = row(ext1)
+          .zip(row(ext2))
+          .zipWithIndex
+          .find:
+            case ((b1, b2), i) => b1 != b2
+          .map(_._2)
+          .get
+        char +: suffices(index)
+  
+    /** Does the "make-consistent" and "distribute" operations (§3.3) with the given suffix. */
+    def makeConsistentAndDistribute(newSuffix: Suffix[A])(using O: Oracle[A]): ObservationTable[A] =
+      import O.{membershipQuery => MQ}
+  
+      val prefixAndBoundarySet = this.prefixAndBoundarySet
+      var boundarySetToAdd = Set.empty[Prefix[A]]
+  
+      // First, the learner do "distribute" operation.
+      for
+        prefix1 <- prefixAndBoundarySet
+        prefix2 <- prefixAndBoundarySet
+        if row(prefix1) == row(prefix2)
+        if MQ(prefix1 ++ newSuffix) != MQ(prefix2 ++ newSuffix)
+      do
+        for
+          char <- extensionSet(prefix1).map(_.last)
+          if !prefixSet.contains(prefix2 :+ char)
+        do boundarySetToAdd += prefix2 :+ char
+        for
+          char <- extensionSet(prefix2).map(_.last)
+          if !prefixSet.contains(prefix1 :+ char)
+        do boundarySetToAdd += prefix1 :+ char
+  
+      var newRowMap = rowMap
+      val newBoundarySet = boundarySet ++ boundarySetToAdd
+      for newBoundary <- boundarySetToAdd; if !rowMap.contains(newBoundary) do
+        newRowMap += newBoundary -> sig(newBoundary)
+  
+      // Next, the learner do "make-consistent" operation.
+      val newSuffices = suffices :+ newSuffix
+      for prefix <- newRowMap.keys do newRowMap += prefix -> (newRowMap(prefix) :+ MQ(prefix ++ newSuffix))
+  
+      ObservationTable(prefixSet, newBoundarySet, newSuffices, newRowMap)
+  
+    /** Processes the given counterexample. */
+    def process(cex: Seq[A])(using O: Oracle[A]): ObservationTable[A] =
+      val prefixAndBoundarySet = this.prefixAndBoundarySet
+      var newBoundarySet = boundarySet
+      var newRowMap = rowMap
+      for boundary <- cex.inits; if !prefixAndBoundarySet.contains(boundary) do
+        newBoundarySet += boundary
+        newRowMap += boundary -> sig(boundary)
+      ObservationTable(prefixSet, newBoundarySet, suffices, newRowMap)
+  
+    /** Builds an evidence automaton from the observation table (§3.1). */
+    def buildEvidence(): Dfa[Prefix[A], A] =
+      val prefixAndBoundarySet = this.prefixAndBoundarySet
+      val rowToPrefix = rowMap.view.filterKeys(prefixSet).map(_.swap).toMap
+      val transitionFunction = mutable.Map.empty[Prefix[A], Map[A, Prefix[A]]]
+      for
+        prefix0 <- prefixAndBoundarySet
+        ext0 <- extensionSet(prefix0)
+      do
+        val char = ext0.last
+        val prefix = rowToPrefix(row(prefix0))
+        val boundary = rowToPrefix(row(ext0))
+        if !transitionFunction.contains(prefix) then
+          transitionFunction(prefix) = Map.empty
+        transitionFunction(prefix) += char -> boundary
+      val initialState = rowToPrefix(rowMap(Seq.empty))
+      val acceptSet = prefixSet.map(row).filter(_.head).map(rowToPrefix)
+      Dfa(initialState, acceptSet, transitionFunction.toMap)
+  
+  object ObservationTable:
+  
+    /** Creates an empty observation table. */
+    def empty[A](using A: Alphabet[A], O: Oracle[A]): ObservationTable[A] =
+      import O.{membershipQuery => MQ}
+      val prefixSet = Set(Seq.empty[A])
+      val boundarySet = Set(Seq(A.arbChar))
+      val suffices = Seq(Seq.empty)
+      val rowMap = Map(
+        Seq.empty -> Seq(MQ(Seq.empty)),
+        Seq(A.arbChar) -> Seq(MQ(Seq(A.arbChar)))
+      )
+      ObservationTable(prefixSet, boundarySet, suffices, rowMap)
+  
+  /** `Learner` provides an implementation of the Λ* algorithm. */
+  object Learner:
+  
+    /** Infers an SFA from the given alphabet and oracle using the Λ* algorithm. */
+    def learn[A, P](
+      alphabet: Alphabet[A],
+      oracle: Oracle[A],
+    )(using P: BoolAlg[A, P]): Sfa[Prefix[A], P] =
+      import oracle.{equivalenceQuery => EQ}
+      given Alphabet[A] = alphabet
+      given Oracle[A] = oracle
+  
+      var obs = ObservationTable.empty
+      var result = Option.empty[Sfa[Prefix[A], P]]
+  
+      while result.isEmpty do
+        util.boundary:
+          println(s"obs = $obs")
+  
+          for boundary <- obs.findUnclosedBoundary() do
+            println(s"close($boundary)")
+            obs = obs.close(boundary)
+            util.boundary.break()
+  
+          val words = obs.findEvidenceUnclosedWord()
+          if words.nonEmpty then
+            for word <- words do
+              println(s"evidenceClose($word)")
+              obs = obs.evidenceClose(word)
+            util.boundary.break()
+  
+          for suffix <- obs.findInconsistentSuffix() do
+            println(s"makeConsistentAndDistribute($suffix)")
+            obs = obs.makeConsistentAndDistribute(suffix)
+            util.boundary.break()
+  
+          val dfa = obs.buildEvidence()
+          val sfa = dfa.toSfa
+  
+          println(s"EQ($sfa)")
+          EQ(sfa) match
+            case Some(cex) =>
+              println(s"process($cex)")
+              obs = obs.process(cex)
+            case None      =>
+              result = Some(sfa)
+  
+      result.get
+  
+  val alphabet = Alphabet(0)
+  val oracle = Oracle.fromFunction(Set(0, 1, 2, 3)): word =>
+    word.count(_ == 0) % 3 == 0 && word.count(_ == 1) % 2 == 0
+
+  val sfa = Learner.learn(alphabet, oracle)(using Pred.EqualityAlgebra[Int])
+  println(sfa)
+  ```
+</details>
+
+直感的には$$\Lambda*$$は、$$L*$$でアルファベットのすべての文字に対して遷移を求めていたものを、最初の1文字以外は反例やこれまでの観察に基づいて遷移を求めるようにしたものだと考えられます。
+そのため、$$L*$$と同様に次のことが言えます。
+
+<Alert color="info">
+  **定理** (**$$\Lambda*$$の最小性**):
+  $$\Lambda*$$が停止したなら、最小の状態数のSFAが求まる。
+</Alert>
+
+## $$\Lambda*$$の計算量
+
+$$\Lambda*$$の計算量は、partitioning関数や<span className="katex-ps-funcname">EQ</span>の返す**反例の質**に依存しています。
+反例の質とは何でしょうか？
+
+例えば、図3のSFA (負の数が偶数個含む文字列を受理する) を学習することを考えてみてください。
+の数という述語が上手く学習できず、$$(-\infty, 1000]$$のような間違った区間で学習していたとします。
+
+<figure>
+  ```mermaid
+  graph LR
+    x@{ shape: sm-circ }
+    q0((($$q_0$$)))
+    q1(($$q_1$$))
+  
+    x --> q0
+    q0 -- $$[0, \infty)$$ --> q0
+    q1 -- $$\textcolor{red}{[1001, \infty)}$$ --> q1
+    q0 -- $$(-\infty, -1]$$ --> q1
+    q1 -- $$\textcolor{red}{(-\infty, 1000]}$$ --> q0
+  ```
+
+  <figcaption className="text-center">図4: 図3のSFAを学習している途中の仮説のSFA。赤文字の遷移の条件が間違っている</figcaption>
+</figure>
+
+ここで、返ってきた反例が$$\langle -1, 0 \rangle$$であれば、正しく述語を修正できます。
+しかし反例が$$\langle -1, 1000 \rangle$$であれば、述語を$$(-\infty, 999]$$としか修正できず、学習があまり進みません。
+さらに、このあとに返ってくる反例が$$\langle -1, 999 \rangle$$、$$\langle -1, 998 \rangle$$、…と2番目の値が減っていくのであれば、正しく学習するために1000回以上の<span className="katex-ps-funcname">EQ</span>を呼び出さなければいけません。
+
+このように、$$\Lambda*$$では反例の質やpartitioning関数の特徴についても考えなければ計算量について議論できません。
+ですが、そのままでは議論が難しいので、まず **$$s_g$$-learnability** について考えます。
+ただし、ここでは簡潔な説明のみにします。
+詳細な説明は論文[\[Drews & D'Antoni, 2017\]](#ref-drews-dantoni-2017)を参照してください。
+
+適当な実効的Bool代数$$\mathcal{A}$$とその上のpartitioning関数$$P$$を考えます。
+$$C$$を$$\mathcal{D}_\mathcal{A}$$を分割する述語のリストの集合 (つまり$$P$$の返り値の集合) とします。
+$$G$$を$$P$$への入力$$L$$とその返り値$$P(L)$$、目的の分割$$c_\mathsf{tgt} \in C$$の3つを受け取って、より詳細な$$P$$への入力$$L'$$を返す関数 (**ジェネレータ**) の集合とします。
+
+ジェネレータ$$g \in G$$は目的の分割$$c_\mathsf{tgt}$$とpartitioning関数$$P$$に対して、$$L_0 = \langle \emptyset \rangle$$とおいて$$L_{i+1} = g(L_i, P(L_i), c_\mathsf{tgt})$$と繰り返し呼び出すことで、最終的に$$P(L_i) = c_\mathsf{tgt}$$となるような$$L_i$$が求められる関数と考えられます。
+
+つまり、ジェネレータはpartitioning関数の特徴や反例の質により、述語の学習がどのように進むかを抽象化しています。
+例えば図4の場合、$$q_1$$での$$P$$への入力は$$L_1 = \langle \{ -1 \}, \{ 1001 \} \rangle$$のようになっていて、ここで反例として$$\langle -1, 0\rangle$$が返ってきたことは$$g_1(L_1, P(L_1), c_\mathsf{tgt}) = \langle \{ -1 \}, \{ 0, 1001 \} \rangle$$が、反例として$$\langle -1, 1000 \rangle$$が返ってきたことは$$g_2(L_1, P(L_1), c_\mathsf{tgt}) = \langle \{ -1 \}, \{ 1000, 1001 \} \rangle$$が相当します。
+
+それでは$$s_g$$-learnabilityを定義します。
+
+<Alert color="success">
+  **定義** (**$$s_g$$-learnability**):
+  実効的Bool代数$$\mathcal{A}$$とpartitioning関数$$P$$、ジェネレータ$g \in G$が与えられたとき次のような暗黙の関数$$s_g\colon C \to \mathbb{N}$$が存在する場合、組$$(\mathcal{A}, P)$$を **$$s_g$$-learnable** と呼びます。
+
+  - 分割$$c \in C$$について、大きさ[^list-size]が高々$$s_g(c)$$のリストを$$P$$に入力することで目的の分割$$c$$が得られる。
+</Alert>
+
+[^list-size]: 論文では"$$P$$ needs as input a list of sets, provided by $$g$$, with total size at most $$s_g(c)$$ to discover a target partition $$c \in C$$."とありますが、このtotal sizeというのが厳密に何を意味するか定かではありません。
+  $$P$$への入力は集合の列なので、単なる列の長さではなく、要素の集合の大きさの総和なのではないかと疑っているのですが、それだと空集合の列$$\langle \emptyset \rangle$$の大きさが$$0$$になってしまい、本当にそれでいいのか自信がありません。
+
+$$g$$を呼び出す毎に入力のリストは大きくなっていくので、$$s_g$$の定義は「高々$s_g(c)$回$$g$$を呼び出すことで目的の分割が得られれる」とも言い換えられます。
+
+論文ではこのあと$$s_g$$-learnableな実効的Bool代数のクラスを分類したり、2つの$$s_g$$-learnableな実行的Bool代数とpartitioning関数から、その直積や直和に対応するpartitioning関数や$$s_g$$が計算できる (つまり直積や直和も$$s_g$$-learnableである) ことを示しています。
+これらも興味深い話題です。
+詳細は論文は参照してください。
+
+論文では$$s_g$$を使って、次のような定理を述べています。
+ただし赤文字の下線はこの記事の筆者によるもので、後で説明するように、筆者はこの定理に疑問的です。
+
+<Alert color="info">
+  **定理** (**SFAの学習可能性**):
+  実効的Bool代数$$\mathcal{A}$$上のSFA $$M$$が$$n$$状態で表せる場合、$$M$$学習するために必要な<u className="text-red-500">equivalence queryの回数は$$n^2 \Sigma_{q_i \in Q} s_{g_i}(c_i)$$で上から抑えられる (?)</u>。
+  ここで$$c_i$$は状態$$q_i$$の遷移先の状態に対する述語の分割で、$$s_{g_i}$$は$$q_i$$の遷移先に対する反例の質を反映した関数です。
+</Alert>
+
+## $$\Lambda*$$の疑問点
+
+### 疑問1: <span className="katex-ps-funcname">Distribute</span>は必要なのか
+
+上で説明した通り、手続き<span className="katex-ps-funcname">Distribute</span>はアルゴリズムの正しさを保証するために必要なものではないと考えています。
+実装で実験した限りでも<span className="katex-ps-funcname">Distribute</span>の有無で学習が停止しなくなる、といったことはありませんでした。
+
+アルゴリズムでは、<span className="katex-ps-funcname">Close</span>でobservation tableがclosedになり、<span className="katex-ps-funcname">EvidenceClose</span>でevidence-closedになり、<span className="katex-ps-funcname">MakeConsistent</span>でconsistentになります。
+reducedかどうかはobservation tableの更新の仕方で保証されているので、これらの手続きのみでアルゴリズムは正しく動作するはずです。
+
+計算量的にも全ての状態の組をループする必要があり、そこまで効率的なわけではないので、この処理を省いた方が効率的なこともあるかもしれません。
+ただ、既知の観察を上手く使えなくなってしまうので、equivalence queryの回数などに微妙な影響があるのではないかと思います。
+
+### 疑問2: equivalence queryの上界
+
+定理 (SFAの学習可能性) では$$n^2 \Sigma_{q_i \in Q} s_{g_i}(c_i)$$で抑えれらると述べています。
+上界なので間違ってはいないと思うのですが、過剰に多く見積っているように思えます。
+とくに$$n^2$$というのがどこから出てきたのかよく分かりません。
+
+$$\Lambda*$$ではequivalence queryは、次の2つの目的で利用されます。
+
+1. 新しい状態を発見する。
+2. 遷移の述語をより詳細にする。
+
+このうち1の目的で利用されるのは高々$$n = |Q|$$回です。
+そして2の目的で利用されるのが高々$$\Sigma_{q_i \in Q} s_{g_i}(c_i)$$回のはずです。
+よってequivalence queryの回数は高々$$|Q| + \Sigma_{q_i \in Q} s_{g_i}(c_i)$$回というのが妥当な気がします。
+
+さらにobservation tableで各状態は1文字は遷移が存在する (observation tableの定義の3の条件) ので、$$P$$に渡されるリストも空ではなく1文字は存在する状態から学習が始まります。
+よって、実際には2の目的で利用されるのは高々$$\Sigma_{q_i \in Q} (s_{g_i}(c_i) - 1) = \Sigma_{q_i \in Q} s_{g_i}(c_i) - |Q|$$となり、equivalence queryの回数は高々$$\Sigma_{q_i \in Q} s_{g_i}(c_i)$$回と考えられそうです。
+
+それでは$$n^2$$というのはどこから出てきたのでしょうか？
+仮説の1つとして、membership queryの回数と間違えたのではないかと個人的に予想しています。
+
+$$n$$個の状態を区別するためには、接尾辞の集合$$E$$も$$n$$程度の大きさになる可能性があります。
+よって、DFAの時点で、$$n$$状態のDFAを学習するために$$O(n^2)$$回のmembership queryが必要となります。
+SFAの場合はそれに加えて述語を学習するために$$O(\Sigma_{q_i \in Q} s_{g_i}(c_i))$$個の接頭辞が$$R$$に追加されているため、$$O((n + \Sigma_{q_i \in Q} s_{g_i}(c_i)) n)$$回のmembership queryが必要となりそうです。
+
+とはいえ、これは反例の文字列の長さについての考慮などが抜けていて、あまり良い見積りではないように感じます。
+
+# $$\mathrm{MAT}*$$ [\[Argyros & D'Antoni, 2018\]](#ref-argyros-dantoni-2018)
+
+$$\mathrm{MAT}*$$[^mat-font]は2018年にArgyrosと[D'Antoni](https://cseweb.ucsd.edu/~ldantoni/)によって提案されたSFAに対するオートマトン学習のアルゴリズムです。
+
+[^mat-font]: 論文では斜体の$$MAT*$$表記なのですが、あんまりな見た目なので$$\mathrm{MAT}*$$としています。
+
+$$\mathrm{MAT}*$$ではKearns-Vazirani (KV) のアルゴリズムで利用される**classification tree**を使います。
+classification treeを構築したあとに、各遷移の述語がSFA全体で完全・決定的となるように学習していきます。
+classification treeはobservation treeと異なり遷移先の状態が必ず求められるので、どのような文字である状態からある状態に遷移するかは分からなくても、ある文字である状態からある状態に遷移するかは分かります。
+つまり、$$\mathrm{MAT}*$$では各遷移に対して、
+
+- ある文字である状態からある状態に遷移するか→membership query
+- その述語がSFA全体で完全・決定的か→equivalence query
+
+という通常のオートマトン学習での**MAT** (*Minimally Adequate Teacher*) に相当する情報を使って、述語を学習していきます。
+これが$$\mathrm{MAT}*$$と呼ばれる所以です。
+
+## classification tree
+
+まず**classification tree**の定義を確認します。
+
+<Alert color="success">
+  **定義** (**classification tree**):
+  アルファベット$$\Sigma$$上の**classification tree** $$T = (V, L, E)$$は2分木で、それぞれ
+
+  - $$V \subseteq \Sigma^\ast$$はノードの集合で、
+  - $$L \subseteq V$$は葉ノードの集合、
+  - $$E \subseteq V \times V \times \{ 0, 1 \}$$は木の辺です。
+</Alert>
+
+classification treeにはどのノードからも遷移が存在しない根ノード$$v_\mathsf{root} \in V$$がただ1つ存在します。
+木の辺$$(v, v_x, x) \in E$$は$$v_x$$の下にある葉ノード$$l \in L$$について、学習対象の言語のmembership query <span className="katex-ps-funcname">MQ</span>について、$$\text{\htmlClass{katex-ps-funcname}{MQ}}(l \cdot v) = x$$となることを意図しています。
+
+classification tree $$T = (V, L, E)$$に対して、木を辿って対応する葉ノードを取得する関数$$\mathsf{sift}_T$$を定義します。
+$$
+\mathsf{sift}_T(v, w) =
+\begin{cases}
+  v & \text{if }v \in L \\
+  \mathsf{sift}_T(v_{\text{\htmlClass{katex-ps-funcname}{MQ}}(w \cdot v)}, w) & \text{if }v \notin L
+\end{cases}
+$$
+ここで、$$v \in V$$、$$w \in \Sigma^\ast$$、$$(v, v_0, 0), (v, v_1, 1) \in E$$です。
+さらに、$$\mathsf{sift}_T(w) = \mathsf{sift}_T(v_\mathsf{root}, w)$$とします。
+
+classification tree $$T$$の葉ノード$$l_\mathsf{old} \in L$$を新しいノード$$v$$と葉ノード$$l_\mathsf{new}$$で置き換えた木を$$\mathsf{split}_T(l_\mathsf{old}, l_\mathsf{new}, v)$$とします (図5)。
+
+<figure>
+  ```mermaid
+  graph TB
+    text1@{ shape: text, label: "$$T_1:$$" }
+  
+    0_root("$$v_{\mathsf{root}}$$")
+    0_leaf1("$$l_1$$")
+    0_leaf_old("$$l_{\mathsf{old}}$$")
+  
+    0_root -- 0 --> 0_leaf1
+    0_root -- 1 --> 0_leaf_old
+  
+    style 0_leaf_old fill:#ffa0a0
+  
+    text2@{ shape: text, label: "$$T_2:$$" }
+  
+    1_root("$$v_{\mathsf{root}}$$")
+    1_leaf1("$$l_1$$")
+    1_node1("$$v$$")
+    1_leaf_old("$$l_{\mathsf{old}}$$")
+    1_leaf_new("$$l_{\mathsf{new}}$$")
+  
+    1_root -- 0 --> 1_leaf1
+    1_root -- 1 --> 1_node1
+    1_node1 -- "$$\mathrm{MQ}(l_\mathsf{old} \cdot v)$$" --> 1_leaf_old
+    1_node1 -- "$$\mathrm{MQ}(l_\mathsf{new} \cdot v)$$" --> 1_leaf_new
+  
+    style 1_node1 fill:#ffa0a0
+    style 1_leaf_old fill:#ffa0a0
+    style 1_leaf_new fill:#ffa0a0
+  ```
+
+  <figcaption className="text-center">図5: 左のclassification tree $$T_1$$と、その$$l_\mathsf{old}$$を$$v$$と$$l_\mathsf{new}$$で置き換えた$$T_2 = \mathsf{split}_T(l_\mathsf{old}, l_\mathsf{new}, v)$$です。赤いノードは更新する、更新された箇所を表します</figcaption>
+</figure>
+
+空文字列の根ノードのみからなるclassification treeを$$T_\varepsilon = (\{  \varepsilon \}, \{  \varepsilon \}, \emptyset)$$とします[^initial-tree]。
+この$$T_\varepsilon$$からはじめて$$\mathsf{split}_T$$で更新していくと、常に葉ノード$$l \in L$$について$$\mathsf{sift}_T(l) = l$$となります。
+
+[^initial-tree]: 論文では根ノードと、それとは異なる葉ノードとして$$\varepsilon$$を追加して、片側が欠けた木として初期化していますが、なぜそんなことをしているのか意味不明なので、より分かりやすい形にしています。
+  このため、論文では$$\mathsf{sift}_T$$が$$\bot$$を返す可能性があるものとなっています。
+
+アルファベット$$\Sigma_\mathsf{fin}$$が有限の大きさであれば、classification tree $$T = (V, L, E)$$に対して、状態の集合を$$Q = L$$で遷移関数を$$\Delta = \{ (l, \sigma, \mathsf{sift}_T(l \cdot \sigma)) \mid l \in L \land \sigma \in \Sigma_\mathsf{fin} \}$$としてDFAが得られます。
+
+一方で、SFAではアルファベットは有限の大きさとは限らず、これだけでは構築できません。
+ただし、実質的な遷移関数である$$\mathsf{sift}_T$$が既に手に入っているので、ここから遷移の述語が構築できればSFAが得られることになります。
+
+## SFAの構築
+
+実効的Bool代数$$\mathcal{A}$$とclassification tree $$T = (V, L, E)$$、2つの葉ノード$$l_1, l_2 \in L$$について、$$\Lambda^{l_1, l_2}$$を$$l_1$$から$$l_2$$の遷移の述語の**learner**とします。
+このlearnerには次のような手続きが与えられています。
+
+- $$\text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_2})$$: 学習中の$$l_1$$から$$l_2$$の遷移の述語$$\psi \in \Psi$$を返す。
+- $$\text{\htmlClass{katex-ps-funcname}{Update}}(\Lambda^{l_1, l_2}, a, \text{\htmlClass{katex-ps-funcname}{MQ}}^{l_1,l_2}_T)$$: learner $$\Lambda^{l_1, l_2}$$を反例となる文字$$a \in \mathcal{D}_\mathcal{A}$$で正しくなるように更新する (つまり更新後に$$(a \in \llbracket \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_2}) \rrbracket) \iff (\text{\htmlClass{katex-ps-funcname}{MQ}}^{l_1,l_2}_T(a) = 1)$$となるようにする)。
+
+ここで$$a \in \mathcal{D}_\mathcal{A}$$について$$\text{\htmlClass{katex-ps-funcname}{MQ}}^{l_1,l_2}_T$$は次のように定義されます。
+$$
+\text{\htmlClass{katex-ps-funcname}{MQ}}^{l_1,l_2}_T(a) =
+\begin{cases}
+  1 & \text{if }\mathsf{sift}_T(l_1 \cdot a) = l_2 \\
+  0 & \text{otherwise}
+\end{cases}
+$$
+
+例えば、等価代数に対するlearnerは次のように与えられます。
+
+<Alert color="info">
+  **例** (**等価代数のlearner**):
+  等価代数のlearner $$\Lambda^{l_1, l_2}$$は2つ組$$(P, N)$$です。
+  $$P \subseteq \mathcal{D}_\mathcal{A}$$は$$l_1$$から$$l_2$$に遷移できる反例の文字の部分集合で、$$N \subseteq \mathcal{D}_\mathcal{A}$$は$$l_1$$から$$l_2$$に遷移しない反例の文字の部分集合です。
+  learnerは$$(\emptyset, \emptyset)$$で初期化されて、各手続きは次のようになります。
+
+  - $$\text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_2})$$: $$|P| > |N|$$なら$$\lambda c. \lnot (\bigvee_{a \in N} c = a)$$を、$$|P| \le |N|$$なら$$\lambda c. \bigvee_{a \in P } c = a$$を返します。
+  - $$\text{\htmlClass{katex-ps-funcname}{Update}}(\Lambda^{l_1, l_2}, a, \text{\htmlClass{katex-ps-funcname}{MQ}}^{l_1,l_2}_T)$$: $$\text{\htmlClass{katex-ps-funcname}{MQ}}^{l_1,l_2}_T(a) = 1$$なら$$P$$を$$P \cup \{ a \}$$に、そうでないなら$$N$$を$$N \cup \{ a \}$$に更新します。
+</Alert>
+
+各葉ノードの組$$l_1, l_2 \in L$$に対してlearner $$\Lambda^{l_1, l_2}$$を初期化して、各葉ノード$$l \in L$$について次の処理を繰り返します。
+
+- **完全化**:
+  $$\phi = \lnot (\bigvee_{l \in L} \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l, l'}))$$とします。
+  ここで$$\llbracket \phi \rrbracket = \empty$$であれば、構築されたSFAで$$l$$からの遷移はすべての文字について存在しますが、そうでなければ何かしら抜けている文字があることになります。
+  そのような文字$$a \in \llbracket \phi \rrbracket$$がある場合、$$l' = \mathsf{sift}_T(l \cdot a)$$として$$\text{\htmlClass{katex-ps-funcname}{Update}}(\Lambda^{l, l'}, a, \text{\htmlClass{katex-ps-funcname}{MQ}}^{l,l'}_T)$$を呼び出し、$$\Lambda^{l, l'}$$を更新します。
+  この処理を$$a \in \llbracket \phi \rrbracket$$が無くなるまで繰り返します。
+- **決定化**:
+  異なる葉ノード$$l_1, l_2$$について、$$\psi = \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l, l_1}) \land \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l, l_2})$$とします。
+  ここで$$\llbracket \psi \rrbracket = \emptyset$$なら構築されたSFAで$$l$$からの遷移は決定的ですが、そうでなければある文字$$a \in \llbracket \psi \rrbracket$$の遷移先が少なくとも$$l_1$$と$$l_2$$の2つ存在することになります。
+  $$a \in \llbracket \psi \rrbracket$$がある場合、$$l' \in \{ l_1, l_2 \}$$について$$(a \in \llbracket \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l, l'}) \rrbracket) \iff (\text{\htmlClass{katex-ps-funcname}{MQ}}^{l, l'}_T(a) = 1)$$ではない場合、$$\text{\htmlClass{katex-ps-funcname}{Update}}(\Lambda^{l, l'}, a, \text{\htmlClass{katex-ps-funcname}{MQ}}^{l, l'}_T)$$を呼び出し、$$\Lambda^{l, l'}$$を更新します。
+  この処理を$$a \in \llbracket \psi \rrbracket$$が無くなるまで繰り返します。
+
+この処理を行なったあとに$$\Delta = \{ (l_1, \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_2}), l_2) \mid l_1, l_2 \in L \}$$として遷移関数を作ると、SFAは完全かつ決定的になります。
+このSFAを$$\mathrm{MAT}*$$の仮説のSFA $$H$$と呼ぶことにします。
+
+## 反例の処理
+
+仮説のSFA $$H$$が得られたら、それをequivalence query $$\text{\htmlClass{katex-ps-funcname}{EQ}}(H)$$に渡して目的の言語になっているか確認します。
+ここで、反例の文字列$$w$$が返ってきた場合にどうすればいいでしょうか？
+
+$$\mathrm{MAT}*$$ではまず[\[Isberner & Steffen, 2014\]](#ref-isberner-steffen-2014)と同様に二分探索を利用して、反例の原因となる遷移を行なったインデックス$$i \in \{ 1, \dots, |w| \}$$を特定します。
+反例の原因となる遷移を行なったインデックスは、$$w_{[1,i-1]}$$を$$w$$の先頭から$$i-1$$番目までの部分文字列、$$w_i$$を$$i$$番目の文字、$$w_{[i+1,|w|]}$$を$$i+1$$番目から末尾までの部分文字列として、$$q_\mathsf{init} \xrightarrow{w_{[1, i-1]}} l_1 \xrightarrow{w_i} l_2$$としたとき、$$\text{\htmlClass{katex-ps-funcname}{MQ}}(l_1 \cdot w_i \cdot w_{[i+1,|w|]}) \ne \text{\htmlClass{katex-ps-funcname}{MQ}}(l_2 \cdot w_{[i+1,|w|]})$$となるインデックス$$i$$のこととします。
+
+Keanrs-Vaziraniであれば、このようなインデックス$$i$$が見つかったら、$$\mathsf{split}_T(l_2, l_1 \cdot w_i, w_{[i+1,|w|]})$$としてclassification treeを更新することで学習を進められました。
+しかしSFAの学習の場合、これは新しい状態を発見することに相当するので、述語を詳細にするためには別の処理をしなければいけません。
+
+まず、$$l_3 = \mathsf{sift}_T(l_1 \cdot w_i)$$として$$w_i \in \llbracket \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_3}) \rrbracket$$を確認します。
+そして、次の処理を行います。
+
+- $$w_i \in \llbracket \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_3}) \rrbracket$$なら、遷移は正しく行なわれていたので、新しい状態を追加するために$$\mathsf{split}_T(l_2, l_1 \cdot w_i, w_{[i+1,|w|]})$$でclassification treeを更新し、この影響を受けるlearnerを初期化し直す。
+- $$w_i \notin \llbracket \text{\htmlClass{katex-ps-funcname}{Conject}}(\Lambda^{l_1, l_3}) \rrbracket$$なら、遷移の述語に不十分な点があるので、$$\Lambda^{l_1,l_2}$$と$$\Lambda^{l_1,l_3}$$を<span className="katex-ps-funcname">Update</span>で更新する。
+
+こうすることで正しく学習を進められます。
+
+## $$\mathrm{MAT}*$$アルゴリズム
+
+最後に、ここまで説明してきた$$\mathrm{MAT}*$$を疑似コードで示します。
+引数の<span className="katex-ps-funcname">MQ</span>はmembership query、<span className="katex-ps-funcname">EQ</span>はequivalence queryで、$$\Lambda$$は実効的Bool代数$$\mathcal{A}$$のlearnerの初期化や操作を与えるものです。
+
+```pseudocode
+\begin{algorithm}
+  \caption{$\mathrm{MAT}*$ algorithm}
+  \begin{algorithmic}
+    \FUNCTION{MAT*}{MQ, EQ, $\Lambda$}
+      \STATE $T \gets$ \Call{InitializeClassificationTree}{}
+      \STATE $S_\Lambda \gets$ \Call{InitializeGuardLearners}{$T$}
+      \STATE $H \gets$ \Call{GetSFAModel}{$T, S_\Lambda$}
+      \WHILE{\Call{EQ}{$H$} $\ne 1$}
+        \STATE $w \gets$ \Call{EQ}{$H$}
+        \STATE $T, S_\Lambda \gets$ \Call{ProcessCounterexample}{$T, S_\Lambda, w$}
+        \STATE $H \gets$ \Call{GetSFAModel}{$T, S_\Lambda$}
+      \ENDWHILE
+      \STATE \RETURN $H$
+    \ENDFUNCTION
+  \end{algorithmic}
+\end{algorithm}
+```
+
+アルゴリズム中に現れる手続きはそれぞれ、次のようなものです。
+これらは、ここまでで解説してきた内容と対応しています。
+
+- $$\text{\htmlClass{katex-ps-funcname}{InitializeClassificationTree}}()$$: 初期化されたclassification tree $$T_\varepsilon$$を返す。
+- $$\text{\htmlClass{katex-ps-funcname}{InitializeGuardLearners}}(T)$$: $$T$$の各遷移に対してlearnerを初期化して返す。
+- $$\text{\htmlClass{katex-ps-funcname}{GetSFAModel}}(T, S_\Lambda)$$: $$T$$の各遷移のlearnerを更新して、完全かつ決定的な仮説のSFAを返す。
+- $$\text{\htmlClass{katex-ps-funcname}{ProcessCounterexample}}(T, S_\Lambda, w)$$: 反例の文字列$$w$$を処理して、classification treeと各遷移のlearnerを更新する。
+
+このアルゴリズムをScalaで実装したものも示します。
+
+<details>
+  <summary>Scalaによる実装</summary>
+
+  Gist: https://gist.github.com/makenowjust/53ed1b8e066952df9d4578d18d20097e
+
+  ```scala showLineNumbers
+  // This is an implementation of the MAT* algorithm in Scala 3.
+  //
+  // The MAT* algorithm is a learning algorithm for symbolic finite automata, proposed by
+  // George Argyros and Loris D'Antoni, "The Learnability of Symbolic Automata"
+  // https://doi.org/10.1007/978-3-319-96145-3_23.
+  
+  import scala.annotation.tailrec
+  import scala.util.hashing.MurmurHash3
+  
+  /** `BoolAlg` represents an effective Boolean algebra on the domain `D`.
+    *
+    * `P` is a type of predicates on the domain `D`.
+    */
+  trait BoolAlg[D, P]:
+  
+    /** Returns the predicate that is always true. */
+    def `true`: P
+  
+    /** Returns the predicate that is always false. */
+    def `false`: P
+  
+    /** Returns the predicate: `p ∧ q`. */
+    def and(p: P, q: P): P
+  
+    /** Returns the predicate: `p ∨ q`. */
+    def or(p: P, q: P): P
+  
+    /** Returns the predicate: `¬p`. */
+    def not(p: P): P
+  
+    /** Checks if the denotation of `p` contains `d`. */
+    def contains(p: P, d: D): Boolean
+  
+    /** Returns a witness data of the predicate `p` if it exists. */
+    def witness(p: P): Option[D]
+  
+  /** `Interval` is a closed interval `[left, right]` of integers. */
+  final class Interval(val left: Int, val right: Int):
+  
+    /** Checks if the interval contains the given integer `n`. */
+    def contains(n: Int): Boolean = left <= n && n <= right
+  
+    /** Checks if the interval overlaps with the given interval `that`. */
+    def overlaps(that: Interval): Boolean =
+      val l = math.max(left, that.left)
+      val r = math.min(right, that.right)
+      l <= r
+  
+    /** Checks if the interval is contiguous with the given interval `that`. */
+    def contiguous(that: Interval): Boolean =
+      val l = math.max(left, that.left)
+      val r = math.min(right, that.right)
+      l == r + 1
+  
+    /** Computes the union of the interval with the given interval `that` if it can be represented as a single interval.
+      */
+    def unionOf(that: Interval): Option[Interval] =
+      Option.when(overlaps(that) || contiguous(that)):
+        val l = math.min(left, that.left)
+        val r = math.max(right, that.right)
+        Interval(l, r)
+  
+    override def equals(that: Any): Boolean = that match
+      case that: Interval => left == that.left && right == that.right
+      case _              => false
+  
+    override def hashCode(): Int =
+      var hash = "Interval".##
+      hash = MurmurHash3.mix(hash, left.##)
+      hash = MurmurHash3.mix(hash, right.##)
+      MurmurHash3.finalizeHash(hash, 2)
+  
+    override def toString(): String = s"Interval($left, $right)"
+  
+  object Interval:
+  
+    /** Returns a new interval `[left, right]`. If `left > right`, an exception is thrown. */
+    def apply(left: Int, right: Int): Interval =
+      require(left <= right, s"Invalid interval: $left > $right")
+      new Interval(left, right)
+  
+  /** `IntervalSet` is a set of intervals. */
+  final class IntervalSet(val intervals: IndexedSeq[Interval]):
+  
+    /** Check if the interval set is empty. */
+    def isEmpty: Boolean = intervals.isEmpty
+  
+    /** Checks if the interval set contains the given integer `n`. */
+    def contains(n: Int): Boolean =
+      val index = intervals.search(Interval(n, n))(Ordering.by(_.right)).insertionPoint
+      index < intervals.length && intervals(index).contains(n)
+  
+    /** Computes the union of the interval set with the given interval set `that`. */
+    infix def union(that: IntervalSet): IntervalSet =
+      IntervalSet.from(intervals ++ that.intervals)
+  
+    /** Computes the intersection of the interval set with the given interval set `that`. */
+    infix def intersect(that: IntervalSet): IntervalSet =
+      (complement union that.complement).complement
+  
+    /** Computes the complement of the interval set. */
+    def complement: IntervalSet =
+      if intervals.isEmpty then IntervalSet.universal
+      else
+        val complemented = IndexedSeq.newBuilder[Interval]
+        if intervals.head.left != Int.MinValue then complemented += Interval(Int.MinValue, intervals.head.left - 1)
+        for i <- 0 until intervals.length - 1 do
+          val left = intervals(i).right
+          val right = intervals(i + 1).left
+          complemented += Interval(left + 1, right - 1)
+        if intervals.last.right != Int.MaxValue then complemented += Interval(intervals.last.right + 1, Int.MaxValue)
+        new IntervalSet(complemented.result())
+  
+    override def equals(that: Any): Boolean = that match
+      case that: IntervalSet => intervals == that.intervals
+      case _                 => false
+  
+    override def hashCode(): Int =
+      val hash = "IntervalSet".##
+      MurmurHash3.mixLast(hash, intervals.##)
+  
+    override def toString(): String = intervals.mkString("IntervalSet(", ", ", ")")
+  
+  object IntervalSet:
+  
+    /** The empty interval set. */
+    val empty: IntervalSet = new IntervalSet(IndexedSeq.empty)
+  
+    /** The universal interval set. */
+    val universal: IntervalSet = new IntervalSet(IndexedSeq(Interval(Int.MinValue, Int.MaxValue)))
+  
+    /** Returns a new interval set from the given intervals. */
+    def apply(intervals: Interval*): IntervalSet = from(intervals)
+  
+    /** Returns a new interval set from the given iterator of intervals. */
+    def from(intervals: IterableOnce[Interval]): IntervalSet =
+      val sorted = intervals.iterator.toSeq.sortBy(i => (i.left, i.right))
+      if sorted.isEmpty then empty
+      else
+        val merged = IndexedSeq.newBuilder[Interval]
+        var current = sorted.head
+        for interval <- sorted.tail do
+          current.unionOf(interval) match
+            case Some(nextCurrent) => current = nextCurrent
+            case None =>
+              merged += current
+              current = interval
+        merged += current
+        new IntervalSet(merged.result())
+  
+    given boolAlg: BoolAlg[Int, IntervalSet] with
+      def `true`: IntervalSet = IntervalSet.universal
+      def `false`: IntervalSet = IntervalSet.empty
+      def and(p: IntervalSet, q: IntervalSet): IntervalSet = p intersect q
+      def or(p: IntervalSet, q: IntervalSet): IntervalSet = p union q
+      def not(p: IntervalSet): IntervalSet = p.complement
+      def contains(p: IntervalSet, d: Int): Boolean = p.contains(d)
+      def witness(p: IntervalSet): Option[Int] =
+        Option.when(!p.isEmpty)(p.intervals.head.left)
+  
+  /** `Membership` represents a membership query. */
+  trait Membership[A]:
+  
+    /** Checks if the given input is a member of the target language. */
+    def apply(a: A): Boolean
+  
+  /** `Learner` represents a Boolean algebra learner.
+    *
+    * This trait takes three type parameters:
+    *
+    *   - `L` is a type of learner instance.
+    *   - `A` is a type of input data.
+    *   - `H` is a type of hypothesis model.
+    */
+  trait Learner[L, A, H]:
+  
+    /** Returns a new learner instance. */
+    def create(using Membership[A]): L
+  
+    /** Returns a learner updated with the given cex (counterexample). */
+    def update(learner: L, cex: A)(using Membership[A]): L
+  
+    /** Returns the hypothesis model conjected by the learner. */
+    def conject(learner: L)(using Membership[A]): H
+  
+  object Learner:
+  
+    /** Learns a hypothesis model from the given membership query and equivalence query. */
+    def learn[L, A, H](mq: Membership[A], eq: (H) => Option[A])(using L: Learner[L, A, H]): H =
+      given Membership[A] = mq
+      var learner = L.create(using mq)
+      var cex: Option[A] = eq(L.conject(learner))
+      while cex.isDefined do
+        learner = L.update(learner, cex.get)
+        cex = eq(L.conject(learner))
+      L.conject(learner)
+  
+  /** `IntervalSetLearner` is a learner for the `IntervalSet` Boolean algebra. */
+  final case class IntervalSetLearner(posExampleSet: Set[Int], negExampleSet: Set[Int]):
+  
+    /** Returns a new learner updated with the given counterexample `cex`. */
+    def update(cex: Int)(using mq: Membership[Int]): IntervalSetLearner =
+      if mq(cex) then copy(posExampleSet = posExampleSet + cex)
+      else copy(negExampleSet = negExampleSet + cex)
+  
+    /** Returns the hypothesis model conjected by the learner. */
+    def conject(): IntervalSet =
+      if posExampleSet.isEmpty then IntervalSet.empty
+      else if negExampleSet.isEmpty then IntervalSet.universal
+      else if posExampleSet.size < negExampleSet.size then
+        posExampleSet.foldLeft(IntervalSet.empty)((l, r) => l union IntervalSet(Interval(r, r)))
+      else negExampleSet.foldLeft(IntervalSet.empty)((l, r) => l union IntervalSet(Interval(r, r))).complement
+  
+  object IntervalSetLearner:
+  
+    /** The empty interval set learner. */
+    val empty: IntervalSetLearner = IntervalSetLearner(Set.empty, Set.empty)
+  
+    given learner: Learner[IntervalSetLearner, Int, IntervalSet] with
+      def create(using Membership[Int]): IntervalSetLearner = IntervalSetLearner.empty
+      def update(learner: IntervalSetLearner, cex: Int)(using mq: Membership[Int]): IntervalSetLearner =
+        learner.update(cex)
+      def conject(learner: IntervalSetLearner)(using Membership[Int]): IntervalSet =
+        learner.conject()
+  
+  /** `Sfa` represents a symbolic finite automaton.
+    *
+    * In this implementation, SFAs are assumed to be deterministic and finite.
+    */
+  final case class Sfa[S, P](
+      initialState: S,
+      acceptStateSet: Set[S],
+      transitionFunction: Map[S, Map[P, S]]
+  ):
+  
+    /** Computes the next state from the given state and input data. */
+    def transition[A](state: S, char: A)(using P: BoolAlg[A, P]): Option[S] =
+      val edgeMap = transitionFunction(state)
+      edgeMap.find((p, _) => P.contains(p, char)).map(_._2)
+  
+    /** Computes the next state from the given state and word. */
+    def transitions[A](state: S, word: Seq[A])(using P: BoolAlg[A, P]): Option[S] =
+      word.foldLeft(Option(state))((state, char) => state.flatMap(transition(_, char)))
+  
+  /** `Prefix` is a prefix of a word. */
+  type Prefix[A] = Seq[A]
+  
+  /** `Suffix` is a suffix of a word. */
+  type Suffix[A] = Seq[A]
+  
+  /** `CTree` is a classification tree. */
+  enum CTree[A]:
+    case Leaf(prefix: Prefix[A])
+    case Node(suffix: Suffix[A], trueBranch: CTree[A], falseBranch: CTree[A])
+  
+    /** Returns the set of leaf nodes. */
+    def leafSet: Set[Prefix[A]] = this match
+      case Leaf(prefix) => Set(prefix)
+      case Node(suffix, trueBranch, falseBranch) =>
+        trueBranch.leafSet ++ falseBranch.leafSet
+  
+    /** Computes the leaf node that the given word belongs to. */
+    @tailrec
+    final def sift(word: Prefix[A])(using mq: Membership[Seq[A]]): Seq[A] = this match
+      case Leaf(prefix) => prefix
+      case Node(suffix, trueBranch, falseBranch) =>
+        val branch =
+          if mq(word ++ suffix) then trueBranch
+          else falseBranch
+        branch.sift(word)
+  
+    /** Returns a new classification tree by splitting the leaf node with given values. */
+    final def split(oldLeaf: Prefix[A], newLeaf: Prefix[A], newSuffix: Suffix[A])(using
+        mq: Membership[Seq[A]]
+    ): CTree[A] =
+      this match
+        case Leaf(leaf) =>
+          assert(leaf == oldLeaf, s"Invalid prefix: $leaf != $oldLeaf")
+          if mq(oldLeaf ++ newSuffix) then Node(newSuffix, Leaf(oldLeaf), Leaf(newLeaf))
+          else Node(newSuffix, Leaf(newLeaf), Leaf(oldLeaf))
+        case Node(suffix, trueBranch, falseBranch) =>
+          if mq(oldLeaf ++ suffix) then Node(suffix, trueBranch.split(oldLeaf, newLeaf, newSuffix), falseBranch)
+          else Node(suffix, trueBranch, falseBranch.split(oldLeaf, newLeaf, newSuffix))
+  
+  /** `SfaLearner` is a learner for symbolic finite automata. */
+  final case class SfaLearner[L, A](
+      tree: CTree[A],
+      acceptMap: Map[Prefix[A], Boolean],
+      guardLearnerMap: Map[(Prefix[A], Prefix[A]), L]
+  ):
+  
+    /** Returns a membership query for the learner of the given transition. */
+    private def membership(leaf1: Prefix[A], leaf2: Prefix[A])(using Membership[Seq[A]]): Membership[A] =
+      new Membership[A]:
+        def apply(a: A): Boolean = tree.sift(leaf1 ++ Seq(a)) == leaf2
+  
+    /** Splits the classification tree and updates the learner. */
+    private def split[P](oldLeaf: Prefix[A], newLeaf: Prefix[A], newSuffix: Suffix[A])(using
+        mq: Membership[Seq[A]],
+        L: Learner[L, A, P]
+    ): SfaLearner[L, A] =
+      println(s"split($oldLeaf, $newLeaf, $newSuffix)")
+  
+      val newTree = tree.split(oldLeaf, newLeaf, newSuffix)
+      val newAcceptMap = acceptMap ++ Map(newLeaf -> mq(newLeaf))
+      val newLeafPairs = newTree.leafSet.iterator.flatMap(leaf => Iterator((newLeaf, leaf), (leaf, newLeaf)))
+      val oldLeafPairs = tree.leafSet.iterator.map(leaf => (leaf, oldLeaf))
+      val newGuardLearnerMap = guardLearnerMap ++ (newLeafPairs ++ oldLeafPairs).map((leaf1, leaf2) =>
+        (leaf1, leaf2) -> L.create(using membership(leaf1, leaf2))
+      )
+      SfaLearner(newTree, newAcceptMap, newGuardLearnerMap)
+  
+    /** Make the guards complete for the given source leaf. */
+    private def makeGuardsComplete[P](
+        srcLeaf: Prefix[A]
+    )(using mq: Membership[Seq[A]], L: Learner[L, A, P], P: BoolAlg[A, P]): (Boolean, SfaLearner[L, A]) =
+      println(s"makeGuardsComplete($srcLeaf)")
+  
+      val leafSet = tree.leafSet
+      var newGuardLearnerMap = guardLearnerMap
+      var updated = false
+      var continue = true
+  
+      while continue do
+        val guards = leafSet.map: leaf =>
+          L.conject(newGuardLearnerMap(srcLeaf, leaf))(using membership(srcLeaf, leaf))
+        val completePred = P.not(guards.foldLeft(P.`false`)(P.or(_, _)))
+        P.witness(completePred) match
+          case None => continue = false
+          case Some(cex) =>
+            val tgtLeaf = tree.sift(srcLeaf ++ Seq(cex))
+            val learner = newGuardLearnerMap((srcLeaf, tgtLeaf))
+            val newLearner = L.update(learner, cex)(using membership(srcLeaf, tgtLeaf))
+            newGuardLearnerMap += (srcLeaf, tgtLeaf) -> newLearner
+            updated = true
+  
+      (updated, copy(guardLearnerMap = newGuardLearnerMap))
+  
+    /** Make the guards deterministic for the given source leaf. */
+    private def makeGuardsDeterministic[P](
+        srcLeaf: Prefix[A]
+    )(using mq: Membership[Seq[A]], L: Learner[L, A, P], P: BoolAlg[A, P]): (Boolean, SfaLearner[L, A]) =
+      println(s"makeGuardsDeterministic($srcLeaf)")
+  
+      val leafSet = tree.leafSet
+      var newGuardLearnerMap = guardLearnerMap
+      var updated = false
+      var continue = true
+  
+      while continue do
+        var updatedLocal = false
+  
+        for leaf1 <- leafSet; leaf2 <- leafSet; if leaf1 != leaf2 do
+          val guard1 = L.conject(newGuardLearnerMap(srcLeaf, leaf1))(using membership(srcLeaf, leaf1))
+          val guard2 = L.conject(newGuardLearnerMap(srcLeaf, leaf2))(using membership(srcLeaf, leaf2))
+          val deterministicPred = P.and(guard1, guard2)
+          P.witness(deterministicPred) match
+            case None => ()
+            case Some(cex) =>
+              for (leaf, guard) <- Seq((leaf1, guard1), (leaf2, guard2)) do
+                if membership(srcLeaf, leaf)(cex) != P.contains(guard, cex) then
+                  val learner = newGuardLearnerMap((srcLeaf, leaf))
+                  val newLearner = L.update(learner, cex)(using membership(srcLeaf, leaf))
+                  newGuardLearnerMap += (srcLeaf, leaf) -> newLearner
+              updatedLocal = true
+              updated = true
+  
+        if !updatedLocal then continue = false
+  
+      (updated, copy(guardLearnerMap = newGuardLearnerMap))
+  
+    /** Iterates `makeGuardsComplete` and `makeGuardsDeterministic` until the guards are complete and deterministic. */
+    private def makeGuardsCompleteAndDeterministic[P](
+        srcLeaf: Prefix[A]
+    )(using Membership[Seq[A]], Learner[L, A, P], BoolAlg[A, P]): SfaLearner[L, A] =
+      println(s"makeGuardsCompleteAndDeterministic($srcLeaf)")
+  
+      var learner = this
+      var isComplete = false
+      var isDeterministic = false
+  
+      while !isComplete || !isDeterministic do
+        val result1 = learner.makeGuardsComplete(srcLeaf)
+        learner = result1._2
+        val result2 = learner.makeGuardsDeterministic(srcLeaf)
+        learner = result2._2
+  
+        isComplete = !result1._1
+        isDeterministic = !result2._1
+  
+      learner
+  
+    /** Returns the index of the breakpoint in the counterexample. */
+    def analyzeCex[P](hypothesis: Sfa[Prefix[A], P], cex: Seq[A])(using mq: Membership[Seq[A]], P: BoolAlg[A, P]): Int =
+      var expected = mq(cex)
+      var low = 0
+      var high = cex.length
+  
+      while high - low > 1 do
+        val mid = (high - low) / 2 + low
+        val state = hypothesis.transitions(hypothesis.initialState, cex.slice(0, mid)).get
+        val word = state ++ cex.slice(mid, cex.length)
+        val actual = mq(word)
+        if actual == expected then low = mid
+        else high = mid
+  
+      low
+  
+    /** Returns a new learner updated with the given counterexample `cex`. */
+    def update[P](cex: Seq[A])(using mq: Membership[Seq[A]], L: Learner[L, A, P], P: BoolAlg[A, P]): SfaLearner[L, A] =
+      println(s"update($cex)")
+  
+      val hypothesis = conject[P]()
+      val breakpoint = analyzeCex(hypothesis, cex)
+  
+      val srcLeaf = hypothesis.transitions(hypothesis.initialState, cex.slice(0, breakpoint)).get
+      val tgtWord = srcLeaf ++ Seq(cex(breakpoint))
+      val tgtLeaf = tree.sift(tgtWord)
+  
+      val guard = L.conject(guardLearnerMap((srcLeaf, tgtLeaf)))(using membership(srcLeaf, tgtLeaf))
+      if P.contains(guard, cex(breakpoint)) then
+        val newSuffix = cex.slice(breakpoint + 1, cex.length)
+        var newLearner = split(tgtLeaf, tgtWord, newSuffix)
+        for leaf <- newLearner.tree.leafSet do newLearner = newLearner.makeGuardsCompleteAndDeterministic(leaf)
+        newLearner
+      else
+        val newTgtLeafGuard =
+          L.update(guardLearnerMap((srcLeaf, tgtLeaf)), cex(breakpoint))(using membership(srcLeaf, tgtLeaf))
+        val tgtState = hypothesis.transition(srcLeaf, cex(breakpoint)).get
+        val newTgtStateGuard =
+          L.update(guardLearnerMap((srcLeaf, tgtState)), cex(breakpoint))(using membership(srcLeaf, tgtState))
+        val newLearner = copy(guardLearnerMap =
+          guardLearnerMap ++ Map((srcLeaf, tgtLeaf) -> newTgtLeafGuard, (srcLeaf, tgtState) -> newTgtStateGuard)
+        )
+        newLearner.makeGuardsCompleteAndDeterministic(srcLeaf)
+  
+    /** Returns the hypothesis SFA conjected by the learner. */
+    def conject[P]()(using mq: Membership[Seq[A]], L: Learner[L, A, P]): Sfa[Prefix[A], P] =
+      val initialState = Seq.empty
+      val acceptStateSet = acceptMap.keySet.filter(acceptMap(_))
+      val leafSet = tree.leafSet
+      val transitionFunction = tree.leafSet.iterator.map: srcLeaf =>
+        val guardMap = leafSet.iterator.map: tgtLeaf =>
+          val guard = L.conject(guardLearnerMap(srcLeaf, tgtLeaf))(using membership(srcLeaf, tgtLeaf))
+          guard -> tgtLeaf
+        srcLeaf -> guardMap.toMap
+      Sfa(initialState, acceptStateSet, transitionFunction.toMap)
+  
+  object SfaLearner:
+  
+    /** Returns an empty SFA learner. */
+    def empty[L, A, P](using mq: Membership[Seq[A]], L: Learner[L, A, P], P: BoolAlg[A, P]): SfaLearner[L, A] =
+      SfaLearner(
+        CTree.Leaf(Seq.empty),
+        Map(Seq.empty -> mq(Seq.empty)),
+        Map((Seq.empty, Seq.empty) -> L.create(using (_ => true)))
+      ).makeGuardsCompleteAndDeterministic(Seq.empty)
+  
+    given learner[L, A, P](using L: Learner[L, A, P], P: BoolAlg[A, P]): Learner[SfaLearner[L, A], Seq[A], Sfa[Seq[A], P]]
+    with
+      def create(using Membership[Seq[A]]): SfaLearner[L, A] = SfaLearner.empty
+      def update(learner: SfaLearner[L, A], cex: Seq[A])(using Membership[Seq[A]]): SfaLearner[L, A] =
+        learner.update(cex)
+      def conject(learner: SfaLearner[L, A])(using Membership[Seq[A]]): Sfa[Seq[A], P] =
+        learner.conject()
+  
+    /** Creates an equivalence query from the given membership query and finite alphabet. */
+    def equivalence[A, P](
+        mq: Membership[Seq[A]],
+        finiteAlphabet: Set[A],
+        minWordLength: Int = 10,
+        maxWordLength: Int = 100,
+        numWords: Int = 100,
+        randomSeed: Long = 0L
+    )(using BoolAlg[A, P]): (Sfa[Prefix[A], P]) => Option[Seq[A]] =
+      val alphabetIndexedSeq = finiteAlphabet.toIndexedSeq
+  
+      (sfa: Sfa[Prefix[A], P]) =>
+        println(sfa)
+        val rand = util.Random(randomSeed)
+        util.boundary:
+          for i <- 0 until numWords do
+            val size = rand.between(minWordLength, maxWordLength + 1)
+            var word = Seq.empty[A]
+            var state = sfa.initialState
+            for j <- 0 until size do
+              val char = alphabetIndexedSeq(rand.nextInt(alphabetIndexedSeq.size))
+              word :+= char
+              state = sfa.transition(state, char).get
+              if sfa.acceptStateSet.contains(state) != mq(word) then util.boundary.break(Some(word))
+          None
+  
+  val mq = new Membership[Seq[Int]]:
+    def apply(word: Seq[Int]): Boolean =
+      word.count(_ == 0) % 3 == 0 && word.count(_ == 1) % 2 == 0
+  val eq = SfaLearner.equivalence[Int, IntervalSet](mq, Set(0, 1, 2, 3))
+  val sfa = Learner.learn[SfaLearner[IntervalSetLearner, Int], Seq[Int], Sfa[Prefix[Int], IntervalSet]](mq, eq)
+  println(sfa)
+  ```
+</details>
+
+次に、このアルゴリズムの計算量について考察します。
+
+大きさ$$n$$の述語を$$\Lambda$$で与えられるlearnerで学習するとして、$$\mathcal{C}^\Lambda_\mathrm{mq}(n)$$を<span className="katex-ps-funcname">MQ</span>の呼び出し回数、$$\mathcal{C}^\Lambda_\mathrm{eq}(n)$$を<span className="katex-ps-funcname">EQ</span>の呼び出し回数とします。
+さらに、SFA $$M$$の最大の遷移の述語の大きさを$$\mathcal{B}(M)$$と表すことにします。
+このとき、$$\mathrm{MAT}*$$の計算量について、論文では次のように述べています。
+
+<Alert color="info">
+  **定理**:
+  SFA $$M = (\mathcal{A}, Q, q_\mathsf{init}, F, \Delta)$$と$$\mathcal{A}$$のlearnerを与える$$\Lambda$$について、$$k = \mathcal{B}(M)$$として、$$\mathrm{MAT}*$$は高々$$O(|Q|^2 |\Delta| \mathcal{C}^\Lambda_\mathrm{mq}(k) + |Q|^2 |\Delta| \mathcal{C}^\Lambda_\mathrm{eq}(k) \log m)$$回のmembership queryの呼び出しと、$$O(|Q| |\Delta| \mathcal{C}^\Lambda_\mathrm{eq}(k))$$回のequivalence queryの呼び出しで$$M$$を学習できる。
+  ここで$$m$$はequivalence queryの返す反例の文字列の長さの最大値とする。
+</Alert>
+
+また、ここまでの考察を整理するとSFAに対しても<span className="katex-ps-funcname">Update</span>や<span className="katex-ps-funcname">Conject</span>が与えられるため、SFA自身を遷移の述語の実効的Bool代数にしたSFAも (いわゆる拡張SFA) もまた$$\mathrm{MAT}*$$で学習できるということが分かります。
+これはなかなか興味深いことなのではないかと思います。
+
+# $$\Lambda*$$と$$\mathrm{MAT}*$$の比較
+
+$$\Lambda*$$と$$\mathrm{MAT}*$$はどちらも既存のオートマトン学習のアルゴリズムを元にして、SFAに拡張したものですが、いくつか違いがあります。
+次の表でそれらをまとめました。
+
+<figure>
+  <figcaption className="text-center">表1: $$\Lambda*$$と$$\mathrm{MAT}*$$の比較</figcaption>
+
+  | アルゴリズム      | データ構造               | 遷移のBool代数に求めるもの |
+  |:-----------------:|:------------------------:|:--------------------------:|
+  | $$\Lambda*$$      | observation table ($L*$) | partitioning関数           |
+  | $$\mathrm{MAT}*$$ | classification tree (KV) | learnerの手続き            |
+</figure>
+
+個人的には$$\mathrm{MAT}*$$の方が、Bool代数に求めるものやアルゴリズムがより洗練された定義になっているように感じています[^mat-star-pref]。
+
+[^mat-star-pref]: 後発のアルゴリズムなので当然なのですが。
+
+# あとがき
+
+この記事ではSFAの学習アルゴリズムである$$\Lambda*$$と$$\mathrm{MAT}*$$について解説しました。
+
+SFAは応用が分かりやすく興味深い対象なのではないかと思います。
+BDDを使うことで、最小化や空性の判定など、様々な問題が効率的に解けることも知られています。
+オートマトン学習に限らず、そういった方向で学んでみても面白いのではないでしょうか。
+
+正直$$\Lambda*$$の計算量の辺りの話は全く自信がありません。
+間違っていたらごめんなさい。
+
+また、こうしてSFAのオートマトン学習のアルゴリズムについて調べると、本当に重要なのはアルゴリズムそのものではなく、その上で学習可能な実効的Bool代数の述語のクラスの方が重要なのではないかという気がします。
+最近の研究である[\[Fisman, Frenkel, & Zilles, 2023\]](#ref-fisman-frenkel-zilles-2023)では、この学習可能な実効的Bool代数について、より詳細に考察されているように見えます。
+
+長い記事ですが、最後まで目を通していただきありがとうございました。
+
+## 参考文献
+
+<dl>
+  <dt>
+    <a id="ref-dantoni-veanes-2017">[D'Antoni & Veanes, 2017]</a>
+  </dt>
+  <dd>
+    <blockquote>
+      D'Antoni, Loris, and Margus Veanes. "The power of symbolic automata and transducers." Computer Aided Verification: 29th International Conference, CAV 2017, Heidelberg, Germany, July 24-28, 2017, Proceedings, Part I 30. Springer International Publishing, 2017.
+
+      <p className="text-right">https://link.springer.com/chapter/10.1007/978-3-319-63387-9_3</p>
+    </blockquote>
+  </dd>
+  <dt>
+    <a id="ref-drews-dantoni-2017">[Drews & D'Antoni, 2017]</a>
+  </dt>
+  <dd>
+    <blockquote>
+      Drews, Samuel, and Loris D'Antoni. "Learning symbolic automata." International Conference on Tools and Algorithms for the Construction and Analysis of Systems. Berlin, Heidelberg: Springer Berlin Heidelberg, 2017.
+
+      <p className="text-right">https://link.springer.com/chapter/10.1007/978-3-662-54577-5_10</p>
+    </blockquote>
+  </dd>
+  <dt>
+    <a id="ref-argyros-dantoni-2018">[Argyros & D'Antoni, 2018]</a>
+  </dt>
+  <dd>
+    <blockquote>
+      Argyros, George, and Loris D'Antoni. "The learnability of symbolic automata." Computer Aided Verification: 30th International Conference, CAV 2018, Held as Part of the Federated Logic Conference, FloC 2018, Oxford, UK, July 14-17, 2018, Proceedings, Part I 30. Springer International Publishing, 2018.
+
+      <p className="text-right">https://link.springer.com/chapter/10.1007/978-3-319-96145-3_23</p>
+    </blockquote>
+  </dd>
+  <dt>
+    <a id="ref-isberner-steffen-2014">[Isberner & Steffen, 2014]</a>
+  </dt>
+  <dd>
+    <blockquote>
+      Isberner, Malte, and Bernhard Steffen. "An abstract framework for counterexample analysis in active automata learning." International Conference on Grammatical Inference. PMLR, 2014.
+
+      <p className="text-right">https://proceedings.mlr.press/v34/isberner14a.pdf</p>
+    </blockquote>
+  </dd>
+  <dt>
+    <a id="ref-fisman-frenkel-zilles-2023">[Fisman, Frenkel, & Zilles, 2023]</a>
+  </dt>
+  <dd>
+    <blockquote>
+      Fisman, Dana, Hadar Frenkel, and Sandra Zilles. "Inferring symbolic automata." Logical Methods in Computer Science 19 (2023).
+
+      <p className="text-right">https://lmcs.episciences.org/11224</p>
+    </blockquote>
+  </dd>
+</dl>
