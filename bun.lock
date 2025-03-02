@@ -21,9 +21,9 @@
         "@eslint/compat": "1.2.7",
         "@eslint/eslintrc": "3.3.0",
         "@eslint/js": "9.21.0",
-        "@fontsource/biz-udpgothic": "5.1.1",
-        "@fontsource/share-tech-mono": "5.1.1",
-        "@fontsource/sometype-mono": "5.1.1",
+        "@fontsource/biz-udpgothic": "5.2.5",
+        "@fontsource/share-tech-mono": "5.2.5",
+        "@fontsource/sometype-mono": "5.2.5",
         "@mdx-js/loader": "3.1.0",
         "@mdx-js/react": "3.1.0",
         "@mermaid-js/mermaid-cli": "11.4.2",
@@ -173,11 +173,11 @@
 
     "@floating-ui/vue": ["@floating-ui/vue@1.1.6", "", { "dependencies": { "@floating-ui/dom": "^1.0.0", "@floating-ui/utils": "^0.2.9", "vue-demi": ">=0.13.0" } }, "sha512-XFlUzGHGv12zbgHNk5FN2mUB7ROul3oG2ENdTpWdE+qMFxyNxWSRmsoyhiEnpmabNm6WnUvR1OvJfUfN4ojC1A=="],
 
-    "@fontsource/biz-udpgothic": ["@fontsource/biz-udpgothic@5.1.1", "", {}, "sha512-O8a0PwDBSHaMvSrZVlEmzFKsNZNuhNm/sEQcau9Ow1+d8VueXduvpsVpNdKiE81ZOydKuDm2bIujpW6bQxCTtA=="],
+    "@fontsource/biz-udpgothic": ["@fontsource/biz-udpgothic@5.2.5", "", {}, "sha512-yDwcOKBe6CntJ3lINKeQIIDuE02zJjpIXN/0sdlCjQJTHTgJxxQQQFxETdZSAdPjPHJAj9pvdRJ0jsFsNZBPUA=="],
 
-    "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.1.1", "", {}, "sha512-GJZXkkRsfQTfjCNnPO/nviAULPxH3lYZoB5J32GOKo6hBePtiRjdhDC32YsR4YxRkdClBo8i0gkIFNCd3nz/pg=="],
+    "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.2.5", "", {}, "sha512-elkcBO1znQKdqCTofXzFQaKU9nL/PiSJg+PcE2fSwVFt47W6/FbwN+rTZgBY5G9jOZh83dhRQGi5NKXiJywMLA=="],
 
-    "@fontsource/sometype-mono": ["@fontsource/sometype-mono@5.1.1", "", {}, "sha512-DC+lnkOT7xcbXAJNmbi+ml9QtOaYIFYpbI2oc9A21eBivucK95kFMtWXx/lu6rvoD+27ccrbC7aFaxaA5Ge4SA=="],
+    "@fontsource/sometype-mono": ["@fontsource/sometype-mono@5.2.5", "", {}, "sha512-v5LA9ijBBxn+JjLGi6WJRkaILcfizhGC3E0a1TqQvko0F8iflr5SxAEonXOnOjLRGAcYy3wmqHUgfNzkchDA+g=="],
 
     "@headlessui-float/vue": ["@headlessui-float/vue@0.14.4", "", { "dependencies": { "@floating-ui/core": "^1.5.3", "@floating-ui/dom": "^1.5.4", "@floating-ui/vue": "^1.0.3" }, "peerDependencies": { "@headlessui/vue": "^1.0.0", "vue": "^3.0.0" } }, "sha512-MSyWCxUTueeex+veRCf++q4KM/fa4HOe9HDttzGrtgVDBULkGduFK6ItJh7EHJp2U/dY7qpyDUqp2KCHpCEplw=="],
 
