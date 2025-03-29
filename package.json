@@ -82,7 +82,7 @@
     "unist-util-filter": "5.0.1",
     "unist-util-remove": "4.0.0",
     "unist-util-visit": "5.0.0",
-    "yaml": "2.7.0",
+    "yaml": "2.7.1",
     "zurk": "0.11.0"
   },
   "patchedDependencies": {
