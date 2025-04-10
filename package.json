@@ -13,7 +13,7 @@
     "@tailwindcss/typography": "0.5.16",
     "daisyui": "^5.0.0-beta.6",
     "dayjs": "1.11.13",
-    "katex": "0.16.21",
+    "katex": "0.16.22",
     "mermaid": "11.6.0",
     "next": "15.2.5",
     "pseudocode": "2.4.1",
