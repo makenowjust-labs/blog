@@ -47,7 +47,7 @@
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-tailwindcss": "3.18.0",
-    "estree-util-value-to-estree": "3.3.3",
+    "estree-util-value-to-estree": "3.4.0",
     "fs-extra": "11.3.0",
     "globby": "14.1.0",
     "gray-matter": "4.0.3",
