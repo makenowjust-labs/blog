@@ -1,14 +1,13 @@
 import createMdx from "@next/mdx";
 
 import fs from "fs-extra";
-import { $ } from "zurk";
-
 import rehypeKatex from "rehype-katex";
 import { rehypePrettyCode } from "rehype-pretty-code";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import { $ } from "zurk";
 
 import rehypeMdxExcerpt from "./src/rehype-mdx-excerpt.mjs";
 import rehypeMermaid from "./src/rehype-mermaid.mjs";

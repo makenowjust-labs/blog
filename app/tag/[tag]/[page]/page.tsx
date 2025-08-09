@@ -4,7 +4,7 @@ import Pagination from "@/components/page/Pagination";
 import PostPreview from "@/components/page/PostPreview";
 
 import { BLOG_TITLE } from "@/src/meta";
-import { type Page, getTagNames, getTagPage, getTagTotalPage } from "@/src/post";
+import { getTagNames, getTagPage, getTagTotalPage, type Page } from "@/src/post";
 
 type Props = {
   params: Promise<{
