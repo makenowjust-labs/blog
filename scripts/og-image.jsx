@@ -1,11 +1,9 @@
 import * as path from "node:path";
-
-import fs from "fs-extra";
-import { globby as glob } from "globby";
-
 import { Resvg } from "@resvg/resvg-js";
 import { loadDefaultJapaneseParser } from "budoux";
 import dayjs from "dayjs";
+import fs from "fs-extra";
+import { globby as glob } from "globby";
 import satori from "satori";
 
 import { BLOG_AUTHOR, BLOG_DESCRIPTION, BLOG_TITLE } from "../src/meta";

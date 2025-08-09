@@ -1,10 +1,8 @@
+import HomeAbstractContent from "@/app/abstract.mdx";
 import Pagination from "@/components/page/Pagination";
 import PostPreview from "@/components/page/PostPreview";
 import MdxWrapper from "@/components/post/MdxWrapper";
-
-import { type Page, getPage } from "@/src/post";
-
-import HomeAbstractContent from "@/app/abstract.mdx";
+import { getPage, type Page } from "@/src/post";
 
 function HomeAbstract() {
   return (

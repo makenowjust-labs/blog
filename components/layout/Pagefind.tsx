@@ -1,11 +1,12 @@
 "use client";
 
 import Script from "next/script";
-import { type SyntheticEvent, createRef, useCallback } from "react";
+import { createRef, type SyntheticEvent, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useKey } from "react-use";
 
 import { BLOG_BASE_PATH } from "@/src/meta";
+
 declare global {
   interface PagefindUIParams {
     element: HTMLElement;
