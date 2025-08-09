@@ -1,11 +1,10 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import Footer from "@/components/layout/Footer";
-import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
 import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
-
+import { GA_ID } from "@/src/gtag";
 import {
   BLOG_AUTHOR,
   BLOG_BASE_URL,
@@ -49,14 +48,12 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <body>
-        <Suspense>
-          <GoogleAnalytics />
-        </Suspense>
         <Navbar title={BLOG_TITLE} repo={BLOG_REPO} twitter={BLOG_TWITTER} />
         <Hero title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
         <main className="mx-auto min-h-screen max-w-3xl p-2 lg:px-0">{children}</main>
         <Footer author={BLOG_AUTHOR} year={BLOG_YEAR} github={BLOG_GITHUB} twitter={BLOG_TWITTER} tags={tags} />
       </body>
+      <GoogleAnalytics gaId={GA_ID} />
     </html>
   );
 }

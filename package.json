@@ -10,6 +10,7 @@
     "typecheck": "tsc -p ."
   },
   "dependencies": {
+    "@next/third-parties": "^15.4.6",
     "@tailwindcss/typography": "0.5.16",
     "daisyui": "^5.0.0-beta.6",
     "dayjs": "1.11.13",
