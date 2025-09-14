@@ -33,7 +33,7 @@
     "@fontsource/sometype-mono": "5.2.6",
     "@mdx-js/loader": "3.1.1",
     "@mdx-js/react": "3.1.1",
-    "@mermaid-js/mermaid-cli": "11.9.0",
+    "@mermaid-js/mermaid-cli": "11.10.1",
     "@next/mdx": "15.5.3",
     "@resvg/resvg-js": "2.6.2",
     "@tailwindcss/postcss": "^4.0.0",
