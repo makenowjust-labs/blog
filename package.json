@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.4.6",
-    "@tailwindcss/typography": "0.5.16",
+    "@tailwindcss/typography": "0.5.18",
     "daisyui": "^5.0.0-beta.6",
     "dayjs": "1.11.18",
     "katex": "0.16.22",
