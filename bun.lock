@@ -78,7 +78,7 @@
         "unist-util-remove": "4.0.0",
         "unist-util-visit": "5.0.0",
         "yaml": "2.8.1",
-        "zurk": "0.11.5",
+        "zurk": "0.11.10",
       },
     },
   },
@@ -1987,7 +1987,7 @@
 
     "zod": ["zod@3.23.8", "", {}, "sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g=="],
 
-    "zurk": ["zurk@0.11.5", "", {}, "sha512-xJeC3R45ZyphJeJJm9lXydc1RVXP7E38yfAMKHQkeJb8WqRARC7yMvsTy1lEFjOQg15qfRWASSJ8Mttc7ecuaw=="],
+    "zurk": ["zurk@0.11.10", "", {}, "sha512-6rX6b2cMQ0Njxl2wa+xPLJVFELmMnBBqdWdkonJY8lET5XRFe3DjTlVZsDb+SG971XKEPD5upb9prE23h+t/LA=="],
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
