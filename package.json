@@ -84,7 +84,7 @@
     "unist-util-remove": "4.0.0",
     "unist-util-visit": "5.0.0",
     "yaml": "2.8.1",
-    "zurk": "0.11.5"
+    "zurk": "0.11.10"
   },
   "patchedDependencies": {
     "rehype-pretty-code@0.14.0": "patches/rehype-pretty-code@0.14.0.patch"
