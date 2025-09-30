@@ -79,7 +79,7 @@
     "sharp": "0.34.4",
     "shiki": "3.13.0",
     "tailwindcss": "^4.0.0",
-    "typescript": "5.9.2",
+    "typescript": "5.9.3",
     "unist-util-filter": "5.0.1",
     "unist-util-remove": "4.0.0",
     "unist-util-visit": "5.0.0",
