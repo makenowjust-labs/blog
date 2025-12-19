@@ -49,7 +49,7 @@
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-tailwindcss": "3.18.2",
     "estree-util-value-to-estree": "3.5.0",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "globby": "16.0.0",
     "gray-matter": "4.0.3",
     "hast-util-excerpt": "2.0.0",
