@@ -39,7 +39,7 @@
     "@tailwindcss/postcss": "^4.0.0",
     "@types/gtag.js": "0.0.20",
     "@types/mdx": "2.0.13",
-    "@types/node": "25.0.7",
+    "@types/node": "25.0.8",
     "@types/react": "19.2.8",
     "@types/react-dom": "19.2.3",
     "budoux": "0.7.0",
