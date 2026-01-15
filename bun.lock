@@ -23,7 +23,7 @@
         "@eslint/compat": "2.0.1",
         "@eslint/eslintrc": "3.3.3",
         "@eslint/js": "9.39.2",
-        "@fontsource/biz-udpgothic": "5.2.8",
+        "@fontsource/biz-udpgothic": "5.2.9",
         "@fontsource/share-tech-mono": "5.2.7",
         "@fontsource/sometype-mono": "5.2.7",
         "@mdx-js/loader": "3.1.1",
@@ -162,7 +162,7 @@
 
     "@floating-ui/vue": ["@floating-ui/vue@1.1.6", "", { "dependencies": { "@floating-ui/dom": "^1.0.0", "@floating-ui/utils": "^0.2.9", "vue-demi": ">=0.13.0" } }, "sha512-XFlUzGHGv12zbgHNk5FN2mUB7ROul3oG2ENdTpWdE+qMFxyNxWSRmsoyhiEnpmabNm6WnUvR1OvJfUfN4ojC1A=="],
 
-    "@fontsource/biz-udpgothic": ["@fontsource/biz-udpgothic@5.2.8", "", {}, "sha512-j6IRqodSErtMnPg+gqaH0MWNDGAUjo+iqRlInU9SUwPonE2N+STwxk/S7ie4h9yYR1IBt7hi+7i6kL61/+2LKw=="],
+    "@fontsource/biz-udpgothic": ["@fontsource/biz-udpgothic@5.2.9", "", {}, "sha512-4b7/B35XSaHB6zMETyZSg12E4LTPk4N5YxkOoG682RiA4y/Dhuql80m/uD/bvbTwBPUj+FWjQGYwKY+s03gFLA=="],
 
     "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.2.7", "", {}, "sha512-1JBJ6CU9u5av8aFEUOGOJkq60/IEVVOZDCmiU8X3i0skk0Pp69GngDwlBUHaTZa4G6pbF1UDrC+Fm7XSckW6TQ=="],
 
