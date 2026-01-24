@@ -11,8 +11,8 @@ const colorToClassName = {
 
 export default async function Alert({ color, children }: Props) {
   const className = color
-    ? `text-sm py-0 my-[1.25em] alert text-left ${colorToClassName[color]}`
-    : "text-sm py-0 my-[1.25em] alert text-left";
+    ? `text-base py-0 my-[1.25em] alert text-left ${colorToClassName[color]}`
+    : "text-base py-0 my-[1.25em] alert text-left";
   return (
     <div role="alert" className={className}>
       <div>{children}</div>
