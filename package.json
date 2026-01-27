@@ -18,8 +18,8 @@
     "mermaid": "11.12.2",
     "next": "15.5.10",
     "pseudocode": "2.4.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "react-icons": "5.5.0",
     "react-use": "17.6.0"
   },
