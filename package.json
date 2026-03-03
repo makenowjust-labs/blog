@@ -70,7 +70,7 @@
     "postcss": "8.5.8",
     "prettier": "3.8.1",
     "rehype-katex": "7.0.1",
-    "rehype-pretty-code": "0.14.1",
+    "rehype-pretty-code": "0.14.3",
     "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.1",
     "remark-math": "6.0.0",
