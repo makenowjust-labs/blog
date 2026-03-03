@@ -67,7 +67,7 @@
     "micromark-extension-math": "3.1.0",
     "micromark-extension-mdxjs": "3.0.0",
     "pagefind": "1.4.0",
-    "postcss": "8.5.6",
+    "postcss": "8.5.8",
     "prettier": "3.8.1",
     "rehype-katex": "7.0.1",
     "rehype-pretty-code": "0.14.1",
