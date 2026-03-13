@@ -24,7 +24,7 @@
     "react-use": "17.6.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.4",
+    "@biomejs/biome": "2.4.7",
     "@eslint/compat": "2.0.3",
     "@eslint/eslintrc": "3.3.5",
     "@eslint/js": "10.0.1",
