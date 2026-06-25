@@ -34,7 +34,7 @@
         "@tailwindcss/postcss": "^4.0.0",
         "@types/gtag.js": "0.0.20",
         "@types/mdx": "2.0.14",
-        "@types/node": "26.0.0",
+        "@types/node": "26.0.1",
         "@types/react": "19.2.17",
         "@types/react-dom": "19.2.3",
         "budoux": "0.8.4",
@@ -494,7 +494,7 @@
 
     "@types/ms": ["@types/ms@2.1.0", "", {}, "sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA=="],
 
-    "@types/node": ["@types/node@26.0.0", "", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-vf2YFi1iY9lHGwNJMs01biZFbKJkrZR1T6/MlzjhJLPdntOHLhTrDSnSVcdtvjihi4VQNlrFRIxLsDBlQpAipA=="],
+    "@types/node": ["@types/node@26.0.1", "", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw=="],
 
     "@types/ramda": ["@types/ramda@0.28.25", "", { "dependencies": { "ts-toolbelt": "^6.15.1" } }, "sha512-HrQNqQAGcITpn9HAJFamDxm7iZeeXiP/95pN5OMbNniDjzCCeOHbBKNGmUy8NRi0fhYS+/cXeo91MFC+06gbow=="],
 
