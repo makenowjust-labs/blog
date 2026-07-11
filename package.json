@@ -26,7 +26,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.1.4",
     "@eslint/compat": "2.1.0",
-    "@eslint/eslintrc": "3.3.5",
+    "@eslint/eslintrc": "3.3.6",
     "@eslint/js": "10.0.1",
     "@fontsource/biz-udpgothic": "5.2.9",
     "@fontsource/share-tech-mono": "5.2.7",
