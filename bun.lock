@@ -23,9 +23,9 @@
         "@eslint/compat": "2.1.0",
         "@eslint/eslintrc": "3.3.6",
         "@eslint/js": "10.0.1",
-        "@fontsource/biz-udpgothic": "5.2.9",
-        "@fontsource/share-tech-mono": "5.2.7",
-        "@fontsource/sometype-mono": "5.2.7",
+        "@fontsource/biz-udpgothic": "5.3.0",
+        "@fontsource/share-tech-mono": "5.3.0",
+        "@fontsource/sometype-mono": "5.3.0",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
         "@mermaid-js/mermaid-cli": "11.16.0",
@@ -152,11 +152,11 @@
 
     "@floating-ui/vue": ["@floating-ui/vue@1.1.6", "", { "dependencies": { "@floating-ui/dom": "^1.0.0", "@floating-ui/utils": "^0.2.9", "vue-demi": ">=0.13.0" } }, "sha512-XFlUzGHGv12zbgHNk5FN2mUB7ROul3oG2ENdTpWdE+qMFxyNxWSRmsoyhiEnpmabNm6WnUvR1OvJfUfN4ojC1A=="],
 
-    "@fontsource/biz-udpgothic": ["@fontsource/biz-udpgothic@5.2.9", "", {}, "sha512-4b7/B35XSaHB6zMETyZSg12E4LTPk4N5YxkOoG682RiA4y/Dhuql80m/uD/bvbTwBPUj+FWjQGYwKY+s03gFLA=="],
+    "@fontsource/biz-udpgothic": ["@fontsource/biz-udpgothic@5.3.0", "", {}, "sha512-uBcdaC2/Bg7GEhzWSb2REs8azL1ys+KpI8TmPnJa2xtaD8DVMgsRbtIcEss8xjN5KRtp8E0+LFbG43FhkWZdPw=="],
 
-    "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.2.7", "", {}, "sha512-1JBJ6CU9u5av8aFEUOGOJkq60/IEVVOZDCmiU8X3i0skk0Pp69GngDwlBUHaTZa4G6pbF1UDrC+Fm7XSckW6TQ=="],
+    "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.3.0", "", {}, "sha512-hVEzVCzEid/fBfhggMyvkfDzn9ODrMihxC0EiOeQK3BuQNvdjmith2ERnoDNUkbW8zhufbKNuCgaSoT8LUNpuQ=="],
 
-    "@fontsource/sometype-mono": ["@fontsource/sometype-mono@5.2.7", "", {}, "sha512-O4+MlxspnkU4LsoKeu+kBw2HzGoZZyJ+UWgxb28M9Ppcy/nxv1PgPO2p0gD4LWMu9IPVHjDSgrhGXz+5Vg9HJg=="],
+    "@fontsource/sometype-mono": ["@fontsource/sometype-mono@5.3.0", "", {}, "sha512-Qqt/fCJh8W3VGLohf/fql6dtybk1RtMDXgzWyxI1RjeuqRr3vv/Y0Nl2M7C8NTwVN2SbeuoYg75HzP+3FQmJ0A=="],
 
     "@fortawesome/fontawesome-free": ["@fortawesome/fontawesome-free@7.2.0", "", {}, "sha512-3DguDv/oUE+7vjMeTSOjCSG+KeawgVQOHrKRnvUuqYh1mfArrh7s+s8hXW3e4RerBA1+Wh+hBqf8sJNpqNrBWg=="],
 
