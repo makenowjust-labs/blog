@@ -68,7 +68,7 @@
     "micromark-extension-mdxjs": "3.0.0",
     "pagefind": "1.5.2",
     "postcss": "8.5.21",
-    "prettier": "3.9.5",
+    "prettier": "3.9.6",
     "rehype-katex": "7.0.1",
     "rehype-pretty-code": "0.14.4",
     "remark-frontmatter": "5.0.0",
