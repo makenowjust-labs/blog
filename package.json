@@ -50,7 +50,7 @@
     "eslint-plugin-tailwindcss": "4.2.0",
     "estree-util-value-to-estree": "3.5.0",
     "fs-extra": "11.4.0",
-    "globby": "16.2.2",
+    "globby": "16.2.3",
     "gray-matter": "4.0.3",
     "hast-util-excerpt": "2.0.0",
     "hast-util-from-html": "2.0.3",

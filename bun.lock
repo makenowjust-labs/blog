@@ -45,7 +45,7 @@
         "eslint-plugin-tailwindcss": "4.2.0",
         "estree-util-value-to-estree": "3.5.0",
         "fs-extra": "11.4.0",
-        "globby": "16.2.2",
+        "globby": "16.2.3",
         "gray-matter": "4.0.3",
         "hast-util-excerpt": "2.0.0",
         "hast-util-from-html": "2.0.3",
@@ -1062,7 +1062,7 @@
 
     "globalthis": ["globalthis@1.0.4", "", { "dependencies": { "define-properties": "^1.2.1", "gopd": "^1.0.1" } }, "sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ=="],
 
-    "globby": ["globby@16.2.2", "", { "dependencies": { "@sindresorhus/merge-streams": "^4.0.0", "fast-glob": "^3.3.3", "ignore": "^7.0.5", "is-path-inside": "^4.0.0", "slash": "^5.1.0", "unicorn-magic": "^0.4.0" } }, "sha512-NLvV9ubZ6NDsJaOpKPy3cQeJpKi9DcWiyCiFUpJPA0YihRqiE6RWaLUmgNNPr8MgPpLZjnBjSmou7uZBRJv9wA=="],
+    "globby": ["globby@16.2.3", "", { "dependencies": { "@sindresorhus/merge-streams": "^4.0.0", "fast-glob": "^3.3.3", "ignore": "^7.0.5", "is-path-inside": "^4.0.0", "slash": "^5.1.0", "unicorn-magic": "^0.4.0" } }, "sha512-VZX7TV7jmd/pn71vdnLKtgwy1IWqc3KjI9x1/UtPkwoKk5fKrNLY30ltDe3cAM5xruIN7YuuaulFt133jRrKZg=="],
 
     "google-artifactregistry-auth": ["google-artifactregistry-auth@3.5.0", "", { "dependencies": { "google-auth-library": "^9.14.0", "js-yaml": "^4.1.0", "yargs": "^17.1.1" }, "bin": { "artifactregistry-auth": "src/main.js" } }, "sha512-SIvVBPjVr0KvYFEJEZXKfELt8nvXwTKl6IHyOT7pTHBlS8Ej2UuTOJeKWYFim/JztSjUyna9pKQxa3VhTA12Fg=="],
 
