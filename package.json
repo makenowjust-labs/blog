@@ -13,7 +13,7 @@
     "@next/third-parties": "^15.4.6",
     "@tailwindcss/typography": "0.5.20",
     "daisyui": "^5.0.0-beta.6",
-    "dayjs": "1.11.21",
+    "dayjs": "1.11.22",
     "katex": "0.18.4",
     "mermaid": "11.16.1",
     "next": "15.5.23",
