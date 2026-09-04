@@ -41,7 +41,7 @@
     "@types/mdx": "2.0.14",
     "@types/node": "26.4.1",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
+    "@types/react-dom": "19.2.7",
     "budoux": "0.9.1",
     "eslint": "10.9.1",
     "eslint-config-next": "15.5.25",
