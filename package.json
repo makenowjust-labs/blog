@@ -43,7 +43,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
     "budoux": "0.9.1",
-    "eslint": "10.9.1",
+    "eslint": "10.10.0",
     "eslint-config-next": "15.5.25",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
