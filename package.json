@@ -74,7 +74,7 @@
     "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.1",
     "remark-math": "6.0.0",
-    "remark-mdx-frontmatter": "5.2.0",
+    "remark-mdx-frontmatter": "6.0.0",
     "satori": "0.33.5",
     "sharp": "0.35.4",
     "shiki": "4.4.3",
